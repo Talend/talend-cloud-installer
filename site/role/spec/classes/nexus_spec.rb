@@ -3,7 +3,7 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 describe 'role::nexus' do
 
   let(:title) { 'role::nexus' }
-  let(:node) { 'nexus.datapwn.com' }
+  let(:node) { 'nexus.testnode.com' }
   let(:facts) {{  :ipaddress      => '10.42.42.42',
                   :concat_basedir => '/var/lib/puppet/concat',
                   :osfamily       => 'RedHat',
@@ -21,7 +21,7 @@ describe 'role::nexus' do
 
       # Test if it compiles
       it { should compile }
-      it { should have_resource_count(72)}
+      it { should have_resource_count(71)}
 
       # Test all default params are set
       it {

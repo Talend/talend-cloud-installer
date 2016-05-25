@@ -4,49 +4,40 @@
 # === Authors
 # Andreas Heumaier <andreas.heumaier@nordcloud.com>
 #
-class profile::web::tomcat {
+class profile::web::tomcat (){
 
+  unless defined(Package['epel-release']){
+    package{  'epel-release':
+      ensure  => 'installed',
+    }
+  }
+  package{  'ruby-augeas':
+    ensure  => 'installed',
+    require => Package['epel-release']
+  }
 
-
-  class { '::tomcat': }
-  class { '::java': }
-
-  tomcat::instance { 'instance1':
-    catalina_base => '/opt/apache-tomcat/instance1',
-    source_url    => 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.53/bin/apache-tomcat-7.0.53.tar.gz',
+  java::oracle { 'jdk8' :
+    ensure  => 'present',
+    version => '8',
+    java_se => 'jre',
   } ->
 
-  tomcat::config::server{ 'instance1':
-    catalina_base => '/opt/apache-tomcat/instance1',
-    port          => '8080',
+  tomcat::instance { 'tomcat7':
+    install_from_source => true,
+    source_url          => 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.69/bin/apache-tomcat-7.0.69.tar.gz',
+    manage_user         => true,
+    manage_group        => true,
+    user                => 'tomcat',
+    group               => 'tomcat',
+    catalina_base       => '/opt/apache-tomcat/tomcat7',
+    java_home           => '/opt/jdk-7',
   } ->
-  tomcat::config::server::context { 'instance1-test':
-    catalina_base         => '/opt/apache-tomcat/instance1',
-    context_ensure        => 'present',
-    doc_base              => 'test.war',
-    parent_service        => 'Catalina',
-    parent_engine         => 'Catalina',
-    parent_host           => 'localhost',
-    additional_attributes => {
-      'path' => '/test',
-    },
-  } ->
-
-  tomcat::service { 'instance1':
-    catalina_base => '/opt/apache-tomcat/instance1',
+  tomcat::service { 'tomcat7':
+    catalina_base => '/opt/apache-tomcat/tomcat7',
+    use_init      => false,
   }
 
   profile::register_profile{ 'tomcat': }
 
 
-
-
-  # configuring tomcat server contexts applications from hiera
-  #$tomcat_server_contexts = hiera_hash('tomcat_server_contexts', {})
-  #create_resources('tomcat::config::server::context', $tomcat_server_contexts)
-
 }
-
-# define configure_hiera_servers {}
-# define configure_hiera_contexts {}
-# define configure_hiera_instances {}

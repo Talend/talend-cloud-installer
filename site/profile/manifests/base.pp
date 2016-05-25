@@ -13,6 +13,12 @@ class profile::base {
   # Ensure we have a yum repo first before we intall rpm packages ....
   Yumrepo <| |> -> Package <| |>
 
+  # Ensure we have a path set for all possible execs
+  # This is now limited to unixoid systems
+  Exec {
+    path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
+  }
+
   # depreceated since concat 2.0
   # include concat::setup
   include ::stdlib

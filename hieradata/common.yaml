@@ -11,4 +11,13 @@ common_packages:
   'aws-sdk':
     ensure: 'installed'
     provider: 'gem'
+  'package_cloud':
+    ensure: 'installed'
+    provider: 'gem'
+  'epel-release':
+    ensure: 'installed'
 
+
+jdk_oracle::version: '7'
+jdk_oracle::install_dir: '/opt'
+jdk_oracle::use_cache: false

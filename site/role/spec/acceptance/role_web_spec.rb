@@ -1,38 +1,40 @@
 require 'spec_helper_acceptance'
 
-describe "role::web", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+if hosts_with_role(hosts, 'web').length >= 1
+  describe "role::web" do
+    context 'TIC web role ' do
+      it 'should should run successfully' do
 
+        agent = only_host_with_role(hosts, 'web')
 
-  context 'default install' do
+        apply_manifest_on(agent, 'class { "role::web": }', :catch_failures => true, :modulepath => '/tmp/puppet/site:/tmp/puppet/modules')
+        #expect( apply_manifest_on(agent, pp, :catch_failures => true, :modulepath => '/tmp/puppet/site:/tmp/puppet/modules').exit_code).to be_zero
+      end
 
-    it 'should provision base role' do
-      pp = <<-EOS
-        class { 'role::web':
-        }
-      EOS
+      # context 'installation of web services' do
+      #
+      #   describe package('nginx') do
+      #     it { is_expected.to be_installed }
+      #   end
+      #
+      #   describe service('nginx') do
+      #     it { is_expected.to be_enabled }
+      #     it { is_expected.to be_running }
+      #   end
+      #
+      #   describe port(80) do
+      #     it { should be_listening }
+      #   end
+      #
+      #   it 'should have java process with correct arguments' do
+      #     expect(command('pgrep -a java').stdout).to match /\/opt\/apache-tomcat\/tomcat7\//
+      #   end
+      #
+      #   describe port(8080) do
+      #     it { should be_listening }
+      #   end
 
-      create_remote_file hosts, '/etc/facter/facts.d/external_facts.txt', 'puppet_role=web', :protocol => 'rsync'
-
-      # With the version of java that ships with pe on debian wheezy, update-alternatives
-      # throws an error on the first run due to missing alternative for policytool. It still
-      # updates the alternatives for java
-      apply_manifest(pp, :catch_failures => true, :modulepath => '/tmp/puppet/site:/tmp/puppet/modules')
-
+      #end
     end
-
-    describe package('nginx') do
-      it { is_expected.to be_installed }
-    end
-
-    describe service('nginx') do
-      it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
-    end
-
-    describe port(80) do
-      it { should be_listening }
-    end
-
-
   end
 end

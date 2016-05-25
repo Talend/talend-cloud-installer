@@ -7,18 +7,23 @@ fixtures:
       repo: "https://github.com/Talend/puppet-dataprep_dataset"
       ref: "development"
   forge_modules:
-    tomcat:
-      repo: "puppetlabs/tomcat"
-      ref: "1.4.1"
+    archive: "puppet-archive"
     selinux: "jfryman/selinux"
     stdlib: "puppetlabs/stdlib"
-    java: "puppetlabs/java"
     concat: "puppetlabs/concat"
     awscli: "jdowning/awscli"
     epel: "stahnma/epel"
     nginx: "jfryman/nginx"
     staging: "nanliu/staging"
     apt: "puppetlabs/apt"
+    shellvar: "herculesteam/augeasproviders_shellvar"
+    auges_core: "herculesteam/augeasproviders_core"
+    tomcat:
+      repo: "puppetlabs/tomcat"
+      ref: "1.5.0"
+    java:
+      repo: "puppetlabs/java"
+      ref: "1.5.0"
     mongodb:
       repo: "puppetlabs/mongodb"
       ref: "0.13.0"
@@ -28,5 +33,3 @@ fixtures:
     wget:
      repo: "maestrodev/wget"
      ref: "1.7.3"
-    shellvar: "herculesteam/augeasproviders_shellvar"
-    auges_core: "herculesteam/augeasproviders_core"

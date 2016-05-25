@@ -2,17 +2,20 @@ fixtures:
   symlinks:
     profile: '#{source_dir}'
   forge_modules:
-    tomcat:
-      repo: "puppetlabs/tomcat"
-      ref: "1.4.1"
     selinux: "jfryman/selinux"
-    stdlib: "puppetlabs/stdlib"
-    java: "puppetlabs/java"
+    archive: "puppet-archive"
     concat: "puppetlabs/concat"
     awscli: "jdowning/awscli"
+    stdlib: "puppetlabs/stdlib"
     epel: "stahnma/epel"
     nginx: "jfryman/nginx"
     staging: "nanliu/staging"
+    tomcat:
+      repo: "puppetlabs/tomcat"
+      ref: "1.5.0"
+    java:
+      repo: "puppetlabs/java"
+      ref: "1.5.0"
     apt: "puppetlabs/apt"
     mongodb:
       repo: "puppetlabs/mongodb"

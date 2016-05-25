@@ -1,0 +1,20 @@
+---
+tomcat_server_contexts:
+  'syncope-srv':
+    catalina_base: '/opt/apache-tomcat/syncope-srv'
+    context_ensure: 'present'
+    doc_base: 'test.war'
+    parent_service: 'Catalina'
+    parent_engine: 'Catalina'
+    parent_host: 'localhost'
+    additional_attributes:
+      'path': '/syncope-srv'
+
+nginx::resource::upstreams:
+  'syncope':
+    members:
+      - '127.0.0.1:8080 fail_timeout=0'
+
+nginx::resource::vhosts:
+  'syncope.aws.talend.com':
+    proxy: 'http://syncope'

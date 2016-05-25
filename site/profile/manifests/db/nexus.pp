@@ -7,13 +7,8 @@ class profile::db::nexus (
 ) {
 
   include java
-  
-  ensure_packages(['wget'])
 
-  file{'/usr/lib/systemd/system/nexus.service':
-    ensure  => 'present',
-    content => template('profile/nexus.service.erb')
-  }
+  ensure_packages(['wget'])
 
   class{ '::nexus':
     version    => '2.8.0',
@@ -21,7 +16,6 @@ class profile::db::nexus (
     nexus_root => $nexus_root, # All directories and files will be relative to this
   }
 
-  File['/usr/lib/systemd/system/nexus.service'] ->
   Class['::java'] ->
   Class['::nexus']
 

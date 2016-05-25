@@ -3,7 +3,7 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 describe 'profile::db::mongodb' do
 
   let(:title) { 'profile::db::mongodb' }
-  let(:node) { 'mongodb.datapwn.com' }
+  let(:node) { 'mongodb.testnode.com' }
   let(:facts) {{  :ipaddress      => '10.42.42.42',
                   :concat_basedir => '/var/lib/puppet/concat',
                   :osfamily       => 'RedHat',

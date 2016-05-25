@@ -10,13 +10,43 @@
 #  masterless: true
 #
 HOSTS:
-  centos-7:
-    vmname: centos-7-us-east-1
+  centos-7-web:
+    vmname: centos-7-web
     platform: el-7-x86_64
     hypervisor: ec2
     amisize: t2.small
     snapshot: foss
     user: centos
+    roles:
+      - web
+      - default
+  centos-7-mongodb:
+    vmname: centos-7-mongodb
+    platform: el-7-x86_64
+    hypervisor: ec2
+    amisize: t2.small
+    snapshot: foss
+    user: centos
+    roles:
+      - mongodb
+  centos-7-nexus:
+    vmname: centos-7-nexus
+    platform: el-7-x86_64
+    hypervisor: ec2
+    amisize: t2.small
+    snapshot: foss
+    user: centos
+    roles:
+      - nexus
+  centos-7-dataprepdataset:
+    vmname: centos-7-dataprepdataset
+    platform: el-7-x86_64
+    hypervisor: ec2
+    amisize: t2.small
+    snapshot: foss
+    user: centos
+    roles:
+      - dataprepdataset
 CONFIG:
   type: foss
   log_level: verbose

@@ -10,6 +10,7 @@
 # node definitions.)
 
 ## Active Configurations ##
+## run with bundle exec puppet apply --verbose --modulepath=site:modules --hiera_config=hiera.yaml manifests/site.pp
 
 # Disable filebucket by default for all File resources:
 #http://docs.puppetlabs.com/pe/latest/release_notes.html#filebucket-resource-no-longer-created-by-default

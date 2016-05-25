@@ -3,7 +3,7 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 describe 'profile::db::nexus' do
 
   let(:title) { 'profile::db::nexus' }
-  let(:node) { 'nexus.datapwn.com' }
+  let(:node) { 'nexus.testnode.com' }
   let(:facts) {{  :ipaddress      => '10.42.42.42',
                   :concat_basedir => '/var/lib/puppet/concat',
                   :osfamily       => 'RedHat',
@@ -21,7 +21,7 @@ describe 'profile::db::nexus' do
 
       # Test if it compiles
       it { should compile }
-      it { should have_resource_count(30)}
+      it { should have_resource_count(29)}
 
       # Test all default params are set
       it {
