@@ -1,12 +1,11 @@
 HOSTS:
-  centos-7-x64:
+  dataprep_dataset-centos-7:
     platform: "el-7-x86_64"
     box: "centos/7"
     box_url: 'https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/virtualbox.box'
     hypervisor: vagrant
     roles:
-      - nexus
-
+      - dataprep_dataset
 CONFIG:
   type: foss
   log_level: verbose
