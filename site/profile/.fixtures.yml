@@ -10,6 +10,7 @@ fixtures:
     epel: "stahnma/epel"
     nginx: "jfryman/nginx"
     staging: "nanliu/staging"
+    packagecloud: "computology/packagecloud"
     tomcat:
       repo: "puppetlabs/tomcat"
       ref: "1.5.0"
