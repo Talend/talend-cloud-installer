@@ -29,6 +29,7 @@ describe 'profile::base' do
 
     context 'on AWS ' do
       let(:facts) { { :operatingsystem  => 'CentOS',
+                      :operatingsystemmajrelease => '7',
                       :lsbdistcodename  => 'trusty',
                       :concat_basedir   => '/var/lib/puppet/concat',
                       :ec2_metadata     => '{ :some =>  \'ec2 content\'}',
