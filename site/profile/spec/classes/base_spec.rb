@@ -18,7 +18,6 @@ describe 'profile::base' do
 
     # Test if it compiles
     it { should compile }
-    it { should have_resource_count(17)}
 
     # Test all default params are set
     it {
@@ -48,7 +47,6 @@ describe 'profile::base' do
 
     # Test if it compiles
     it { should compile }
-    it { should have_resource_count(15)}
 
     # Test all default params are set
     it {
