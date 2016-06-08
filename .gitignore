@@ -6,3 +6,4 @@ vendor/
 Gemfile.lock
 log
 .vagrant
+site/role/spec/fixtures
