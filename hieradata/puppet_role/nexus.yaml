@@ -1,8 +1,1 @@
 ---
-nginx::resource::upstreams:
-  'nexus':
-    members:
-      - '127.0.0.1:8081 fail_timeout=0'
-nginx::resource::vhosts:
-  'nexus.aws.talend.com':
-    proxy: 'http://nexus'
