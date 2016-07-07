@@ -10,19 +10,19 @@
 #  masterless: true
 #
 HOSTS:
-  centos-7-x64:
-    platform: "el-7-x86_64"
-    box: "centos/7"
-    box_url: 'https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/virtualbox.box'
-    hypervisor: vagrant
+#  centos-7-x64:
+#    platform: "el-7-x86_64"
+#    box: "centos/7"
+#    box_url: 'https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/virtualbox.box'
+#    hypervisor: vagrant
 #
-#  centos-7-base:
-#    vmname: centos-7-base
-#    platform: el-7-x86_64
-#    hypervisor: ec2
-#    amisize: t2.small
-#    snapshot: foss
-#    user: centos
+  centos-7-base:
+    vmname: centos-7-base
+    platform: el-7-x86_64
+    hypervisor: ec2
+    amisize: t2.small
+    snapshot: foss
+    user: centos
     roles:
       - default
       - base
