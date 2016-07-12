@@ -13,7 +13,6 @@ gem 'retries'
 
 group :development do
   gem 'beaker', :git => 'https://github.com/Talend/beaker.git', :branch => 'feature/aws-sdk-v2' # https://tickets.puppetlabs.com/browse/BKR-782
-  gem 'serverspec-aws-resources', :git => 'https://github.com/Talend/serverspec-aws-resources.git'
   gem 'beaker-puppet_install_helper'
   gem 'beaker-rspec'
   gem 'puppetlabs_spec_helper', :git => 'https://github.com/Talend/puppetlabs_spec_helper.git'
