@@ -32,7 +32,7 @@ end
 
 RSpec.configure do |c|
   # Readable test descriptions
-  c.formatter = :documentation
+  # c.formatter = :documentation
 
   # Configure all nodes in nodeset
   c.before :suite do
