@@ -1,6 +1,7 @@
 require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
 require 'beaker-rspec/helpers/serverspec'
+require 'serverspec-aws-resources'
 
 WORKDIR = '/tmp/puppet'
 
