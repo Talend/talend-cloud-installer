@@ -1,9 +1,9 @@
 #
 # TIC Services role
 #
-class role::services {
+class role::tic_services_internal {
 
-  include ::profile::base
+  require profile::tic_services
 
 	class { 'tic::globals':
 		role                               => 'services',

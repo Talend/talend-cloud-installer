@@ -1,0 +1,5 @@
+---
+java::distribution: "jre"
+java::package: "jre1.8.0_60"
+java::version: "1.8.0_60-fcs"
+java::java_home: "/usr/java/jre1.8.0_60"
