@@ -9,24 +9,24 @@ HOSTS:
     amisize: t2.small
     snapshot: foss
     user: centos
-  centos-7-mongodb:
-    roles:
-      - mongodb
-    vmname: centos-7-mongodb
-    platform: el-7-x86_64
-    hypervisor: ec2
-    amisize: t2.small
-    snapshot: foss
-    user: centos
-  centos-7-web-nginx:
-    roles:
-      - web_nginx
-    vmname: centos-7-web-nginx
-    platform: el-7-x86_64
-    hypervisor: ec2
-    amisize: t2.small
-    snapshot: foss
-    user: centos
+#  centos-7-mongodb:
+#    roles:
+#      - mongodb
+#    vmname: centos-7-mongodb
+#    platform: el-7-x86_64
+#    hypervisor: ec2
+#    amisize: t2.small
+#    snapshot: foss
+#    user: centos
+#  centos-7-web-nginx:
+#    roles:
+#      - web_nginx
+#    vmname: centos-7-web-nginx
+#    platform: el-7-x86_64
+#    hypervisor: ec2
+#    amisize: t2.small
+#    snapshot: foss
+#    user: centos
 CONFIG:
   type: foss
   log_level: verbose

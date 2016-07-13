@@ -1,20 +1,40 @@
 ---
-tomcat_server_contexts:
-  'syncope-srv':
-    catalina_base: '/opt/apache-tomcat/syncope-srv'
-    context_ensure: 'present'
-    doc_base: 'test.war'
-    parent_service: 'Catalina'
-    parent_engine: 'Catalina'
-    parent_host: 'localhost'
-    additional_attributes:
-      'path': '/syncope-srv'
+java::distribution: "jre"
+java::package: "jre1.8.0_60"
+java::version: "1.8.0_60-fcs"
+java::java_home: "/usr/java/jre1.8.0_60"
 
-nginx::resource::upstreams:
+syncope::postgres_host: "%{::tic_db_host}"
+syncope::postgres_db_name: 'syncope'
+syncope::postgres_password: "%{::master_password}"
+syncope::admin_password: "%{::master_password}"
+
+profile::postgresql::pg_role_user: syncope
+profile::postgresql::pg_role_db_name: syncope
+profile::postgresql::pg_role_user_password: "%{::master_password}"
+
+postgresql::server::service_ensure: stopped
+postgresql::server::service_enable: false
+postgresql::server::service_manage: true
+
+postgresql::globals::default_connect_settings:
+      PGHOST: "%{::tic_db_host}"
+      PGUSER: 'tadmin'
+      PGDATABASE: 'tadmin'
+      PGPASSWORD: "%{::master_password}"
+
+pg_databases:
   'syncope':
-    members:
-      - '127.0.0.1:8080 fail_timeout=0'
+    dbname: 'syncope'
+    owner: 'tadmin'
 
-nginx::resource::vhosts:
-  'syncope.aws.talend.com':
-    proxy: 'http://syncope'
+pg_roles:
+  'syncope':
+    login: true
+    password_hash: "%{::master_password}"
+
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/opt/tomcat/logs/catalina.out":
+    path: '/opt/tomcat/logs/catalina.out'
+  "/talend/tic/%{::puppet_role}/opt/tomcat/logs/sts.out":
+    path: '/opt/tomcat/logs/sts.out'

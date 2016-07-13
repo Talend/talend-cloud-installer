@@ -1,0 +1,199 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    camptocamp-archive (0.8.1)
+    camptocamp-systemd (0.3.0)
+    camptocamp-tomcat (0.15.0)
+      camptocamp-archive (< 2.0.0, >= 0.3.0)
+      camptocamp-systemd (< 2.0.0, >= 0.1.5)
+      herculesteam-augeasproviders_core (< 3.0.0, >= 2.0.0)
+      herculesteam-augeasproviders_shellvar (< 3.0.0, >= 2.0.0)
+      puppetlabs-concat (< 2.0.0, >= 1.0.0)
+      puppetlabs-inifile (< 2.0.0, >= 1.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.0.0)
+    ceritsc-yum (0.9.8)
+      puppetlabs-stdlib (>= 4.2.0)
+    computology-packagecloud (0.3.0)
+      puppetlabs-stdlib (>= 0)
+    elasticsearch-elasticsearch (0.9.9)
+      ceritsc-yum (< 1.0.0, >= 0.9.6)
+      puppetlabs-apt (< 2.0.0, >= 1.4.0)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    herculesteam-augeasproviders_core (2.1.2)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    herculesteam-augeasproviders_shellvar (2.2.1)
+      herculesteam-augeasproviders_core (< 3.0.0, >= 2.1.0)
+    jdowning-awscli (1.3.0)
+      puppetlabs-concat (< 2.0.0, >= 1.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.0.0)
+      stahnma-epel (< 2.0.0, >= 1.0.0)
+    jfryman-nginx (0.3.0)
+      puppetlabs-apt (< 3.0.0, >= 1.8.0)
+      puppetlabs-concat (< 3.0.0, >= 1.1.1)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
+    jfryman-selinux (0.4.0)
+      puppetlabs-stdlib (>= 0)
+    justinclayton-serf (1.0.0)
+      nanliu-staging (>= 0.3.1)
+    maestrodev-wget (1.7.3)
+    nanliu-staging (1.0.3)
+    puppet-archive (0.5.1)
+      puppetlabs-pe_gem (>= 0.0.1)
+      puppetlabs-stdlib (>= 2.2.1)
+    puppetlabs-apt (1.8.0)
+      puppetlabs-stdlib (>= 2.2.1)
+    puppetlabs-concat (1.2.5)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-inifile (1.5.0)
+    puppetlabs-java (1.5.0)
+      puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
+    puppetlabs-mongodb (0.13.0)
+      puppetlabs-apt (< 3.0.0, >= 1.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 2.2.0)
+    puppetlabs-pe_gem (0.2.0)
+    puppetlabs-postgresql (4.7.1)
+      puppetlabs-apt (< 3.0.0, >= 1.8.0)
+      puppetlabs-concat (< 3.0.0, >= 1.1.0)
+      puppetlabs-stdlib (~> 4.0)
+    puppetlabs-stdlib (4.11.0)
+    puppetlabs-tomcat (1.5.0)
+      nanliu-staging (< 2.0.0, >= 0.4.1)
+      puppetlabs-concat (< 3.0.0, >= 1.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
+    saz-limits (2.3.0)
+    stahnma-epel (1.2.2)
+      puppetlabs-stdlib (>= 3.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-activemq.git
+  ref: master
+  sha: 1752fb20c364054df709e701c3fd15aca8ac68a4
+  specs:
+    activemq (0.1.0)
+      computology-packagecloud (>= 0)
+      puppetlabs-java (= 1.5.0)
+      puppetlabs-postgresql (>= 0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-cloudwatch.git
+  ref: master
+  sha: c56352d2ffa9e8b389488f318e7437d0cbe94091
+  specs:
+    cloudwatch (0.1.0)
+      jdowning-awscli (>= 0)
+      puppetlabs-aws (>= 0)
+      puppetlabs-concat (~> 1.0)
+      puppetlabs-stdlib (>= 0)
+      stahnma-epel (>= 0)
+
+GIT
+  remote: https://github.com/Talend/puppet-cloudwatchlogs.git
+  ref: master
+  sha: 9c331c5ea621ce0f1137faa94b12d3974feb8ad3
+  specs:
+    cloudwatchlogs (0.1.0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-dataprep_dataset
+  ref: development
+  sha: 1ff1bddd3209492560bdef958df9dedfb0e39f43
+  specs:
+    dataprep_dataset (0.1.0)
+      herculesteam-augeasproviders_core (>= 2.1.2)
+      herculesteam-augeasproviders_shellvar (>= 2.1.1)
+      puppetlabs-java (>= 1.5.0)
+      puppetlabs-stdlib (>= 4.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-nexus.git
+  ref: master
+  sha: 855e1646614f8987ed1156d5e5a55e4153f98792
+  specs:
+    nexus (1.3.4)
+      maestrodev-wget (< 2.0.0, >= 1.0.0)
+      puppetlabs-inifile (~> 1.5.0)
+      puppetlabs-stdlib (< 5.0.0, >= 0.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-syncope.git
+  ref: master
+  sha: 5a5e4d1872e125d906f5292503184042f16a4f7a
+  specs:
+    syncope (0.1.0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-tic.git
+  ref: master
+  sha: 2a861395742f828091d17e3722ad159fd9b3f085
+  specs:
+    talend-tic (0.0.1)
+      camptocamp-archive (>= 0)
+      camptocamp-systemd (>= 0)
+      camptocamp-tomcat (>= 0)
+      computology-packagecloud (>= 0)
+      herculesteam-augeasproviders_core (>= 0)
+      herculesteam-augeasproviders_shellvar (>= 0)
+      jfryman-nginx (>= 0)
+      justinclayton-serf (>= 0)
+      puppetlabs-apt (>= 0)
+      puppetlabs-concat (= 1.2.5)
+      puppetlabs-inifile (>= 0)
+      puppetlabs-java (= 1.5.0)
+      puppetlabs-postgresql (>= 0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-zookeeper.git
+  ref: master
+  sha: de17047d3e65fe3ac7a7e4d388c06b4d9b7aa6af
+  specs:
+    zookeeper (0.1.0)
+      computology-packagecloud (>= 0)
+      maestrodev-wget (= 1.7.3)
+      nanliu-staging (>= 0)
+      puppet-archive (>= 0)
+      puppetlabs-java (= 1.5.0)
+      puppetlabs-stdlib (>= 1.0.0)
+      puppetlabs-tomcat (= 1.5.0)
+
+GIT
+  remote: https://github.com/Talend/puppetlabs-aws.git
+  ref: master
+  sha: e3ea14179d0598796722a0d0e0a2f375d6d02192
+  specs:
+    aws (1.4.0)
+    puppetlabs-aws (1.4.0)
+
+DEPENDENCIES
+  activemq (>= 0)
+  aws (>= 0)
+  cloudwatch (>= 0)
+  cloudwatchlogs (>= 0)
+  computology-packagecloud (= 0.3.0)
+  dataprep_dataset (>= 0)
+  elasticsearch-elasticsearch (= 0.9.9)
+  herculesteam-augeasproviders_core (>= 0)
+  herculesteam-augeasproviders_shellvar (>= 0)
+  jdowning-awscli (>= 0)
+  jfryman-nginx (>= 0)
+  jfryman-selinux (>= 0)
+  maestrodev-wget (= 1.7.3)
+  nanliu-staging (>= 0)
+  nexus (>= 0)
+  puppet-archive (= 0.5.1)
+  puppetlabs-concat (= 1.2.5)
+  puppetlabs-inifile (= 1.5.0)
+  puppetlabs-java (= 1.5.0)
+  puppetlabs-mongodb (= 0.13.0)
+  puppetlabs-postgresql (= 4.7.1)
+  puppetlabs-stdlib (= 4.11.0)
+  puppetlabs-tomcat (= 1.5.0)
+  saz-limits (= 2.3.0)
+  stahnma-epel (>= 0)
+  syncope (>= 0)
+  talend-tic (>= 0)
+  zookeeper (>= 0)
+

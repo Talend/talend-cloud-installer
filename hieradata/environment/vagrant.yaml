@@ -1,0 +1,13 @@
+---
+
+postgresql::server::service_ensure: running
+postgresql::server::service_enable: true
+postgresql::server::service_manage: true
+
+postgresql::globals::default_connect_settings: {}
+
+pg_databases:
+  'ams':
+    dbname: 'ams'
+  'syncope':
+    dbname: 'syncope'

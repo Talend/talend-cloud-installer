@@ -25,7 +25,7 @@ describe 'role::web' do
 
       # Test if it compiles
       it { should compile }
-      it { should have_resource_count(73)}
+      it { should have_resource_count(70)}
 
       # Test all default params are set
       it {
@@ -34,7 +34,7 @@ describe 'role::web' do
         should contain_class('profile::web::nginx')
         should contain_class('profile::web::tomcat')
         should contain_java__oracle('jdk8')
-        should contain_tomcat__instance('tomcat7')
+        should contain_tomcat__instance('tomcat')
       }
     end
 

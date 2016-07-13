@@ -20,10 +20,10 @@ The major points are:
    - These match the default hierarchy that ships with PE
    
 # Requirements
-
+  - Epel Repository
   - Ruby >= 1.9.3
   - Bundler >= 1.11.0
-
+  - ruby-augeas
 # Setup
 ## Install
 Clone this repo

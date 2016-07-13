@@ -1,0 +1,4 @@
+---
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/opt/tomcat/logs/catalina.out":
+    path: '/opt/tomcat/logs/catalina.out'

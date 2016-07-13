@@ -4,6 +4,8 @@ HOSTS:
     box: "centos/7"
     box_url: 'https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/virtualbox.box'
     hypervisor: vagrant
+    roles:
+      - nexus
 
 CONFIG:
   type: foss

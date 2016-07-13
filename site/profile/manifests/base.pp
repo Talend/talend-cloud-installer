@@ -8,32 +8,16 @@
 #
 class profile::base {
 
-  profile::register_profile{ 'base': order => 1, }
+  require ::profile::common::packagecloud_repos
+  require ::profile::common::packages
+  require ::profile::common::cloudwatchlogs
 
-  # Ensure we have a yum repo first before we intall rpm packages ....
-  Yumrepo <| |> -> Package <| |>
+  include ::profile::common::concat
 
-  # Ensure we have a path set for all possible execs
-  # This is now limited to unixoid systems
-  Exec {
-    path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
-  }
-
-  # depreceated since concat 2.0
-  # include concat::setup
-  include ::stdlib
+  profile::register_profile { 'base': order => 1, }
 
   if $::osfamily == 'RedHat' { include ::selinux }
   if $::ec2_metadata { include ::awscli }
-
-  # get some packagecloud repos installed
-  $packagecloud_repos = hiera_hash('packagecloud_repos', {})
-  create_resources('packagecloud::repo', $packagecloud_repos)
-
-  # get some usual helpers installed
-  $common_packages = hiera_hash('common_packages', {})
-  create_resources(Package, $common_packages)
-
 
   # This distributes the custom fact to the host(-pluginsync)
   # on using puppet apply
@@ -43,18 +27,7 @@ class profile::base {
     recurse => true,
     purge   => true,
     backup  => false,
-    noop    => false
+    noop    => false,
   }
 
-  concat{ '/etc/sysconfig/puppetProfile':
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
-  }
-
-  concat{ '/etc/sysconfig/puppetRole':
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
-  }
 }

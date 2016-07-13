@@ -1,0 +1,48 @@
+---
+java::distribution: "jre"
+java::package: "jre1.8.0_60"
+java::version: "1.8.0_60-fcs"
+java::java_home: "/usr/java/jre1.8.0_60"
+
+activemq::version: 'installed'
+activemq::network_password: "%{::master_password}"
+activemq::network_user: 'activemq'
+activemq::brokers: 'localhost'
+activemq::java_home: '/usr/java/default'
+activemq::zk_password: "%{::master_password}"
+activemq::zookeeper_nodes: ''
+activemq::pg_host: "%{::tic_db_host}"
+activemq::pg_db: 'ams'
+activemq::pg_username: 'activemq'
+activemq::pg_password: "%{::master_password}"
+activemq::activemq_auth_ensure: 'installed'
+activemq::persistence: 'kahadb'
+
+profile::postgresql::pg_role_user: activemq
+profile::postgresql::pg_role_db_name: ams
+profile::postgresql::pg_role_user_password: "%{::master_password}"
+
+postgresql::server::service_ensure: stopped
+postgresql::server::service_enable: false
+postgresql::server::service_manage: true
+
+postgresql::globals::default_connect_settings:
+      PGHOST: "%{::tic_db_host}"
+      PGUSER: 'tadmin'
+      PGDATABASE: 'tadmin'
+      PGPASSWORD: "%{::master_password}"
+
+pg_databases:
+  'ams':
+    dbname: 'ams'
+    owner: 'tadmin'
+
+pg_roles:
+  'ams':
+    login: true
+    password_hash: "%{::master_password}"
+
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/opt/activemq/data/activemq.log":
+    path: '/opt/activemq/data/activemq.log'
+

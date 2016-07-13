@@ -1,0 +1,28 @@
+---
+elasticsearch::manage_repo: true
+elasticsearch::repo_version: '1.5'
+elasticsearch::java_install: false
+elasticsearch::status: running
+
+profile::elasticsearch::plugins_hash:
+  'elasticsearch/elasticsearch-cloud-aws/2.5.1':
+    instances: 'default'
+profile::elasticsearch::cluster_name: 'talend'
+
+common_packages:
+  'wget':
+    ensure: 'installed'
+
+limits::entries:
+  elasticsearch_files:
+    user: elasticsearch
+    limit_type: nofile
+    both: 65535
+  elasticsearch_memlock:
+    user: elasticsearch
+    limit_type: memlock
+    both: unlimited
+
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/var/log/elasticsearch/default/tic.log":
+    path: '/var/log/elasticsearch/default/tic.log'

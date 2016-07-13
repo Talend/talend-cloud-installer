@@ -1,12 +1,9 @@
 require 'spec_helper_acceptance'
 
-
-
-
-describe "role::web" do
+describe "profile::web:syncope" do
   let(:pp) do
     <<-EOS
-        class { 'role::web':
+        class { 'profile::web::syncope':
         }
     EOS
   end
@@ -14,7 +11,7 @@ describe "role::web" do
   it_behaves_like "a idempotent resource"
 end
 
-describe 'should have web role configured' do
+describe 'should have web::syncope profile configured' do
 
   describe package('nginx') do
     it { is_expected.to be_installed }
@@ -26,11 +23,8 @@ describe 'should have web role configured' do
   end
 
   describe port(80) do
+    before { skip("Initial implementation. There are no virtual hosts as of now") }
     it { should be_listening }
-  end
-
-  it 'should have java process with correct arguments' do
-    expect(command('pgrep -a java').stdout).to match /\/opt\/apache-tomcat\/tomcat7\//
   end
 
   describe port(8080) do

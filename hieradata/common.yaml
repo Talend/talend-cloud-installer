@@ -24,7 +24,20 @@ packagecloud_repos:
   'talend/thirdparty':
     type: 'rpm'
 
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/var/log/messages":
+    path: '/var/log/messages'
+  "/talend/tic/%{::puppet_role}/var/log/secure":
+    path: '/var/log/secure'
+  "/talend/tic/%{::puppet_role}/var/log/audit/audit.log":
+    path: '/var/log/audit/audit.log'
+    datetime_format: '%s'
 
-jdk_oracle::version: '7'
-jdk_oracle::install_dir: '/opt'
-jdk_oracle::use_cache: false
+
+
+
+
+profile::web::tomcat::catalina_base: '/opt/apache-tomcat/tomcat'
+profile::web::tomcat::tomcat_version: '8'
+
+

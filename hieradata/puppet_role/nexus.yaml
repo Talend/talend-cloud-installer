@@ -1,8 +1,10 @@
 ---
-nginx::resource::upstreams:
-  'nexus':
-    members:
-      - '127.0.0.1:8081 fail_timeout=0'
-nginx::resource::vhosts:
-  'nexus.aws.talend.com':
-    proxy: 'http://nexus'
+nexus::admin_password: "%{::master_password}"
+nexus::enable_anonymous_access: false
+nexus::initialize_passwords: true
+
+cloudwatchlog_files:
+  "/talend/tic/%{::puppet_role}/srv/sonatype-work/nexus/logs/nexus.log":
+    path: '/srv/sonatype-work/nexus/logs/nexus.log'
+  "/talend/tic/%{::puppet_role}/srv/sonatype-work/nexus/logs/request.log":
+    path: '/srv/sonatype-work/nexus/logs/request.log'

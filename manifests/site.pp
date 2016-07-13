@@ -22,6 +22,12 @@ Package {
   allow_virtual => true,
 }
 
+# Ensure we have a path set for all possible execs
+# This is now limited to unixoid systems
+Exec {
+  path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
+}
+
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
 # http://docs.puppetlabs.com/guides/language_guide.html#nodes for more on

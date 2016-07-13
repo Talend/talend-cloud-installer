@@ -1,0 +1,14 @@
+HOSTS:
+  centos-7-mongodb:
+    vmname: centos-7-mongodb
+    platform: el-7-x86_64
+    hypervisor: ec2
+    amisize: t2.small
+    snapshot: foss
+    user: centos
+    roles:
+      - mongodb
+CONFIG:
+  type: foss
+  log_level: verbose
+  masterless: true

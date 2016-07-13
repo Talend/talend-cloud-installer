@@ -18,7 +18,6 @@ describe 'profile::base' do
 
     # Test if it compiles
     it { should compile }
-    it { should have_resource_count(17)}
 
     # Test all default params are set
     it {
@@ -29,6 +28,7 @@ describe 'profile::base' do
 
     context 'on AWS ' do
       let(:facts) { { :operatingsystem  => 'CentOS',
+                      :operatingsystemmajrelease => '7',
                       :lsbdistcodename  => 'trusty',
                       :concat_basedir   => '/var/lib/puppet/concat',
                       :ec2_metadata     => '{ :some =>  \'ec2 content\'}',
@@ -47,7 +47,6 @@ describe 'profile::base' do
 
     # Test if it compiles
     it { should compile }
-    it { should have_resource_count(15)}
 
     # Test all default params are set
     it {

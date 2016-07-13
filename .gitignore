@@ -4,6 +4,11 @@ vendor/
 .bundle/
 .idea/
 Gemfile.lock
-.reviewboardrc
 log
 .vagrant
+site/role/spec/fixtures
+site/profile/spec/fixtures
+.kitchen/
+.librarian/
+.kitchen.local.yml
+.tmp/
