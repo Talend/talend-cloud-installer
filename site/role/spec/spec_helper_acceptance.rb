@@ -3,6 +3,8 @@ require 'beaker/puppet_install_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'serverspec-aws'
 
+include Serverspec::Type::AWS
+
 WORKDIR = '/tmp/puppet'
 
 # Load shared acceptance examples

@@ -12,8 +12,8 @@ describe "role::base" , :if => fact('puppet_roles').split(',').include?('base') 
     its(:content) { should_not match /ERROR:/ }
   end
 
-  describe vpc('vpc-22d93b47') do
-    it { should be_default_tenancy }
+  describe vpc = EC2::VPC.new('vpc-22d93b47')  do
+    it { is_expected.to be_default_tenancy }
   end
 
 end
