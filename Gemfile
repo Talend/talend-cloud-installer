@@ -31,7 +31,8 @@ group :development do
 
   gem 'ci_reporter'
   gem 'serverspec'
-  gem 'serverspec-aws', :git => 'https://github.com/Talend/serverspec-aws.git'
+  # gem 'serverspec-aws-resources', :git => 'https://github.com/Talend/serverspec-aws-resources.git', :branch => 'master'
+  gem 'serverspec-aws', :git => 'https://github.com/Talend/serverspec-aws.git', :branch => 'master'
 end
 
 group :system_tests do
