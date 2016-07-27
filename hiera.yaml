@@ -7,7 +7,7 @@
   - environment/%{::environment}
   - puppet_role/%{puppet_role}
   - common
-  - accounts
+  - extra
 
 :yaml:
   :datadir: "%{settings::confdir}/hieradata"
