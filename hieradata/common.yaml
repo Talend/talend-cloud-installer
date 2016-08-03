@@ -34,6 +34,8 @@ cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/audit/audit.log":
     path: '/var/log/audit/audit.log'
     datetime_format: '%s'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/awslogs.log":
+    path: '/var/log/awslogs.log'
 
 profile::web::tomcat::catalina_base: '/opt/apache-tomcat/tomcat'
 profile::web::tomcat::tomcat_version: '8'
