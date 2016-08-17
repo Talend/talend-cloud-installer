@@ -10,6 +10,7 @@ class profile::nexus (
   require ::profile::java
   require ::profile::common::packages
 
+  include ::nginx
   include ::profile::common::concat
   include ::profile::common::cloudwatchlogs
 
