@@ -7,10 +7,10 @@ java::java_home: "/usr/java/jre1.8.0_60"
 activemq::version: 'installed'
 activemq::network_password: "%{::master_password}"
 activemq::network_user: 'activemq'
-activemq::brokers: 'localhost'
+activemq::brokers: '%{::activemq_nodes}'
 activemq::java_home: '/usr/java/default'
 activemq::zk_password: "%{::master_password}"
-activemq::zookeeper_nodes: ''
+activemq::zookeeper_nodes: '%{::zookeeper_nodes}'
 activemq::pg_host: "%{::postgres_nodes}"
 activemq::pg_db: 'ams'
 activemq::pg_username: 'activemq'
