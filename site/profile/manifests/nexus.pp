@@ -25,4 +25,16 @@ class profile::nexus (
   }
   contain ::nexus
 
+  # [ "10.0.2.12:8081", "10.0.2.23:8081" ]
+  $_nexus_nodes = unique(
+    concat(
+      ["${::ipaddress}:8081"],
+      split($nexus_nodes, ',')
+    )
+  )
+
+  class { 'profile::nexus::nginx':
+    nexus_nodes => $_nexus_nodes,
+  }
+
 }
