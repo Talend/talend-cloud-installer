@@ -21,6 +21,7 @@ class profile::nexus (
     version    => '2.8.0',
     revision   => '05',
     nexus_root => $nexus_root, # All directories and files will be relative to this
+    nexus_port => '8081',
   }
   contain ::nexus
 
