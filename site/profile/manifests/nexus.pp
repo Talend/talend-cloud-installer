@@ -3,7 +3,8 @@
 #
 class profile::nexus (
 
-  $nexus_root = '/srv',
+  $nexus_root  = '/srv',
+  $nexus_nodes = '',
 
 ) {
 
