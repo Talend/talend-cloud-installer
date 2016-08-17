@@ -31,11 +31,27 @@ shared_examples 'profile::nexus' do
   end
 
   describe 'admin user should have its password updated' do
-    describe command('/usr/bin/curl -v -f -X GET -u admin:mypassword http://localhost:8081/nexus/service/local/users/admin 2>&1') do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should include 'HTTP/1.1 200 OK' }
-      its(:stdout) { should include '<userId>admin</userId>' }
+    %w(8081 80).each do |port_number|
+      describe "requesting admin user from nexus on port #{port_number}" do
+        subject { command("/usr/bin/curl -v -f -X GET -u admin:mypassword http://localhost:#{port_number}/nexus/service/local/users/admin 2>&1") }
+        its(:exit_status) { should eq 0 }
+        its(:stdout) { should include 'HTTP/1.1 200 OK' }
+        its(:stdout) { should include '<userId>admin</userId>' }
+      end
     end
+  end
+
+  describe port(80) do
+    it { should be_listening }
+  end
+
+  describe file('/etc/nginx/conf.d/nexus1-upstream.conf') do
+    it { should be_file }
+    its(:content) { should include 'upstream nexus1' }
+  end
+
+  describe file('/etc/nginx/sites-enabled/nexus.conf') do
+    its(:content) { should include 'location @nexus1' }
   end
 
 end
