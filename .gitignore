@@ -14,3 +14,4 @@ site/profile/spec/fixtures
 build/
 *.swp
 .ruby-version
+*.iml
