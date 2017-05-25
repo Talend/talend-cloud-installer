@@ -27,6 +27,10 @@ cloudwatchlog_files:
     path: '/srv/sonatype-work/nexus/logs/nexus.log'
   "/talend/tic/%{::main_stack}/%{::puppet_role}/srv/sonatype-work/nexus/logs/request.log":
     path: '/srv/sonatype-work/nexus/logs/request.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/nexus.access.log":
+    path: '/var/log/nginx/nexus.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/nexus.error.log":
+    path: '/var/log/nginx/nexus.error.log'
 
 cloudwatch::metrics:
   DiskSpace:

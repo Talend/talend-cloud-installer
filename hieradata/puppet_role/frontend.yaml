@@ -77,6 +77,8 @@ cloudwatchlog_files:
     path: '/srv/tomcat/ipaas-srv/logs/ipaas-server.log'
   "/talend/tic/%{::main_stack}/%{::puppet_role}/srv/tomcat/ipaas-srv/logs/inventory-service.log":
     path: '/srv/tomcat/ipaas-srv/logs/inventory-service.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/redirect.access.log":
+    path: '/var/log/nginx/redirect.access.log'
 
 nginx::config::server_tokens: 'off'
 nginx::config::keepalive_timeout: '5 5'

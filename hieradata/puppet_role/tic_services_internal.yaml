@@ -124,6 +124,12 @@ tic::services::kms_key_alias: "%{::kms_key_alias}"
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/tic_services.access.log":
+    path: '/var/log/nginx/tic_services.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/tic_services.error.log":
+    path: '/var/log/nginx/tic_services.error.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/maillog":
+    path: '/var/log/maillog'
 
 tic::services::karaf_features_install:
   - '(aries-blueprint'

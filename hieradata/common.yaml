@@ -50,6 +50,8 @@ cloudwatchlog_files:
     path: '/var/log/messages'
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/secure":
     path: '/var/log/secure'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/cron":
+    path: '/var/log/cron'
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/audit/audit.log":
     path: '/var/log/audit/audit.log'
     datetime_format: '%s'

@@ -143,6 +143,26 @@ tic::services20::crypto_service_url: "%{::tpsvc_crypto_url}"
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/webhooks.access.log":
+    path: '/var/log/nginx/webhooks.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/webhooks.error.log":
+    path: '/var/log/nginx/webhooks.error.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/pairing.access.log":
+    path: '/var/log/nginx/pairing.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/pairing.error.log":
+    path: '/var/log/nginx/pairing.error.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/lts.access.log":
+    path: '/var/log/nginx/lts.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/lts.error.log":
+    path: '/var/log/nginx/lts.error.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/dts.access.log":
+    path: '/var/log/nginx/dts.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/dts.error.log":
+    path: '/var/log/nginx/dts.error.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/tic_services.access.log":
+    path: '/var/log/nginx/tic_services.access.log'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/nginx/tic_services.error.log":
+    path: '/var/log/nginx/tic_services.error.log'
 
 tic::services::karaf_features_install:
   - '(aries-blueprint'
