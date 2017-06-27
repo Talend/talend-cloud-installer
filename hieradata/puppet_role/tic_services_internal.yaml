@@ -157,7 +157,6 @@ tic::services::karaf_features_install:
   - 'tipaas-dispatcher-client'
   - 'tipaas-plan-executor-client'
   - 'tipaas-flow-manager-client'
-  - 'tipaas-healthcheck-service-core'
   - 'tipaas-container-management-service-client'
   - 'tipaas-configuration-service-client'
   - 'tipaas-webhooks-client'
@@ -184,6 +183,7 @@ tic::services::karaf_features_install:
   - 'tesb-el-elasticsearch'
   - 'tesb-el-server'
   - 'tipaas-logs-transfer-service-client'
+  - 'tipaas-healthcheck-service-core'
 
 tic::services20::karaf_features_install:
   - 'tipaas-account-manager-service'
