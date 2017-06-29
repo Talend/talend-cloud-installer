@@ -30,6 +30,12 @@ nginx::nginx_vhosts:
     listen_port: 8181
     proxy: 'http://localhost:8180/'
 
+nginx::nginx_locations:
+  tic_services_status:
+    location: '/nginx_status'
+    vhost: 'tic_services'
+    stub_status: true
+
 nginx::config::server_tokens: 'off'
 nginx::config::keepalive_timeout: '5 5'
 nginx::config::client_body_buffer_size: '128k'
