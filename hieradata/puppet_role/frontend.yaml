@@ -94,6 +94,12 @@ nginx::config::proxy_connect_timeout: '3600'
 nginx::config::proxy_read_timeout: '3600'
 nginx::config::proxy_send_timeout: '3600'
 
+nginx::nginx_upstreams:
+  'ipaasweb':
+      ensure: present
+      members:
+        - 127.0.0.1
+
 nginx::nginx_vhosts:
   'redirect':
     use_default_location: false
@@ -101,3 +107,13 @@ nginx::nginx_vhosts:
     listen_port: 8088
     vhost_cfg_append:
       rewrite: '^ https://$host$request_uri? permanent'
+  'default':
+    proxy: 'http://ipaasweb'
+    listen_port: 8080
+    server_name: ['_']
+
+nginx::nginx_locations:
+  status:
+    location: '/nginx_status'
+    vhost: 'default'
+    stub_status: true
