@@ -39,6 +39,10 @@ describe 'role::tic_services_external' do
     it { should match /wrapper.disable_restarts\s*=\s*true/ }
   end
 
+  describe port(8181) do
+    it { should be_listening }
+  end
+
   describe port(8182) do
     it { should be_listening }
   end
@@ -53,6 +57,12 @@ describe 'role::tic_services_external' do
 
   describe port(8185) do
     it { should be_listening }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8181/nginx_status') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should include 'Active connections' }
+    its(:stdout) { should include 'server accepts handled requests' }
   end
 
   describe 'Additional Java Packages' do
