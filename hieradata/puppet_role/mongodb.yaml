@@ -66,6 +66,13 @@ profile::mongodb::users:
     roles:
       - role: 'clusterMonitor'
         db: 'admin'
+  dq:
+    db_address: 'dqdict'
+    username: 'dqdict-user'
+    password: '%{::master_password}'
+    roles:
+      - role: 'dbOwner'
+        db: 'dqdict'
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
