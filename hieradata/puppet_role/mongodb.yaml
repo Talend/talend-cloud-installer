@@ -74,6 +74,42 @@ profile::mongodb::users:
       - role: 'dbOwner'
         db: 'dqdict'
 
+profile::mongodb::collections:
+  Document_index_compound:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'published.categoryId': 1
+      'draft.categoryId': 1
+      'sandbox.categoryId': 1
+  Document_index_published:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'published.values': 1
+  Document_index_draft:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'draft.values': 1
+  Document_index_sandbox:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'sandbox.values': 1
+  Upload:
+    db_address: 'dqdict'
+    collection_name: 'Upload'
+    create_index: true
+    index_keys:
+      createdAt: 1
+    index_options:
+      expireAfterSeconds: 172800
+
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
 logrotate::rules:

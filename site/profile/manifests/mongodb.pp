@@ -12,7 +12,7 @@ class profile::mongodb (
   $storage_device      = undef,
   $users               = {},
   $roles               = {},
-
+  $collections         = {},
 ) {
 
   require ::profile::common::packages
@@ -83,6 +83,9 @@ class profile::mongodb (
   } ->
   class { '::profile::mongodb::users':
     users => $users,
+  } ->
+  class { '::profile::mongodb::collections':
+    collections => $collections,
   }
 
   if $storage_device {

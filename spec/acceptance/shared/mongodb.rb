@@ -55,6 +55,18 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"clusterMonitor","db":"admin"}' }
   end
 
+  describe command('/usr/bin/mongo -u dqdict-user -p mypassword dqdict --eval "printjson(db.getUser(\'dqdict-user\'));" | /usr/bin/tr -d "\t\n "') do
+    its(:stdout) { should include '{"role":"dbOwner","db":"dqdict"}' }
+  end
+
+  describe command('/usr/bin/mongo -u dqdict-user -p mypassword dqdict --eval "printjson(db.Document.getIndexes());" | /usr/bin/tr -d "\t\n "') do
+    its(:stdout) { should include '{"published.values":1}' }
+  end
+
+  describe command('/usr/bin/mongo -u dqdict-user -p mypassword dqdict --eval "printjson(db.Upload.getIndexes());" | /usr/bin/tr -d "\t\n "') do
+    its(:stdout) { should include '{"createdAt":1}' }
+  end
+
   describe 'Logrotate configuration' do
     subject { file('/etc/logrotate.d/mongodb_log').content }
     it { should include '/var/log/mongodb/mongod.log' }
