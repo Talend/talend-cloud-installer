@@ -7,6 +7,29 @@ shared_examples 'profile::mongodb' do
     /var/log/mongodb/mongod.log
   )
 
+  describe 'Verifying mongod conf' do
+     describe file('/etc/mongod.conf') do
+       it { should be_file }
+       its(:content) { should include '#mongodb.conf - generated from Puppet' }
+       its(:content) { should include '#System Log' }
+       its(:content) { should include 'systemLog.path: /var/log/mongodb/mongod.log' }
+       its(:content) { should include 'systemLog.logAppend: true' }
+    end
+  end
+
+
+  describe 'Verifying mongod ulimits' do
+    describe file('/etc/security/limits.d/mongod.conf') do
+      it { should be_file }
+      its(:content) { should include '# File managed by Pupppet, do not edit manually' }
+      its(:content) { should match /\nmongod\s+soft\s+nproc\s+64000\s*\n/ }
+      its(:content) { should match /\nmongod\s+hard\s+nproc\s+64000\s*\n/ }
+    end
+    describe command('/bin/bash -c \'/bin/cat /proc/$(/bin/pgrep mongo)/limits\'') do
+      its(:stdout) { should include 'Max processes             64000                64000                processes' }
+    end
+  end
+
   describe service('mongod') do
     it { is_expected.to be_enabled }
     it { is_expected.to be_running }
