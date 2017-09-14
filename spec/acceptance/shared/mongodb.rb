@@ -3,6 +3,10 @@ shared_examples 'profile::mongodb' do
   it_behaves_like 'profile::defined', 'mongodb'
   it_behaves_like 'profile::common::packages'
 
+  it_behaves_like 'profile::common::cloudwatchlog_files', %w(
+    /var/log/mongodb/mongod.log
+  )
+
   describe service('mongod') do
     it { is_expected.to be_enabled }
     it { is_expected.to be_running }
