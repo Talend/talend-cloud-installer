@@ -64,7 +64,6 @@ class profile::mongodb (
     mode   => '0777',
   } ->
   class { '::mongodb::server':
-    verbose        => true,
     auth           => $_mongo_auth_enable,
     bind_ip        => [$::ipaddress, '127.0.0.1'],
     replset        => $replset_name,
