@@ -90,6 +90,9 @@ class profile::mongodb (
   class { '::profile::mongodb::users':
     users => $users,
   } ->
+  class { '::profile::mongodb::rs_config':
+    replset_name => $replset_name,
+  } ->
   class { '::profile::mongodb::collections':
     collections => $collections,
   }
