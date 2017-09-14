@@ -64,6 +64,12 @@ class profile::mongodb (
     path   => '/var/run/mongodb',
     mode   => '0777',
   } ->
+  file { 'ensure mongod user limits':
+    ensure => file,
+    path   => '/etc/security/limits.d/mongod.conf',
+    source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
+    mode   => '0644',
+  } ->
   class { '::mongodb::server':
     auth           => $_mongo_auth_enable,
     bind_ip        => [$::ipaddress, '127.0.0.1'],

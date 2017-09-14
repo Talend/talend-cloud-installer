@@ -17,7 +17,6 @@ shared_examples 'profile::mongodb' do
     end
   end
 
-
   describe 'Verifying mongod ulimits' do
     describe file('/etc/security/limits.d/mongod.conf') do
       it { should be_file }
