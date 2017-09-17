@@ -136,7 +136,7 @@ logrotate::rules:
     maxsize: '250M'
     copytruncate: true
     rotate: 5
-    rotate_every: 'day'
+    rotate_every: 'hour'
     compress: true
 
 cloudwatch::metrics:

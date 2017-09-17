@@ -105,7 +105,7 @@ shared_examples 'profile::mongodb' do
     subject { file('/etc/logrotate.d/mongodb_log').content }
     it { should include '/var/log/mongodb/mongod.log' }
     it { should include 'copytruncate' }
-    it { should include 'daily' }
+    it { should include 'hourly' }
   end
 
   %w(
