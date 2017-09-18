@@ -18,6 +18,8 @@ class profile::mongodb (
   require ::profile::common::packages
 
   include ::logrotate
+
+  include ::profile::common::rsyslog
   include ::profile::common::concat
   # $dbpath configured in hiera for monitoring
   # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
@@ -70,6 +72,9 @@ class profile::mongodb (
     source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
     mode   => '0644',
   } ->
+  rsyslog::snippet { '10_mongod':
+    content => ":programname,contains,\"mongod\" /var/log/mongodb/mongod.log;CloudwatchAgentEOL\n& stop",
+  } ->
   class { '::mongodb::server':
     auth           => $_mongo_auth_enable,
     bind_ip        => [$::ipaddress, '127.0.0.1'],
@@ -81,6 +86,8 @@ class profile::mongodb (
     service_enable => $service_enable,
     dbpath         => $dbpath,
     dbpath_fix     => true,
+    logpath        => false,
+    syslog         => true
   } ->
   class { '::mongodb::client':
   } ->

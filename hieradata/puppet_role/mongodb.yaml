@@ -133,11 +133,11 @@ logrotate::hieramerge: true
 logrotate::rules:
   mongodb_log:
     path: '/var/log/mongodb/mongod.log'
-    maxsize: '250M'
-    copytruncate: true
-    rotate: 5
+    maxsize: '100M'
+    rotate: 24
     rotate_every: 'hour'
     compress: true
+    postrotate: '/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true'
 
 cloudwatch::metrics:
   DiskSpaceMongoDB:
@@ -154,3 +154,4 @@ cloudwatch::metrics:
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/mongodb/mongod.log":
      path: '/var/log/mongodb/mongod.log'
+     datetime_format: '%Y-%m-%d %H:%M:%S'
