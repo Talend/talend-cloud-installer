@@ -24,6 +24,16 @@ describe 'role::frontend' do
     it { should be_listening }
   end
 
+  describe port(8080) do
+    it { should be_listening }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8080/nginx_status') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should include 'Active connections' }
+    its(:stdout) { should include 'server accepts handled requests' }
+  end
+
   describe command('/usr/bin/curl -v -I http://127.0.0.1:8088') do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include 'HTTP/1.1 301 Moved Permanently' }
@@ -123,6 +133,10 @@ describe 'role::frontend' do
     describe host(h) do
       it { should be_resolvable.by('hosts') }
     end
+  end
+
+  describe file('/srv/tomcat/ipaas-srv/webapps/ipaas/config/config.js') do
+    its(:content) { should include "HELP_URL : 'the-help-url'," }
   end
 
 end

@@ -51,12 +51,15 @@ FORGE
     puppetlabs-mongodb (0.16.0)
       puppetlabs-apt (< 3.0.0, >= 2.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
+    puppetlabs-ntp (4.2.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppetlabs-stdlib (4.14.0)
     puppetlabs-tomcat (1.6.0)
       puppet-staging (< 2.0.0, >= 0.4.1)
       puppetlabs-concat (< 3.0.0, >= 1.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     richardc-datacat (0.6.2)
+    saz-rsyslog (5.0.0)
     saz-sudo (3.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 2.3.0)
     stahnma-epel (1.2.2)
@@ -124,12 +127,12 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-syncope
   specs:
-    talend-syncope (0.1.1.6)
+    talend-syncope (0.1.1.10)
 
 GITHUBTARBALL
   remote: Talend/puppet-tic
   specs:
-    talend-tic (0.1.4.41)
+    talend-tic (0.1.4.60)
 
 GITHUBTARBALL
   remote: Talend/puppet-user_accounts
@@ -158,9 +161,11 @@ DEPENDENCIES
   puppetlabs-limits (~> 0.0)
   puppetlabs-lvm (~> 0.0)
   puppetlabs-mongodb (~> 0.0)
+  puppetlabs-ntp (~> 4.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-stdlib (~> 4.0)
   puppetlabs-tomcat (~> 1.0)
+  saz-rsyslog (~> 5.0)
   saz-sudo (~> 3.0)
   stankevich-python (= 1.18.2)
   talend-activemq (~> 0.0)

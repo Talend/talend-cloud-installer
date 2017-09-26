@@ -67,6 +67,10 @@ nginx::nginx_locations:
     location: '/status'
     vhost: 'pairing'
     proxy: 'http://localhost:8181/services/healthcheck/is-ok'
+  tic_services_status:
+    location: '/nginx_status'
+    vhost: 'tic_services'
+    stub_status: true
 
 profile::tic_services::version: "%{::tic_services_version}"
 profile::tic_services::activemq_nodes: "%{::activemq_nodes}"

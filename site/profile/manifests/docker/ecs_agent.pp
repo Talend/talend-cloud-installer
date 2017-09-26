@@ -5,7 +5,7 @@ class profile::docker::ecs_agent (
 
   $cluster_name = undef,
   $running      = true,
-  $image        = 'amazon/amazon-ecs-agent:v1.14.0',
+  $image        = 'amazon/amazon-ecs-agent:v1.14.3',
 
 ) {
 

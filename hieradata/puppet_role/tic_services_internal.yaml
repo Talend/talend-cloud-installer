@@ -30,6 +30,12 @@ nginx::nginx_vhosts:
     listen_port: 8181
     proxy: 'http://localhost:8180/'
 
+nginx::nginx_locations:
+  tic_services_status:
+    location: '/nginx_status'
+    vhost: 'tic_services'
+    stub_status: true
+
 nginx::config::server_tokens: 'off'
 nginx::config::keepalive_timeout: '5 5'
 nginx::config::client_body_buffer_size: '128k'
@@ -63,6 +69,7 @@ tic::services::notification_manager_destination_queue: "ipaas.talend.notificatio
 
 tic::services::notification_client_failures_log: "org.talend.ipaas.rt.notification.client.Failures"
 
+tic::services::amq_security_switch: "%{::amq_security_switch}"
 tic::services::ams_postgres_password: "%{::master_password}"
 tic::services::ams_syncope_host: "%{::syncope_nodes}"
 tic::services::ams_syncope_password: "%{::master_password}"
@@ -174,7 +181,6 @@ tic::services::karaf_features_install:
   - 'tipaas-plan-executor-service'
   - 'tipaas-account-manager-service'
   - 'tipaas-configuration-service-core'
-  - 'tipaas-trial-registration-service'
   - 'tipaas-notification-subscription-service'
   - 'tipaas-notification-manager'
   - 'tipaas-notification-server'
@@ -189,3 +195,8 @@ tic::services20::karaf_features_install:
   - 'tipaas-account-manager-service'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
+
+tic::services20::karaf_features_remove:
+  - 'tesb-el-collector-jms'
+  - 'tesb-el-elasticsearch'
+  - 'tesb-el-server'

@@ -22,12 +22,13 @@ provisioner:
     region: 'us-east-1'
     aws_accesskey: <%= ENV['AWS_ACCESS_KEY_ID'] %>
     aws_secretkey: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+    redis_sessions_host: 'redis-host'
 
 transport:
   name: sftp
 
 platforms:
-  - name: centos-7.2
+  - name: centos-7.3
 
 verifier:
   name: serverspec
@@ -131,6 +132,9 @@ suites:
         puppet_role: test
         services_internal_host: "http://infra-host.com"
         nexus_host: "http://nexus-host.com"
+        tpsvc_iam_scim_back_url: "http://tpsvc_iam_scim_back_url.com"
+        tpsvc_iam_oidc_back_url: "http://tpsvc_iam_oidc_back_url.com"
+        elasticsearch_host: "es-host.com"
     verifier:
       patterns:
         - 'spec/acceptance/test_spec.rb'
@@ -155,10 +159,9 @@ suites:
       custom_facts:
         puppet_role: kafka
         storage_device: /dev/sdb
-        topics_replication_factor: 1
-        topics_partitions: 6
-        topics_max_size_bytes: -1
-        topics_max_age_ms: 86400000
+        kafka_yaml_profile_name: "kafka_applications_cluster_simple"
+        kafka_cluster_id: 'testing-kafka'
+        zookeeper_nodes: "127.0.0.1"
     verifier:
       patterns:
         - 'spec/acceptance/kafka_spec.rb'

@@ -8,10 +8,13 @@ syncope::postgres_host: "%{::postgres_nodes}"
 syncope::postgres_db_name: 'syncope'
 syncope::postgres_password: "%{::master_password}"
 syncope::admin_password: "%{::master_password}"
+syncope::amq_security_switch: "%{::amq_security_switch}"
 syncope::ams_security_db_host: "%{::postgres_nodes}"
 syncope::ams_security_db_name: 'ams'
 syncope::ams_security_db_user: 'ams'
 syncope::ams_security_db_pass: "%{::master_password}"
+syncope::ipaas_crypto_url: "%{::ipaas_crypto_url}"
+syncope::tpsvc_crypto_url: "%{::tpsvc_crypto_url}"
 
 profile::postgresql::roles:
   syncope:

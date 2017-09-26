@@ -1,4 +1,0 @@
-#!/bin/sh
-#This file is managed by Puppet, do no modify manually
-PATH=/bin:/usr/bin
-find /opt/kafka/logs -type f -name "*.log.[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]" -mtime +<%= scope['::profile::kafka::log_retention_days'] -%> -delete

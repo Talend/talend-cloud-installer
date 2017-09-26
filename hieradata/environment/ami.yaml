@@ -41,3 +41,6 @@ profile::elasticsearch::security_group: 'not_available'
 profile::influxdb::service_enable: false
 kafka::broker::service_ensure: 'stopped'
 profile::kafka::kafka_topics_config: ''
+
+ntp::service_ensure: 'stopped'
+ntp::service_enable: false

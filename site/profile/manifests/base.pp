@@ -18,6 +18,8 @@ class profile::base {
 
   include ::profile::common::cloudwatch
 
+  include ::ntp
+
   profile::register_profile { 'base': order => 1, }
 
   if $::osfamily == 'RedHat' and $::selinux == 'true' {

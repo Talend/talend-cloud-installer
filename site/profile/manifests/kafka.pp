@@ -1,21 +1,23 @@
 #
 # Sets up the kafka instance
 #
+
 class profile::kafka (
-  $kafka_version  = '0.10.1.1',
-  $scala_version  = '2.11',
-  $kafka_protocol_version = '0.10.1.1',
-  $kafka_datapath = '/var/lib/kafka',
-  $storage_device       = undef,
-  $zookeeper_nodes      = '', # A string f.e. '[ "10.0.2.12", "10.0.2.23" ]'
-  $zookeeper_kafkapath  = '', # A string f.e. '/kafka/logs'
-  $kafka_broker_id   = '-1',
-  $kafka_broker_config = {},
-  $kafka_topics_config = {},
+  $kafka_version           = '0.10.2.1',
+  $scala_version           = '2.11',
+  $kafka_datapath          = '/var/lib/kafka',
+  $storage_device          = undef,
+  $zookeeper_nodes         = '[ "127.0.0.1" ]', # A string f.e. '[ "10.0.2.12", "10.0.2.23" ]'
+  $zookeeper_port          = 2181,
+  $kafka_cluster_id        = 'kafka-cluster',
+  $kafka_broker_id         = '-1',         # Automatic id
+  $kafka_broker_config     = {},
+  $kafka_topics_config     = {},
   $kafka_topics_default_replication = 1,
-  $kafka_topics_default_partitions = 1,
-  $log_retention_days = 31,
-  $log_level = 'WARN'
+  $kafka_topics_default_partitions  = 2,
+  $kafka_topics_autocreate = false,
+  $log_level               = 'INFO',
+  $kafka_yaml_profile_name = '',
 ) {
 
   require ::profile::common::packages
@@ -28,20 +30,74 @@ class profile::kafka (
 
   profile::register_profile { 'kafka': }
 
-  if empty($zookeeper_nodes){
-    $zookeeper_connect = "127.0.0.1:2181${zookeeper_kafkapath}"
-  } else {
-    $zookeeper_connect = join(suffix(split(regsubst($zookeeper_nodes, '[\s\[\]\"]', '', 'G'), ','), ":2181${zookeeper_kafkapath}"), ',')
-  }
+  $zookeeper_kafkapath = "/${kafka_cluster_id}"
+  $zookeeper_cluster = join(
+    suffix(
+      split(regsubst($zookeeper_nodes, '[\s\[\]\"]', '', 'G'), ','),
+      ":${zookeeper_port}"
+    ), ','
+  )
+  $zookeeper_connect = "${zookeeper_cluster}${zookeeper_kafkapath}"
 
-  $_kafka_broker_config = {
+  $default_kafka_broker_config = {
     'broker.id'                     => $kafka_broker_id,
     'zookeeper.connect'             => $zookeeper_connect,
     'log.dir'                       => $kafka_datapath,
     'log.dirs'                      => $kafka_datapath,
-    'inter.broker.protocol.version' => $kafka_protocol_version,
+    'inter.broker.protocol.version' => $kafka_version,
     'advertised.host.name'          => $::ipaddress,
-    'auto.create.topics.enable'     => false
+    'auto.create.topics.enable'     => $kafka_topics_autocreate,
+    'log.cleanup.policy'            => 'delete',
+    'log.retention.bytes'           => '536870912', # 512M
+    'log.retention.ms'              => '43200000',  #  12h
+  }
+
+  if empty($kafka_yaml_profile_name){
+    $kafka_yaml_profile = {}
+  } else {
+    $kafka_yaml_profile = hiera($kafka_yaml_profile_name, {})
+  }
+
+  if has_key($kafka_yaml_profile, 'kafka_version') {
+    $_kafka_version = $kafka_yaml_profile['kafka_version']
+  } else {
+    $_kafka_version = $kafka_version
+  }
+
+  if has_key($kafka_yaml_profile, 'scala_version') {
+    $_scala_version = $kafka_yaml_profile['scala_version']
+  } else {
+    $_scala_version = $scala_version
+  }
+
+  if has_key($kafka_yaml_profile, 'log_level') {
+    $_log_level = $kafka_yaml_profile['log_level']
+  } else {
+    $_log_level = $log_level
+  }
+
+  if has_key($kafka_yaml_profile, 'kafka_topics_default_replication') {
+    $_kafka_topics_default_replication = $kafka_yaml_profile['kafka_topics_default_replication']
+  } else {
+    $_kafka_topics_default_replication = $kafka_topics_default_replication
+  }
+
+  if has_key($kafka_yaml_profile, 'kafka_topics_default_partitions') {
+    $_kafka_topics_default_partitions = $kafka_yaml_profile['kafka_topics_default_partitions']
+  } else {
+    $_kafka_topics_default_partitions = $kafka_topics_default_partitions
+  }
+
+  if has_key($kafka_yaml_profile, 'kafka_broker_config') {
+    $broker_config = deep_merge($default_kafka_broker_config, $kafka_broker_config, $kafka_yaml_profile['kafka_broker_config'])
+  } else {
+    $broker_config = deep_merge($default_kafka_broker_config, $kafka_broker_config)
+  }
+
+  if has_key($kafka_yaml_profile, 'topics') {
+    $_kafka_topics_config = deep_merge($kafka_topics_config, $kafka_yaml_profile['topics'])
+  } else {
+    $_kafka_topics_config = $kafka_topics_config
   }
 
   class { '::profile::common::mount_device':
@@ -50,12 +106,12 @@ class profile::kafka (
     options => 'noatime,nodiratime,noexec',
   } ->
   class { '::kafka':
-    version       => $kafka_version,
-    scala_version => $scala_version,
-    install_java  => false
+    version       => $_kafka_version,
+    scala_version => $_scala_version,
+    install_java  => false,
   } ->
   class { '::kafka::broker':
-    config                     => deep_merge($_kafka_broker_config, $kafka_broker_config),
+    config                     => $broker_config,
     service_requires_zookeeper => false
   }
 
@@ -68,14 +124,6 @@ class profile::kafka (
     notify  => Service['kafka']
   }
 
-  file { '/etc/cron.daily/kafka':
-    ensure  => 'present',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => template('profile/etc/cron.daily/kafka.erb'),
-  }
-
   file { '/opt/kafka/config/log4j.properties':
     ensure  => 'present',
     owner   => 'kafka',
@@ -86,7 +134,13 @@ class profile::kafka (
     notify  => Service['kafka']
   }
 
-  unless empty($kafka_topics_config) {
+  # For debugging
+  #  notice(inline_template("
+  #<%- require 'json' -%>
+  #<%= JSON.pretty_generate(@_kafka_topics_config) %>
+  #"))
+
+  unless empty($_kafka_topics_config) {
     exec { 'wait-for-kafka':
       command   => 'timeout 1 bash -c "cat < /dev/null > /dev/tcp/localhost/9092"',
       tries     => 10,
@@ -96,10 +150,10 @@ class profile::kafka (
     }
 
     create_resources('::profile::kafka::broker_topic',
-      $kafka_topics_config,
+      $_kafka_topics_config,
       {
-        replication_factor => $kafka_topics_default_replication,
-        partitions         => $kafka_topics_default_partitions,
+        replication_factor => $_kafka_topics_default_replication,
+        partitions         => $_kafka_topics_default_partitions,
         require            => Exec['wait-for-kafka']
       }
     )

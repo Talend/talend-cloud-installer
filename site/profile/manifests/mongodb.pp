@@ -12,16 +12,19 @@ class profile::mongodb (
   $storage_device      = undef,
   $users               = {},
   $roles               = {},
-
+  $collections         = {},
 ) {
 
   require ::profile::common::packages
 
   include ::logrotate
+
+  include ::profile::common::rsyslog
   include ::profile::common::concat
   # $dbpath configured in hiera for monitoring
   # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
   include ::profile::common::cloudwatch
+  include ::profile::common::cloudwatchlogs
 
   profile::register_profile { 'mongodb': }
 
@@ -63,8 +66,16 @@ class profile::mongodb (
     path   => '/var/run/mongodb',
     mode   => '0777',
   } ->
+  file { 'ensure mongod user limits':
+    ensure => file,
+    path   => '/etc/security/limits.d/mongod.conf',
+    source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
+    mode   => '0644',
+  } ->
+  rsyslog::snippet { '10_mongod':
+    content => ":programname,contains,\"mongod\" /var/log/mongodb/mongod.log;CloudwatchAgentEOL\n& stop",
+  } ->
   class { '::mongodb::server':
-    verbose        => true,
     auth           => $_mongo_auth_enable,
     bind_ip        => [$::ipaddress, '127.0.0.1'],
     replset        => $replset_name,
@@ -75,6 +86,8 @@ class profile::mongodb (
     service_enable => $service_enable,
     dbpath         => $dbpath,
     dbpath_fix     => true,
+    logpath        => false,
+    syslog         => true
   } ->
   class { '::mongodb::client':
   } ->
@@ -83,6 +96,12 @@ class profile::mongodb (
   } ->
   class { '::profile::mongodb::users':
     users => $users,
+  } ->
+  class { '::profile::mongodb::rs_config':
+    replset_name => $replset_name,
+  } ->
+  class { '::profile::mongodb::collections':
+    collections => $collections,
   }
 
   if $storage_device {

@@ -7,4 +7,18 @@ shared_examples 'profile::base' do
   it_behaves_like 'profile::common::cloudwatchlogs'
   it_behaves_like 'profile::common::ssm'
 
+  describe 'ntp configuration' do
+    subject { file('/etc/ntp.conf').content }
+    it { should include 'restrict default nomodify notrap nopeer noquery' }
+    it { should include 'server 0.amazon.pool.ntp.org iburst' }
+    it { should include 'server 1.amazon.pool.ntp.org iburst' }
+    it { should include 'server 2.amazon.pool.ntp.org iburst' }
+    it { should include 'server 3.amazon.pool.ntp.org iburst' }
+  end
+
+  describe 'ntp sync' do
+    subject { command('ntpstat').stdout }
+    it { should include 'synchronised to NTP server (' }
+    it { should include '   time correct to within ' }
+  end
 end

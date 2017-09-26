@@ -1,19 +1,21 @@
 ---
 profile::kafka::zookeeper_nodes: "%{::zookeeper_nodes}"
 profile::kafka::storage_device: "%{::storage_device}"
+profile::kafka::kafka_cluster_id: "%{::kafka_cluster_id}"
+profile::kafka::kafka_yaml_profile_name: "%{::kafka_yaml_profile_name}"
 
 cloudwatchlog_files:
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/server.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/server.log":
     path: '/opt/kafka/logs/server.log'
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/state-change.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/state-change.log":
     path: '/opt/kafka/logs/state-change.log'
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/kafka-request.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/kafka-request.log":
     path: '/opt/kafka/logs/kafka-request.log'
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/log-cleaner.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/log-cleaner.log":
     path: '/opt/kafka/logs/log-cleaner.log'
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/controller.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/controller.log":
     path: '/opt/kafka/logs/controller.log'
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/kafka/logs/kafka-authorizer.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/kafka-authorizer.log":
     path: '/opt/kafka/logs/kafka-authorizer.log'
 
 
@@ -29,24 +31,108 @@ cloudwatch::metrics:
     threshold         : 80
     comparisonoperator: "GreaterThanThreshold"
 
+# Default profile
 profile::kafka::kafka_broker_config:
   log.cleanup.policy: 'delete'
-  log.retention.bytes: "%{::topics_max_size_bytes}"
-  log.retention.ms: "%{::topics_max_age_ms}"
+  log.retention.bytes: "536870912" # 512MB
+  log.retention.ms: "43200000"     # 12h
 
-profile::kafka::kafka_topics_config:
-  tpsvclogs:
-    replication_factor: "%{::topics_replication_factor}"
-    partitions: "%{::topics_partitions}"
-  zipkin:
-    replication_factor: "%{::topics_replication_factor}"
-    partitions: "%{::topics_partitions}"
-  dispatcher:
-    replication_factor: "%{::topics_replication_factor}"
-    partitions: "%{::topics_partitions}"
-  container-manager:
-    replication_factor: "%{::topics_replication_factor}"
-    partitions: "%{::topics_partitions}"
-  container-events:
-    replication_factor: "%{::topics_replication_factor}"
-    partitions: "%{::topics_partitions}"
+# We can have several kafka cluster
+kafka_infra_logs_cluster_ha:
+  kafka_topics_default_partitions: 6
+  kafka_topics_default_replication: 1
+  kafka_broker_config:
+    log.cleanup.policy: 'delete'
+    log.retention.bytes: "536870912" # 512MB
+    log.retention.ms: "43200000"     # 12h
+  log_level: 'INFO'
+  topics:
+    tpsvclogs:
+      topic_options:
+        retention.ms: "43200000"      # 12h
+        retention.bytes: "5368709120" #  5GB
+    zipkin: {}
+
+kafka_customers_logs_cluster_ha:
+  kafka_topics_default_partitions: 6
+  kafka_topics_default_replication: 1
+  log_level: 'INFO'
+  topics:
+    tpsvclogs:
+      topic_options:
+        retention.ms: "43200000"       # 12h
+        retention.bytes: "10737418240" # 10GB
+
+kafka_applications_cluster_ha:
+  kafka_topics_default_partitions: 6
+  kafka_topics_default_replication: 2
+  kafka_broker_config:
+    log.cleanup.policy: 'delete'
+    log.retention.bytes: "536870912" # 512MB
+    log.retention.ms: "43200000"     # 12h
+  topics:
+    dispatcher: {}
+    container-manager: {}
+    container-events: {}
+    output: {}
+    data-history: {}
+    category: {}
+    dictionary: {}
+    regex: {}
+    schemas: {}
+    schemas-references: {}
+    dataset-changed: {}
+    datastore-changed: {}
+    app-to-runtime: {}
+    runtime-to-app: {}
+    notifications: {}
+    websocket-to-app: {}
+    app-to-websocket: {}
+
+kafka_applications_cluster_simple:
+  kafka_topics_default_partitions: 2
+  kafka_topics_default_replication: 1
+  kafka_broker_config:
+    log.cleanup.policy: 'delete'
+    log.retention.bytes: "536870912" # 512MB
+    log.retention.ms: "43200000"     # 12h
+  topics:
+    dispatcher:
+      topic_options:
+        retention.bytes: "536870912"
+    container-manager: {}
+    container-events: {}
+    output: {}
+    data-history: {}
+    category: {}
+    dictionary: {}
+    regex: {}
+    schemas: {}
+    schemas-references: {}
+    dataset-changed: {}
+    datastore-changed: {}
+    app-to-runtime: {}
+    runtime-to-app: {}
+    notifications: {}
+    websocket-to-app: {}
+    app-to-websocket: {}
+
+# Example of tuning for profiling kafka:
+# <kafka_yaml_profile_name>:
+#   kafka_version: '0.10.2.1' # if absent, use profile::kafka::kafka_version
+#   scala_version: '2.11'     # if absent, use profile::kafka::scala_version
+#   log_level: 'INFO'         # if absent, use profile::kafka::log_level
+#   kafka_topics_default_replication: 1 # if absent, use profile::kafka::kafka_topics_default_replication
+#   kafka_topics_default_partitions: 6  # if absent, use profile::kafka::kafka_topics_default_partitions
+#   kafka_broker_config:  # a merge is done between this hash, profile::kafka::kafka_broker_config and the default
+#     log.cleanup.policy: 'delete'
+#     log.retention.bytes: "536870912"
+#     log.retention.ms: "43200000"
+#   topics:  # a merge is done between this hash and profile::kafka::kafka_topics_config
+#     <topic1name>:
+#       replication_factor: 1
+#       partitions: 1
+#       topic_options: # https://kafka.apache.org/documentation/#topic-config
+#         retention.bytes: "1073741824"
+#     <topic2name_all_default>: {}
+#

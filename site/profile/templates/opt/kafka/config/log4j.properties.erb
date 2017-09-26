@@ -1,5 +1,5 @@
 #This file is managed by Puppet, do no modify manually
-log4j.rootLogger=<%= scope['::profile::kafka::log_level'] %>, stdout
+log4j.rootLogger=<%= scope['::profile::kafka::_log_level'] %>, stdout
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 log4j.appender.stdout.threshold=WARN
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout

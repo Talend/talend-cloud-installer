@@ -22,3 +22,36 @@ profile::docker::registry::s3_prefix: '%{::registry_prefix}'
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/rt_test.log":
     path: '/var/log/rt_test.log'
+
+nginx::config::server_tokens: 'off'
+nginx::config::keepalive_timeout: '5 5'
+
+nginx::nginx_vhosts:
+  'default':
+    use_default_location: false
+    server_name: ['_']
+    listen_port: 80
+
+nginx::nginx_locations:
+  health:
+    vhost: 'default'
+    location: '/health'
+    stub_status: true
+  oidc:
+    vhost: 'default'
+    location: '~ /oidc/(.*)$'
+    raw_prepend:
+      - 'include /etc/nginx-resolvers.conf;'
+      - "set $proxy_url %{::tpsvc_iam_oidc_back_url}/$1$is_args$args;"
+    proxy: '$proxy_url'
+    proxy_set_header: ['Host $host']
+    proxy_redirect: 'off'
+  es:
+    vhost: 'default'
+    location: '/'
+    raw_prepend:
+      - 'include /etc/nginx-resolvers.conf;'
+      - "set $proxy_url http://%{::elasticsearch_host}:9200/;"
+    proxy: '$proxy_url'
+    proxy_set_header: ['Host $host']
+    proxy_redirect: 'off'

@@ -1,0 +1,135 @@
+{
+    "variables": {
+        "puppet_role": "",
+        "installer_version": "",
+        "client_id": "",
+        "client_secret": "",
+        "tenant_id": "",
+        "subscription_id": "",
+        "resource_group_name": "",
+        "packagecloud_master_token": "{{env `PACKAGECLOUD_MASTER_TOKEN`}}",
+        "storage_account": "",
+        "packer_tempdir": "/tmp/packer",
+        "aws_access_key_id": "",
+        "aws_secret_access_key": ""
+    },
+    "builders": [{
+            "type": "azure-arm",
+            "client_id": "{{user `client_id`}}",
+            "client_secret": "{{user `client_secret`}}",
+            "resource_group_name": "{{user `resource_group_name`}}",
+            "storage_account": "{{user `storage_account`}}",
+            "subscription_id": "{{user `subscription_id`}}",
+            "tenant_id": "{{user `tenant_id`}}",
+            "capture_container_name": "os-image-container",
+            "capture_name_prefix": "packer",
+            "os_type": "Linux",
+            "image_publisher": "OpenLogic",
+            "image_offer": "CentOS",
+            "image_sku": "7.3",
+            "image_version": "latest",
+            "location": "East US",
+            "vm_size": "Standard_A3",
+            "azure_tags": {
+                "puppet_role": "{{user `puppet_role`}}",
+                "installer_version": "{{user `installer_version`}}"
+            }
+        }
+    ],
+    "provisioners": [{
+            "type": "shell",
+            "inline": [
+                "rm -rf {{user `packer_tempdir`}} ",
+                "mkdir -p {{user `packer_tempdir`}}/yum.repos.d ",
+                "mkdir /tmp/etcreposd",
+                "echo Copying repos from template dir"
+            ]
+        }, {
+            "type": "file",
+            "source": "{{template_dir}}/etc/yum.repos.d/",
+            "destination": "{{user `packer_tempdir`}}/yum.repos.d/"
+        }, {
+            "type": "shell",
+            "execute_command": "sudo -E sh '{{ .Path }}'",
+            "inline": [
+                "wget -O /usr/lib/yum-plugins/s3iam.py https://raw.githubusercontent.com/seporaitis/yum-s3-iam/master/s3iam.py",
+                "wget -O /etc/yum/pluginconf.d/s3iam.conf https://raw.githubusercontent.com/seporaitis/yum-s3-iam/master/s3iam.conf",
+                "echo Moving existing repos to /tmp/etcreposd",
+                "mv /etc/yum.repos.d/* /tmp/etcreposd",
+                "cp -r {{user `packer_tempdir`}}/yum.repos.d/* /etc/yum.repos.d/",
+                "echo Copied own repos /etc/yum.repos.d/"
+            ]
+        }, {
+            "type": "shell",
+            "execute_command": "sudo {{ .Vars }} -E sh '{{ .Path }}'",
+            "inline": [
+                "yum clean all",
+                "rpm -Uv --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
+                "yum install --nogpgcheck -y puppet python-pip python-devel policycoreutils-devel cloud-init",
+                "gem install aws-sdk hiera-eyaml hiera-eyaml-kms",
+                "puppet module install camptocamp-ruby && puppet apply -e 'include ruby::gems'",
+                "puppet module install camptocamp-augeas && puppet apply -e 'include ::augeas'"
+            ],
+            "environment_vars": [
+                "AWS_ACCESS_KEY_ID={{user `aws_access_key_id`}}",
+                "AWS_SECRET_ACCESS_KEY={{user `aws_secret_access_key`}}"
+            ]
+        }, {
+            "type": "shell",
+            "inline": [
+                "mkdir -p /tmp/puppet/hieradata"
+            ]
+        }, {
+            "type": "file",
+            "source": "{{template_dir}}/../hieradata/",
+            "destination": "/tmp/puppet/hieradata"
+        }, {
+            "type": "file",
+            "source": "{{template_dir}}/extra.yaml",
+            "destination": "/tmp/puppet/hieradata/extra.yaml"
+        }, {
+            "type": "puppet-masterless",
+            "prevent_sudo": "false",
+            "execute_command": "cd {{.WorkingDir}} && {{.FacterVars}} AWS_ACCESS_KEY_ID={{user `aws_access_key_id`}} AWS_SECRET_ACCESS_KEY={{user `aws_secret_access_key`}} sudo -E puppet apply --verbose --modulepath='{{.ModulePath}}' --hiera_config='{{.HieraConfigPath}}' --detailed-exitcodes {{.ExtraArguments}} {{.ManifestFile}}",
+            "staging_directory": "/tmp/puppet",
+            "manifest_file": "{{template_dir}}/../manifests/site.pp",
+            "module_paths": [
+                "{{template_dir}}/../modules",
+                "{{template_dir}}/../site"
+            ],
+            "hiera_config_path": "{{template_dir}}/../hiera.yaml",
+            "extra_arguments": [
+                "--confdir=/tmp/puppet"
+            ],
+            "facter": {
+                "environment": "ami",
+                "packagecloud_master_token": "{{user `packagecloud_master_token`}}",
+                "puppet_role": "{{user `puppet_role`}}"
+            }
+        }, {
+            "type": "shell",
+            "execute_command": "sudo -E sh '{{ .Path }}'",
+            "inline": [
+                "echo Starting clean up",
+                "sudo find /etc/yum.repos.d -type f ! -name puppetlabs.repo -exec rm -rf {} +"
+            ]
+        }, {
+            "type": "shell",
+            "execute_command": "sudo -E sh '{{ .Path }}'",
+            "inline": [
+                "echo Removing cloud-init",
+                "yum remove -y cloud-init",
+                "rm -rf /tmp/puppet /tmp/packer",
+                "rm -rf /etc/yum.repos.d/talend-system.repo /etc/yum.repos.d/centos-talend.repo /etc/yum.repos.d/talend-ipaas.repo /etc/yum.repos.d/talend-sys-java.repo"
+            ]
+        }, {
+            "inline_shebang": "/bin/sh -x",
+            "type": "shell",
+            "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "inline": [
+                "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+            ]
+        }
+
+    ]
+}

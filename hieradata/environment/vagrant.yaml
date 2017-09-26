@@ -47,6 +47,8 @@ tic::frontend20::client_app_oidc_clientId: "iam-client"
 tic::frontend20::client_app_oidc_clientSecret: "iam-client-secret"
 tic::frontend20::server_app_oidc_clientId: "iam-server"
 tic::frontend20::server_app_oidc_clientSecret: "iam-server-secret"
+tic::frontend20::help_url: "the-help-url"
+tic::frontend18::help_url: "the-help-url"
 
 activemq::persistence: 'kahadb'
 
@@ -71,3 +73,8 @@ profile::common::jsons::files:
       some_urls:
         - "https://url1.com/uri"
         - "http://localhost/uri"
+
+ntp::interfaces:
+  - '127.0.0.1'
+  - '::1'
+  - "%{::ipaddress_enp0s3}"

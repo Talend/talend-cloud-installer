@@ -1,7 +1,17 @@
 ---
+mongodb::globals::version: '2.6.12-1'
+mongodb::server::verbose: true
+# mongodb::server::verbositylevel, from 'v' to 'vvvvv'
+mongodb::server::verbositylevel: 'v'
+
+
 profile::mongodb::replset_auth_enable: '%{::mongo_replset_auth_enable}'
 profile::mongodb::mongodb_nodes: "%{::mongodb_nodes}"
 profile::mongodb::storage_device: "%{::storage_device}"
+
+common_packages:
+  'mongodb-org-tools':
+    ensure: 'present'
 
 profile::common::hosts::entries:
   mongo:
@@ -43,7 +53,7 @@ profile::mongodb::users:
     db_address: 'configuration'
     password: "%{::master_password}"
     roles:
-      - role: 'dbAdmin'
+      - role: 'dbOwner'
         db: 'configuration'
   backup:
     db_address: 'admin'
@@ -66,17 +76,68 @@ profile::mongodb::users:
     roles:
       - role: 'clusterMonitor'
         db: 'admin'
+  dq:
+    db_address: 'dqdict'
+    username: 'dqdict-user'
+    password: '%{::master_password}'
+    roles:
+      - role: 'dbOwner'
+        db: 'dqdict'
+
+  tds:
+    db_address: 'tds'
+    username: 'tds'
+    password: '%{::master_password}'
+    roles:
+      - role: 'dbOwner'
+        db: 'tds'
+
+profile::mongodb::collections:
+  Document_index_compound:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'published.categoryId': 1
+      'draft.categoryId': 1
+      'sandbox.categoryId': 1
+  Document_index_published:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'published.values': 1
+  Document_index_draft:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'draft.values': 1
+  Document_index_sandbox:
+    db_address: 'dqdict'
+    collection_name: 'Document'
+    create_index: true
+    index_keys:
+      'sandbox.values': 1
+  Upload:
+    db_address: 'dqdict'
+    collection_name: 'Upload'
+    create_index: true
+    index_keys:
+      createdAt: 1
+    index_options:
+      expireAfterSeconds: 172800
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
 logrotate::rules:
   mongodb_log:
     path: '/var/log/mongodb/mongod.log'
-    maxsize: '250M'
-    copytruncate: true
-    rotate: 5
-    rotate_every: 'day'
+    maxsize: '100M'
+    rotate: 24
+    rotate_every: 'hour'
     compress: true
+    postrotate: '/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true'
 
 cloudwatch::metrics:
   DiskSpaceMongoDB:
@@ -89,3 +150,8 @@ cloudwatch::metrics:
     evaluationperiods : 3
     threshold         : 80
     comparisonoperator: "GreaterThanThreshold"
+
+cloudwatchlog_files:
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/mongodb/mongod.log":
+     path: '/var/log/mongodb/mongod.log'
+     datetime_format: '%b %d %H:%M:%S'

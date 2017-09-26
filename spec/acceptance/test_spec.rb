@@ -26,5 +26,6 @@ describe 'role::test' do
     its(:content) { should include '[ipaas-rt-test]' }
     its(:content) { should include 'nexus=http://nexus-host.com' }
     its(:content) { should include 'infra=http://infra-host.com' }
+    its(:content) { should include 'iam_scim=http://tpsvc_iam_scim_back_url.com' }
   end
 end

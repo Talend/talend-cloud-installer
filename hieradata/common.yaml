@@ -26,8 +26,6 @@ common_packages:
   'awscli':
     ensure: 'installed'
     provider: 'pip'
-  'ntp':
-    ensure: 'installed'
 
 packagecloud_repos:
   'talend/other':
@@ -56,6 +54,22 @@ cloudwatchlog_files:
 
 profile::web::tomcat::catalina_base: '/opt/apache-tomcat/tomcat'
 profile::web::tomcat::tomcat_version: '8'
+
+ntp::udlc: true
+ntp::interfaces:
+  - '127.0.0.1'
+  - '::1'
+  - "%{::ipaddress_eth0}"
+ntp::restrict:
+  - 'default nomodify notrap nopeer noquery'
+  - '127.0.0.1'
+  - '::1'
+  - '10.200.0.0 mask 255.255.0.0 nomodify notrap'
+ntp::servers:
+  - '0.amazon.pool.ntp.org iburst'
+  - '1.amazon.pool.ntp.org iburst'
+  - '2.amazon.pool.ntp.org iburst'
+  - '3.amazon.pool.ntp.org iburst'
 
 profile::postgresql::username: tadmin
 profile::postgresql::database: tadmin

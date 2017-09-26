@@ -10,19 +10,11 @@ class role::management_proxy(
 
 ) {
 
-  include ::profile::base
-  include ::profile::web::nginx
+  require ::profile::base
+  require ::profile::web::nginx
+  require ::profile::web::nginx_resolvers
 
   $elasticsearch_url = "${elasticsearch_url_scheme}://${elasticsearch_host}"
-
-  $create_resolvers_command = 'echo resolver \
-  $(awk \'BEGIN{ORS=" "} $1=="nameserver" {print $2}\' /etc/resolv.conf) "valid=5s;" \
-  > /etc/nginx-resolvers.conf'
-  exec { 'create nginx resolvers.conf':
-    command => $create_resolvers_command,
-    creates => '/etc/nginx-resolvers.conf',
-    before  => Nginx::Resource::Vhost['es-sys'],
-  }
 
   if $auth_username and $auth_password {
     $htpasswd_file = '/etc/nginx/.htpasswd'

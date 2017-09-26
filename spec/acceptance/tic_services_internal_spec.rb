@@ -47,6 +47,12 @@ describe 'role::tic_services_internal' do
     it { should match(/proxy_send_timeout.*3600;/) }
   end
 
+  describe command('/usr/bin/curl -v http://127.0.0.1:8181/nginx_status') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should include 'Active connections' }
+    its(:stdout) { should include 'server accepts handled requests' }
+  end
+
   describe command('/usr/bin/curl http://localhost:8181/services') do
     its(:stdout) { should include 'Service list' }
   end
