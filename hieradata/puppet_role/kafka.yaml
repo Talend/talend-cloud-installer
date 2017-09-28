@@ -89,6 +89,7 @@ kafka_applications_cluster_ha:
     websocket-to-app: {}
     app-to-websocket: {}
     tds_localOffsets: {}
+    publication: {}
 
 kafka_applications_cluster_simple:
   kafka_topics_default_partitions: 2
@@ -118,6 +119,7 @@ kafka_applications_cluster_simple:
     websocket-to-app: {}
     app-to-websocket: {}
     tds_localOffsets: {}
+    publication: {}
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:
