@@ -1,11 +1,15 @@
 ---
-mongodb::globals::version: '2.6.12-1'
+mongodb::globals::version: '3.4.10-1.el7'
+mongodb::globals::mongos_package_name: 'mongodb-org'
 mongodb::server::verbose: true
 # mongodb::server::verbositylevel: 'v'  # from 'v' to 'vvvvv' in extrafile
 
 profile::mongodb::replset_auth_enable: '%{::mongo_replset_auth_enable}'
 profile::mongodb::mongodb_nodes: "%{::mongodb_nodes}"
 profile::mongodb::storage_device: "%{::storage_device}"
+
+profile::mongodb::admin_user: "sreadmin"
+profile::mongodb::admin_password: "%{::master_password}"
 
 common_packages:
   'mongodb-org-tools':

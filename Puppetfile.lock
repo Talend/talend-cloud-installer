@@ -46,7 +46,7 @@ FORGE
     puppetlabs-limits (0.1.0)
     puppetlabs-lvm (0.7.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
-    puppetlabs-mongodb (0.16.0)
+    puppetlabs-mongodb (0.17.0)
       puppetlabs-apt (< 3.0.0, >= 2.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
     puppetlabs-ntp (4.2.0)
