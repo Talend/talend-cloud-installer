@@ -134,7 +134,8 @@ kafka_applications_cluster_simple:
     app-to-websocket: {}
     logs-app-to-runtime: {}
     logs-runtime-to-app: {}
-    local-offsets: {}
+    local-offsets:
+      partitions: 1
     publication: {}
 
 # Example of tuning for profiling kafka:
