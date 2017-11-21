@@ -147,7 +147,6 @@ tic::services::karaf_features_install:
   - 'ssh'
   - 'system'
   - 'wrap)'
-  - 'camel'
   - 'tipaas-crypto-service-core'
   - 'tipaas-amq-dependencies'
   - 'tipaas-crypto-service-client'
