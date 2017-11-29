@@ -4,12 +4,16 @@ describe 'role::frontend' do
   it_behaves_like 'profile::base'
   it_behaves_like 'role::defined', 'frontend'
 
+  describe package('nginx') do
+    it { should be_installed.with_version('1.12.1') }
+  end
+
   describe port(8081) do
     it { should be_listening }
   end
 
   describe command('/usr/bin/wget -O - http://127.0.0.1:8081') do
-    its(:stdout) { should include '<title>Talend Integration Cloud</title>' }
+    its(:stdout) { should include '<title>Integration Cloud | Talend</title>' }
   end
 
   describe port(8009) do
@@ -54,9 +58,6 @@ describe 'role::frontend' do
 
   %w(
   /srv/tomcat/ipaas-srv/webapps/ipaas/config/config.js
-  /srv/tomcat/ipaas-srv/conf/jaas-ipaas-services.conf
-  /srv/tomcat/ipaas-srv/conf/jaas-ipaas-server.conf
-  /srv/tomcat/ipaas-srv/webapps/ipaas-server/META-INF/context.xml
   ).each do |f|
     describe file(f) do
       it { should be_file }
@@ -91,10 +92,6 @@ describe 'role::frontend' do
 
   describe file('/srv/tomcat/ipaas-srv/webapps/ipaas-server/WEB-INF/web.xml') do
     its(:content) { should include '<secure>false</secure>' }
-  end
-
-  describe file('/srv/tomcat/ipaas-srv/webapps/ipaas/WEB-INF/web.xml') do
-    its(:content) { should include '<welcome-file>index-min.jsp</welcome-file>' }
   end
 
   describe service('tomcat-ipaas-srv') do
@@ -137,6 +134,27 @@ describe 'role::frontend' do
 
   describe file('/srv/tomcat/ipaas-srv/webapps/ipaas/config/config.js') do
     its(:content) { should include "HELP_URL : 'the-help-url'," }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8404') do
+    its(:stdout) { should include "HTTP/1.1 404 Not Found" }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8080/ipaas') do
+    its(:stdout) { should_not include 'HTTP/1.1 301 Moved Permanently' }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8080/api') do
+    its(:stdout) { should_not include 'HTTP/1.1 301 Moved Permanently' }
+  end
+
+  describe command('/usr/bin/curl -v http://127.0.0.1:8080/') do
+    its(:stdout) { should include 'HTTP/1.1 301 Moved Permanently' }
+  end
+
+  describe file('/srv/tomcat/ipaas-srv/webapps/ipaas/config/config.js') do
+    its(:content) { should include 'PENDO_CLOUD_PROVIDER: \'AWS\',' }
+    its(:content) { should include 'PENDO_REGION: \'US East (N. Virginia)\',' }
   end
 
 end

@@ -18,7 +18,7 @@ shared_examples 'profile::base' do
 
   describe 'ntp sync' do
     subject { command('ntpstat').stdout }
-    it { should include 'synchronised to NTP server (' }
-    it { should include '   time correct to within ' }
+    it { should include 'synchronised to' }
+    it { should include 'time correct to within' }
   end
 end

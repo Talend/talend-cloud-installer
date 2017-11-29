@@ -53,6 +53,56 @@ class profile::mongodb (
     $replset_name = undef
   }
 
+  file { 'mongod disable-transparent-hugepages':
+    ensure => file,
+    path   => '/etc/init.d/disable-transparent-hugepages',
+    source => 'puppet:///modules/profile/etc/init.d/disable-transparent-hugepages',
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
+    before => Class['::mongodb::server'],
+    notify => [
+      Exec['enable disable-transparent-hugepages'],
+      Exec['start disable-transparent-hugepages']
+    ]
+  }
+
+  exec { 'enable disable-transparent-hugepages':
+    path        => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command     => 'chkconfig --add disable-transparent-hugepages',
+    refreshonly => true,
+    notify      => Exec['start disable-transparent-hugepages']
+  }
+
+  exec { 'start disable-transparent-hugepages':
+    path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command => '/etc/init.d/disable-transparent-hugepages start',
+    before  => Class['::mongodb::server']
+  }
+
+  exec { 'disable tuned for mongod':
+    path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command => 'tuned-adm off',
+    before  => Exec['start disable-transparent-hugepages'],
+    onlyif  => 'which tuned-adm',
+  }
+
+  file { 'mongod sysctl conf':
+    ensure => file,
+    path   => '/etc/sysctl.d/mongod.conf',
+    source => 'puppet:///modules/profile/etc/sysctl.d/mongod.conf',
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
+    before => Class['::mongodb::server'],
+    notify => Exec['mongod sysctl apply']
+  }
+
+  exec { 'mongod sysctl apply':
+    path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command => 'sysctl --system'
+  }
+
   class { '::profile::common::mount_device':
     device  => $storage_device,
     path    => $dbpath,
@@ -71,6 +121,8 @@ class profile::mongodb (
     path   => '/etc/security/limits.d/mongod.conf',
     source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
     mode   => '0644',
+    owner  => 'root',
+    group  => 'root'
   } ->
   rsyslog::snippet { '10_mongod':
     content => ":programname,contains,\"mongod\" /var/log/mongodb/mongod.log;CloudwatchAgentEOL\n& stop",

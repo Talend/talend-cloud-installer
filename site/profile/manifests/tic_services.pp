@@ -199,8 +199,4 @@ class profile::tic_services (
     }
   }
 
-  if versioncmp($::ipaas_rt_infra_build_version, '2.0') > 0 {
-      include 'tic::services20'
-  }
-
 }

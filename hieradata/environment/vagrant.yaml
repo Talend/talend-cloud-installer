@@ -43,12 +43,11 @@ sudo::configs:
 tic::services::init_configuration_service::username: "%{::services_username}"
 tic::services::init_configuration_service::password: "%{::services_password}"
 
-tic::frontend20::client_app_oidc_clientId: "iam-client"
-tic::frontend20::client_app_oidc_clientSecret: "iam-client-secret"
-tic::frontend20::server_app_oidc_clientId: "iam-server"
-tic::frontend20::server_app_oidc_clientSecret: "iam-server-secret"
-tic::frontend20::help_url: "the-help-url"
-tic::frontend18::help_url: "the-help-url"
+tic::frontend::client_app_oidc_clientId: "iam-client"
+tic::frontend::client_app_oidc_clientSecret: "iam-client-secret"
+tic::frontend::server_app_oidc_clientId: "iam-server"
+tic::frontend::server_app_oidc_clientSecret: "iam-server-secret"
+tic::frontend::help_url: "the-help-url"
 
 activemq::persistence: 'kahadb'
 
@@ -78,3 +77,28 @@ ntp::interfaces:
   - '127.0.0.1'
   - '::1'
   - "%{::ipaddress_enp0s3}"
+
+role::management_proxy::elasticsearch:
+  sys:
+    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_url_scheme: 'http'
+    nginx_location: ''
+    nginx_location_priority: 500
+    auth_username: 'kibana'
+    auth_password: "%{::master_password}"
+  sys2:
+    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_url_scheme: 'http'
+    nginx_location: '/sys2'
+    nginx_location_priority: 450
+    auth_username: 'kibana2'
+    auth_password: "%{::master_password}"
+  sys3:
+    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_url_scheme: 'http'
+    nginx_location: '/sys3'
+    nginx_location_priority: 410
+    auth_username: 'kibana3'
+    auth_password: "%{::master_password}"
+
+profile::test_launcher::tmc_pswseed: 'test_tmc_pswseed'

@@ -1,5 +1,20 @@
 ---
-role::management_proxy::elasticsearch_host: "%{::elasticsearch_sys}"
-role::management_proxy::elasticsearch_url_scheme: 'https'
-role::management_proxy::auth_username: 'kibana'
-role::management_proxy::auth_password: "%{::master_password}"
+role::management_proxy::elasticsearch:
+  system:
+    elasticsearch_url: "%{::elasticsearch_system_logs}/"
+    nginx_location: '/system'
+    nginx_location_priority: 410 # lower is higher
+    auth_username: 'kibana'
+    auth_password: "%{::master_password}"
+  logs:
+    elasticsearch_url: "%{::elasticsearch_customer_logs}/"
+    nginx_location: '/logs'
+    nginx_location_priority: 450 # lower is higher
+    auth_username: 'kibana'
+    auth_password: "%{::master_password}"
+  sys:
+    elasticsearch_host: "%{::elasticsearch_sys}"
+    nginx_location: ''
+    nginx_location_priority: 500 # lower is higher, by default is 500
+    auth_username: 'kibana'
+    auth_password: "%{::master_password}"

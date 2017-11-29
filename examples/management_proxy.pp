@@ -12,6 +12,4 @@ class {'elasticsearch':
   repo_version => '2.x'
 } ->
 elasticsearch::instance { 'es-01': } ->
-class { 'role::management_proxy':
-    elasticsearch_url_scheme => 'http'
-}
+class { 'role::management_proxy': }

@@ -27,8 +27,6 @@ FORGE
       herculesteam-augeasproviders_core (< 3.0.0, >= 2.1.0)
     jfryman-selinux (0.4.0)
       puppetlabs-stdlib (>= 0)
-    landcareresearch-amazon_ses (0.1.4)
-      puppetlabs-stdlib (>= 2.4.0)
     maestrodev-wget (1.7.3)
     puppet-archive (1.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
@@ -107,7 +105,7 @@ GIT
 GITHUBTARBALL
   remote: Talend/puppet-activemq
   specs:
-    talend-activemq (0.2.0.2)
+    talend-activemq (0.3.1)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatch
@@ -132,7 +130,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-tic
   specs:
-    talend-tic (0.1.4.60)
+    talend-tic (0.2.6)
 
 GITHUBTARBALL
   remote: Talend/puppet-user_accounts
@@ -153,7 +151,6 @@ DEPENDENCIES
   herculesteam-augeasproviders_shellvar (~> 2.0)
   hubspot-nexus (>= 0)
   jfryman-selinux (~> 0.0)
-  landcareresearch-amazon_ses (~> 0.1.0)
   puppet-nginx (~> 0.4.0)
   puppetlabs-concat (~> 1.0)
   puppetlabs-firewall (~> 1.0)

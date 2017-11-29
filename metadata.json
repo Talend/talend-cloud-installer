@@ -24,7 +24,6 @@
     {"name": "herculesteam-augeasproviders_shellvar","version_requirement":"2.x"},
     {"name": "camptocamp/accounts", "version_requirement": "1.x"},
     {"name": "saz/sudo", "version_requirement": "3.x"},
-    {"name": "landcareresearch/amazon_ses", "version_requirement": "0.1.x"},
     {"name": "thias/sysctl", "version_requirement": "1.x"},
     {"name": "garethr/docker", "version_requirement": "5.3.x"},
     {"name": "puppetlabs/lvm", "version_requirement": "0.x"},

@@ -1,9 +1,7 @@
 ---
 mongodb::globals::version: '2.6.12-1'
 mongodb::server::verbose: true
-# mongodb::server::verbositylevel, from 'v' to 'vvvvv'
-mongodb::server::verbositylevel: 'v'
-
+# mongodb::server::verbositylevel: 'v'  # from 'v' to 'vvvvv' in extrafile
 
 profile::mongodb::replset_auth_enable: '%{::mongo_replset_auth_enable}'
 profile::mongodb::mongodb_nodes: "%{::mongodb_nodes}"

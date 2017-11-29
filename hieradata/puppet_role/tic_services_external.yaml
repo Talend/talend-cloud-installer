@@ -102,7 +102,6 @@ tic::services::elasticsearch_port: "9200"
 tic::services::nexus_password: "%{::master_password}"
 tic::services::notification_subscription_db_password: "%{::master_password}"
 tic::services::pe_db_password: "%{::master_password}"
-tic::services::pe_service_password: "%{::master_password}"
 tic::services::postgres_nodes: "%{::postgres_nodes}"
 tic::services::quartz_db_password: "%{::master_password}"
 tic::services::syncope_password: "%{::master_password}"
@@ -142,8 +141,10 @@ tic::services::cms_dts_service_url: "%{::dts_host}"
 tic::services::cms_lts_service_url: "%{::lts_host}"
 tic::services::lts_service_url: "%{::lts_host}"
 tic::services::cms_amq_broker_url: "%{::activemq_host}"
-tic::services20::crypto_service_url: "%{::tpsvc_crypto_url}"
-tic::services20::config_service_url: "%{::tpsvc_config_url}"
+tic::services::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
+tic::services::iam_service_url: "%{::tpsvc_iam_server_front_url}"
+tic::services::crypto_service_url: "%{::tpsvc_crypto_url}"
+tic::services::config_service_url: "%{::tpsvc_config_url}"
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
@@ -189,8 +190,6 @@ tic::services::karaf_features_install:
   - 'tipaas-webhooks-service'
   - 'tipaas-logs-transfer-service-core'
   - 'tipaas-healthcheck-service-core'
-
-tic::services20::karaf_features_install:
   - 'tipaas-account-manager-service'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'

@@ -26,6 +26,18 @@ cloudwatch::metrics:
     threshold         : 80
     comparisonoperator: "GreaterThanThreshold"
 
+profile::common::cloudwatchlogs::recursive: false
 cloudwatchlog_files:
-  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/influxdb/influxd.log":
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/cfn-init.log":
+    path: '/var/log/cfn-init.log'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/cfn-init-cmd.log":
+    path: '/var/log/cfn-init-cmd.log'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/messages":
+    path: '/var/log/messages'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/secure":
+    path: '/var/log/secure'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/audit/audit.log":
+    path: '/var/log/audit/audit.log'
+    datetime_format: '%s'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/influxdb/influxd.log":
     path: '/var/log/influxdb/influxd.log'

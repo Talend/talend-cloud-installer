@@ -6,6 +6,8 @@ python::virtualenv: 'present'
 python::pip: 'present'
 python::dev: 'present'
 
+nginx::package_ensure: '1.12.1-1.el7.ngx'
+
 common_packages:
   'hiera-eyaml':
     ensure: 'installed'
@@ -17,7 +19,7 @@ common_packages:
     ensure: 'installed'
     provider: 'gem'
   'package_cloud':
-    ensure: 'installed'
+    ensure: '0.2.45'
     provider: 'gem'
   'nmap-ncat':
     ensure: 'installed'

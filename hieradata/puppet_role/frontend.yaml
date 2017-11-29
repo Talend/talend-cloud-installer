@@ -5,6 +5,7 @@ java::version: "1.8.0_60-fcs"
 java::java_home: "/usr/java/jre1.8.0_60"
 
 profile::tic_frontend::version: "%{::tic_frontend_version}"
+profile::tic_frontend::region: "%{::region}"
 
 profile::common::hosts::entries:
   mongo:
@@ -15,51 +16,43 @@ profile::common::hosts::entries:
       - "mongo%index%.production.internal-tipaas.com"
       - "mongo%index%"
 
-tic::frontend::java_home: "/usr/java/jre1.8.0_60"
-tic::frontend::sts_host: '%{::syncope_nodes}'
-tic::frontend::sts_username: 'admin'
-tic::frontend::sts_password: "%{::master_password}"
-tic::frontend::elasticache_address: "%{::memcache_nodes}"
-
-tic::frontend::elasticsearch_host: "%{::elasticsearch_nodes}"
-tic::frontend::elasticsearch_port: "9200"
-
-tic::frontend::redis_session_host: "%{::redis_sessions_host}"
-tic::frontend::redis_session_port: "%{::redis_sessions_port}"
-tic::frontend::redis_session_namespace: "%{::main_stack}Tipaas"
-
-tic::frontend20::tcomp_static_ips: "%{::vpc_nat_ips}"
-tic::frontend20::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
-tic::frontend20::crypto_service_url: "%{::tpsvc_crypto_url}"
-tic::frontend20::config_tpsvc_service_url: "%{::tpsvc_config_url}"
-tic::frontend20::logquery_tpsvc_service_url: "%{::tpsvc_logquery_url}"
-tic::frontend20::iam_oidc_front_url: "%{::tpsvc_iam_oidc_front_url}"
-tic::frontend20::iam_oidc_back_url: "%{::tpsvc_iam_oidc_back_url}"
-tic::frontend20::workspace_url: "/ipaas/services"
-tic::frontend20::portal_url: "%{::tpsvc_portal_url}"
-tic::frontend20::tdp_url: "%{::tdp_url}"
-tic::frontend20::tmc_url: "%{::tmc_url}"
-
-tic::frontend18::workspace_url: "/ipaas-server/services"
-
 tic::frontend::account_manager_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::artifact_manager_nodes: "%{::tic_services_internal_nodes}"
-tic::frontend::crypto_service_nodes: "%{::tic_services_internal_nodes}"
+tic::frontend::cms_node: "%{::tic_services_internal_nodes}"
+tic::frontend::config_tpsvc_service_url: "%{::tpsvc_config_url}"
+tic::frontend::crypto_service_url: "%{::tpsvc_crypto_url}"
 tic::frontend::custom_resources_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::data_prep_service_nodes: "%{::dataprep_nodes}"
+tic::frontend::dts_service_url: "http://%{::tic_services_external_nodes}:8181/services/data-transfer-service"
+tic::frontend::elasticache_address: "%{::memcache_nodes}"
+tic::frontend::elasticsearch_host: "%{::elasticsearch_nodes}"
+tic::frontend::elasticsearch_port: "9200"
 tic::frontend::flow_manager_nodes: "%{::tic_services_internal_nodes}"
+tic::frontend::iam_oidc_back_url: "%{::tpsvc_iam_oidc_back_url}"
+tic::frontend::iam_oidc_front_url: "%{::tpsvc_iam_oidc_front_url}"
+tic::frontend::java_home: "/usr/java/jre1.8.0_60"
+tic::frontend::logquery_tpsvc_service_url: "%{::tpsvc_logquery_url}"
+tic::frontend::logs_log_transfer_service_nodes: "%{::tic_services_external_nodes}"
 tic::frontend::notification_subscription_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::notifier_service_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::pe_service_nodes: "%{::tic_services_internal_nodes}"
+tic::frontend::portal_url: "%{::tpsvc_portal_url}"
+tic::frontend::redis_session_host: "%{::redis_sessions_host}"
+tic::frontend::redis_session_namespace: "%{::main_stack}Tipaas"
+tic::frontend::redis_session_port: "%{::redis_sessions_port}"
 tic::frontend::schema_discovery_service_nodes: "%{::tic_services_internal_nodes}"
+tic::frontend::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
+tic::frontend::sts_host: '%{::syncope_nodes}'
+tic::frontend::sts_password: "%{::master_password}"
+tic::frontend::sts_username: 'admin'
+tic::frontend::tcomp_static_ips: "%{::vpc_nat_ips}"
+tic::frontend::tdp_url: "%{::tdp_url}"
+tic::frontend::tmc_url: "%{::tmc_url}"
 tic::frontend::trial_service_nodes: "%{::tic_services_internal_nodes}"
-tic::frontend::webhooks_service_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
-tic::frontend::cms_node: "%{::tic_services_internal_nodes}"
-tic::frontend::dts_service_url: "http://%{::tic_services_external_nodes}:8181/services/data-transfer-service"
-tic::frontend::logs_log_transfer_service_nodes: "%{::tic_services_external_nodes}"
 tic::frontend::web_samples_account_name: "sample"
-
 tic::frontend::web_use_ssl: false
+tic::frontend::webhooks_service_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
+tic::frontend::workspace_url: "/ipaas/services"
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
@@ -106,6 +99,12 @@ nginx::nginx_upstreams:
         - 127.0.0.1
 
 nginx::nginx_vhosts:
+  'bad_request':
+    use_default_location: false
+    server_name: ['_']
+    listen_port: 8404
+    vhost_cfg_append:
+      return: '404'
   'redirect':
     use_default_location: false
     server_name: ['_']
@@ -113,15 +112,25 @@ nginx::nginx_vhosts:
     vhost_cfg_append:
       rewrite: '^ https://$host$request_uri? permanent'
   'default':
-    proxy: 'http://ipaasweb'
     listen_port: 8080
     server_name: ['_']
+    use_default_location: false
 
 nginx::nginx_locations:
   status:
     location: '/nginx_status'
     vhost: 'default'
     stub_status: true
+  ipaas:
+    location: '/ipaas'
+    vhost: 'default'
+    proxy: 'http://ipaasweb'
+  default:
+    location: '= /'
+    vhost: 'default'
+    priority: 410
+    location_custom_cfg:
+      rewrite: '^ https://$host/ipaas$request_uri? permanent'
 
 limits::fragment:
   "tomcat/soft/nofile":

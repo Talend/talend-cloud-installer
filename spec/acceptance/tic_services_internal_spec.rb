@@ -4,6 +4,10 @@ describe 'role::tic_services_internal' do
   it_behaves_like 'profile::base'
   it_behaves_like 'role::defined', 'tic_services_internal'
 
+  describe package('nginx') do
+    it { should be_installed.with_version('1.12.1') }
+  end
+
 	describe package('talend-ipaas-rt-infra') do
     it { should be_installed }
   end
@@ -81,11 +85,6 @@ describe 'role::tic_services_internal' do
     subject { file('/opt/talend/ipaas/rt-infra/etc/org.talend.ipaas.rt.cr.service.cfg').content }
     it { should include 'bucket.name = mytestbucket' }
     it { should include 'object.key.prefix = mytestprefix' }
-  end
-
-  describe 'Trial Registration Service configuration' do
-    subject { file('/opt/talend/ipaas/rt-infra/etc/org.talend.ipaas.rt.trial.service.cfg').content }
-    it { should include 'confirm.url.template=https://the-frontend.hostname.com/#/signup/login?trialKey=' }
   end
 
   describe 'Account Management Service configuration' do

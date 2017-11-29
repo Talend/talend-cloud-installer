@@ -5,7 +5,7 @@ class profile::docker::ecs_agent (
 
   $cluster_name = undef,
   $running      = true,
-  $image        = 'amazon/amazon-ecs-agent:v1.14.3',
+  $image        = 'amazon/amazon-ecs-agent:v1.15.1',
 
 ) {
 
@@ -67,7 +67,8 @@ class profile::docker::ecs_agent (
       "ECS_CLUSTER=${cluster_name_real}",
       'ECS_ENABLE_TASK_IAM_ROLE=true',
       'ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true',
-      'ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]'
+      'ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]',
+      'ECS_ENABLE_CONTAINER_METADATA=true'
     ]
   }
 

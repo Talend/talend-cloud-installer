@@ -4,6 +4,10 @@ describe 'role::tic_services_external' do
   it_behaves_like 'profile::base'
   it_behaves_like 'role::defined', 'tic_services_external'
 
+  describe package('nginx') do
+    it { should be_installed.with_version('1.12.1') }
+  end
+
 	describe package('talend-ipaas-rt-infra') do
     it { should be_installed }
   end

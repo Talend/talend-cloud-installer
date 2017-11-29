@@ -30,13 +30,15 @@ ${SCRIPT_NAME} [options]
     -l: list available tests and exit
     -s: syntax check only and exit
     -t testname: launch this specific test only
+    -r testname: redo puppet and verify on the test specified (must have already be launched by -t before)
 
   Example of use:
   launch all the tests: ${SCRIPT_NAME}
   launch all the test but (re)install everything before: ${SCRIPT_NAME} -c
   list the tests availables: ${SCRIPT_NAME} -l
-  launch a specific test:  ${SCRIPT_NAME} -t "role-frontend-centos-72"
   launch a syntax check: ${SCRIPT_NAME} -s
+  launch a specific test:  ${SCRIPT_NAME} -t "role-frontend-centos-72"
+  redo test after modifications: ${SCRIPT_NAME} -r "role-frontend-centos-72"
 
   Tips:
     if the syntax check fail with alignment errors, maybe you can fix it with the following command for each file in error:
@@ -73,14 +75,16 @@ TEST_NAME="all"
 LIST_MODE=0
 CLEAN_MODE=0
 SYNTAX_ONLY=0
+REDO=0
 
-while getopts hclst: option
+while getopts hclst:r: option
 do
   case "${option}" in
     h) fShowHelp; exit $?;;
     c) export CLEAN_MODE=1;;
     l) export LIST_MODE=1;;
     t) export TEST_NAME="${OPTARG}";;
+    r) export TEST_NAME="${OPTARG}"; export REDO=1;;
     s) export SYNTAX_ONLY=1;;
     \?) fShowHelp;  fError "Unknown option -${option}";;
   esac
@@ -109,15 +113,17 @@ fi
 
 set -e
 ### Install bundle
-fTitle "Install bundle stuff"
-bundle install --path=vendor/bundle --with=development
-bundle exec librarian-puppet install --clean
+if [ $REDO -eq 0 ];
+then
+  fTitle "Install bundle stuff"
+  bundle install --path=vendor/bundle --with=development
+  bundle exec librarian-puppet install --clean
 
-### clean ?
-if [ ${LIST_MODE} -eq 1 ]; then
-  fTitle "Available tests"
-  bundle exec kitchen list
-  exit $?
+  if [ ${LIST_MODE} -eq 1 ]; then
+    fTitle "Available tests"
+    bundle exec kitchen list
+    exit $?
+  fi
 fi
 
 fTitle "Validating code"
@@ -162,6 +168,13 @@ if [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
 fi
 
 ### test !
-fTitle "Execute tests"
-bundle exec kitchen test ${TEST_NAME}
+if [ $REDO -eq 0 ];
+then
+  fTitle "Execute tests"
+  bundle exec kitchen test ${TEST_NAME}
+else
+  fTitle "Redo tests"
+  bundle exec kitchen converge ${TEST_NAME} && bundle exec kitchen verify ${TEST_NAME}
+fi
+
 exit $?

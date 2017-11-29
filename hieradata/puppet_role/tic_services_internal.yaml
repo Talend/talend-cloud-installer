@@ -81,7 +81,6 @@ tic::services::elasticsearch_port: "9200"
 tic::services::nexus_password: "%{::master_password}"
 tic::services::notification_subscription_db_password: "%{::master_password}"
 tic::services::pe_db_password: "%{::master_password}"
-tic::services::pe_service_password: "%{::master_password}"
 tic::services::postgres_nodes: "%{::postgres_nodes}"
 tic::services::quartz_db_password: "%{::master_password}"
 tic::services::syncope_password: "%{::master_password}"
@@ -115,17 +114,12 @@ tic::services::dispatcher_response_queue: "ipaas.talend.dispatcher.response.queu
 
 tic::services::tipaas_email_subject: "Confirmation Required for Talend Integration Cloud Trial"
 
-tic::services20::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
-tic::services20::iam_service_url: "%{::tpsvc_iam_server_front_url}"
-tic::services20::crypto_service_url: "%{::tpsvc_crypto_url}"
-tic::services20::config_service_url: "%{::tpsvc_config_url}"
+tic::services::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
+tic::services::iam_service_url: "%{::tpsvc_iam_server_front_url}"
+tic::services::crypto_service_url: "%{::tpsvc_crypto_url}"
+tic::services::config_service_url: "%{::tpsvc_config_url}"
 
 tic::services::notification_subscription_memcached_host: "%{::memcache_nodes}"
-
-profile::amazon_ses_smtp::region: '%{::region}'
-profile::amazon_ses_smtp::domain: 'localhost'
-profile::amazon_ses_smtp::smtp_accces_key_id: '%{::smtp_accces_key_id}'
-profile::amazon_ses_smtp::smtp_secret_access_key: '%{::smtp_secret_access_key}'
 
 tic::services::kms_key_alias: "%{::kms_key_alias}"
 
@@ -185,18 +179,7 @@ tic::services::karaf_features_install:
   - 'tipaas-notification-manager'
   - 'tipaas-notification-server'
   - 'tipaas-notification-sendgrid-webhook-service'
-  - 'tesb-el-collector-jms'
-  - 'tesb-el-elasticsearch'
-  - 'tesb-el-server'
   - 'tipaas-logs-transfer-service-client'
   - 'tipaas-healthcheck-service-core'
-
-tic::services20::karaf_features_install:
-  - 'tipaas-account-manager-service'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
-
-tic::services20::karaf_features_remove:
-  - 'tesb-el-collector-jms'
-  - 'tesb-el-elasticsearch'
-  - 'tesb-el-server'

@@ -7,6 +7,39 @@ shared_examples 'profile::mongodb' do
     /var/log/mongodb/mongod.log
   )
 
+  describe 'Verifying mongod sysctl conf' do
+    describe file('/etc/sysctl.d/mongod.conf') do
+      it { should be_file }
+      its(:content) { should include '# File managed by Puppet, do not edit manually' }
+    end
+    describe command('/sbin/sysctl -a') do
+      its(:stdout) { should include 'kernel.pid_max = 64000' }
+      its(:stdout) { should include 'kernel.threads-max = 64000' }
+      its(:stdout) { should include 'fs.file-max = 98384' }
+      its(:stdout) { should include 'net.ipv4.tcp_keepalive_time = 120' }
+      its(:stdout) { should include 'vm.zone_reclaim_mode = 0' }
+    end
+  end
+
+  describe 'mongod hugepages off' do
+    describe command('/sbin/tuned-adm active') do
+      its(:stdout) { should include 'No current active profile.' }
+    end
+    describe file('/etc/init.d/disable-transparent-hugepages') do
+      it { should be_file }
+      its(:content) { should include '# File managed by Puppet, do not edit manually' }
+    end
+    describe command('/sbin/chkconfig --list') do
+      its(:stdout) { should include 'disable-transparent-hugepages' }
+    end
+    describe command('/bin/cat /sys/kernel/mm/transparent_hugepage/enabled') do
+      its(:stdout) { should include 'always madvise [never]' }
+    end
+    describe command('/bin/cat /sys/kernel/mm/transparent_hugepage/defrag') do
+      its(:stdout) { should include 'always madvise [never]' }
+    end
+  end
+
   describe 'Verifying mongod conf' do
      describe file('/etc/mongod.conf') do
        it { should be_file }
@@ -19,7 +52,7 @@ shared_examples 'profile::mongodb' do
   describe 'Verifying mongod ulimits' do
     describe file('/etc/security/limits.d/mongod.conf') do
       it { should be_file }
-      its(:content) { should include '# File managed by Pupppet, do not edit manually' }
+      its(:content) { should include '# File managed by Puppet, do not edit manually' }
       its(:content) { should match /\nmongod\s+soft\s+nproc\s+64000\s*\n/ }
       its(:content) { should match /\nmongod\s+hard\s+nproc\s+64000\s*\n/ }
     end
@@ -36,7 +69,7 @@ shared_examples 'profile::mongodb' do
     describe file('/var/log/mongodb/mongod.log') do
       it { should be_file }
     end
-    describe command('/bin/test $(/bin/egrep \'^[a-zA-Z]{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \' /var/log/mongodb/mongod.log | /bin/wc -l) -gt 3') do
+    describe command('/bin/test $(/bin/egrep \'^[a-zA-Z]{3} ([0-9]{2}| [0-9]) [0-9]{2}:[0-9]{2}:[0-9]{2} \' /var/log/mongodb/mongod.log | /bin/wc -l) -gt 3') do
       its(:exit_status) { should eq 0 }
     end
     describe command('/bin/test $(/bin/egrep \'^\s*$\' /var/log/mongodb/mongod.log | /bin/wc -l) -eq 0') do

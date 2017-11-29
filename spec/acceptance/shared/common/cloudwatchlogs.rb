@@ -9,11 +9,6 @@ shared_examples 'profile::common::cloudwatchlogs' do
   describe service('awslogs') do
     it { should be_enabled }
     it { should be_running }
-
-    describe 'log [/var/log/awslogs.log]' do
-      subject { file('/var/log/awslogs.log').content }
-      it { should_not include 'ERROR:' }
-    end
   end
 
 end

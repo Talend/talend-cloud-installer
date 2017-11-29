@@ -4,7 +4,19 @@ profile::kafka::storage_device: "%{::storage_device}"
 profile::kafka::kafka_cluster_id: "%{::kafka_cluster_id}"
 profile::kafka::kafka_yaml_profile_name: "%{::kafka_yaml_profile_name}"
 
+profile::common::cloudwatchlogs::recursive: false
 cloudwatchlog_files:
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/cfn-init.log":
+    path: '/var/log/cfn-init.log'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/cfn-init-cmd.log":
+    path: '/var/log/cfn-init-cmd.log'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/messages":
+    path: '/var/log/messages'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/secure":
+    path: '/var/log/secure'
+  "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/audit/audit.log":
+    path: '/var/log/audit/audit.log'
+    datetime_format: '%s'
   "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/server.log":
     path: '/opt/kafka/logs/server.log'
   "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/state-change.log":
@@ -88,6 +100,12 @@ kafka_applications_cluster_ha:
     notifications: {}
     websocket-to-app: {}
     app-to-websocket: {}
+    logs-app-to-runtime: {}
+    logs-runtime-to-app: {}
+    userflow-changed: {}
+    impact-analysis-offsets:
+      partitions: 1
+    publication: {}
 
 kafka_applications_cluster_simple:
   kafka_topics_default_partitions: 2
@@ -116,6 +134,12 @@ kafka_applications_cluster_simple:
     notifications: {}
     websocket-to-app: {}
     app-to-websocket: {}
+    logs-app-to-runtime: {}
+    logs-runtime-to-app: {}
+    userflow-changed: {}
+    impact-analysis-offsets:
+      partitions: 1
+    publication: {}
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:

@@ -9,6 +9,7 @@ common_packages:
     ensure: '2.0-4'
 
 activemq::version: 'installed'
+activemq::jmx_enabled: true
 activemq::network_password: "%{::master_password}"
 activemq::network_user: 'activemq'
 activemq::brokers: '%{::activemq_nodes}'
@@ -66,4 +67,10 @@ profile::postgresql::roles:
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/activemq/data/activemq.log":
     path: '/opt/activemq/data/activemq.log'
+
+limits::fragment:
+  "activemq/soft/nofile":
+     value: '102400'
+  "activemq/hard/nofile":
+     value: '102400'
 
