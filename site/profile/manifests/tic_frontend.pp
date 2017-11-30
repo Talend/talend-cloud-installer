@@ -19,14 +19,8 @@ class profile::tic_frontend (
     $_version = 'installed'
   }
 
-  $pendo_regions = {
-    'us-east-1'    =>  'US East (N. Virginia)',
-    'eu-central-1' =>  'EU (Frankfurt)',
-    'us-west-2'    =>  'US West (Oregon)',
-    'eu-west-1'    =>  'EU (Ireland)',
-  }
-  if ( has_key($pendo_regions, $region) ) {
-    $_pendo_region = $pendo_regions[$region]
+  if size($region) > 0 {
+    $_pendo_region = $region
   } else {
     $_pendo_region = 'NoRegion'
   }

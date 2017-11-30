@@ -154,7 +154,7 @@ describe 'role::frontend' do
 
   describe file('/srv/tomcat/ipaas-srv/webapps/ipaas/config/config.js') do
     its(:content) { should include 'PENDO_CLOUD_PROVIDER: \'AWS\',' }
-    its(:content) { should include 'PENDO_REGION: \'US East (N. Virginia)\',' }
+    its(:content) { should include 'PENDO_REGION: \'us-east-1\',' }
   end
 
 end
