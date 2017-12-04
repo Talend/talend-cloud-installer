@@ -14,7 +14,7 @@ class profile::mongodb::is_primary (
       file { $primary_flag_file:
         ensure  => file
       }
-      if $::profile::mongodb::_mongo_auth_enable {
+      if $::profile::mongodb::mongo_auth_already_enabled or $::profile::mongodb::mongo_auth_asked {
         exec { 'primary_flag_with_auth':
           path    => '/bin:/usr/bin',
           command => "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
