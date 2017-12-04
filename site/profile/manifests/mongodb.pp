@@ -43,6 +43,12 @@ class profile::mongodb (
     $create_admin = true
   }
 
+  swap_file::files { 'mongo_swap':
+    ensure       => present,
+    swapfile     => '/mnt/mongo.swap',
+    swapfilesize => $::memorysize,
+  }
+
   # explicitly only support replica sets of size 3
   if size($_mongo_nodes) == 3 {
     if empty($::mongodb_replset_name) {

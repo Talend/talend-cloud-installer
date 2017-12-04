@@ -21,6 +21,15 @@ shared_examples 'profile::mongodb' do
     end
   end
 
+  describe 'Verifying swap' do
+    describe file('/mnt/mongo.swap') do
+      it { should be_file }
+    end
+    describe command('/sbin/swapon') do
+      its(:stdout) { should include '/mnt/mongo.swap file' }
+    end
+  end
+
   describe 'mongod hugepages off' do
     describe command('/sbin/tuned-adm active') do
       its(:stdout) { should include 'No current active profile.' }
