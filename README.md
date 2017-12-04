@@ -69,5 +69,3 @@ For manually running rspec or beaker test per module change in the module dir an
  bundle exec rake beaker
  ```
 
-
-
