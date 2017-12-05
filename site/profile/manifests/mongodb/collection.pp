@@ -34,7 +34,7 @@ define profile::mongodb::collection (
       $verify_coll_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
-        db.getCollectionNames();\" | grep -q '\"${collection_name}\"'"
+        printjson(db.getCollectionNames());\" | grep -q '\"${collection_name}\"'"
     } else {
       $create_coll_cmd = "mongo --quiet ${db_address} \
         --eval \"db.createCollection('${collection_name}', ${options_str});\""
@@ -43,7 +43,7 @@ define profile::mongodb::collection (
         --eval \"db.${collection_name}.createIndex(${index_keys_str}, ${index_options_str});\""
 
       $verify_coll_cmd = "mongo --quiet ${db_address} \
-        --eval \"db.getCollectionNames();\" | grep -q '\"${collection_name}\"'"
+        --eval \"printjson(db.getCollectionNames());\" | grep -q '\"${collection_name}\"'"
     }
 
     exec { "Create collection: ${collection_name} for ${name} in ${db_address}":

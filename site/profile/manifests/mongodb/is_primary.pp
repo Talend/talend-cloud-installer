@@ -18,15 +18,15 @@ class profile::mongodb::is_primary (
         exec { 'primary_flag_with_auth':
           path    => '/bin:/usr/bin',
           command => "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
-          -p ${::profile::mongodb::admin_password} --eval \"db.isMaster();\" \
-          | grep -q '\"ismaster\" : true' \
+          -p ${::profile::mongodb::admin_password} --eval \"printjson(db.isMaster().ismaster);\" \
+          | grep -q '^true$' \
           && echo \"true\" > ${primary_flag_file} \
           || echo \"false\" > ${primary_flag_file}"
         }
       } else {
         exec { 'primary_flag_without_auth':
           path    => '/bin:/usr/bin',
-          command => "mongo --quiet admin --eval \"db.isMaster();\" \
+          command => "mongo --quiet admin --eval \"printjson(db.isMaster().ismaster);\" \
           | grep -q '\"ismaster\" : true' \
           && echo \"true\" > ${primary_flag_file} \
           || echo \"false\" > ${primary_flag_file}"
