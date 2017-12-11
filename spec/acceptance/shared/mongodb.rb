@@ -175,14 +175,6 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"dbOwner","db":"dqdict"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u dqdict-user -p mypassword dqdict --eval "printjson(db.Document.getIndexes());" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"published.values":1}' }
-  end
-
-  describe command('/usr/bin/mongo --quiet -u dqdict-user -p mypassword dqdict --eval "printjson(db.Upload.getIndexes());" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"createdAt":1}' }
-  end
-
   describe command('/usr/bin/mongo --quiet -u tds -p mypassword tds --eval "printjson(db.getUser(\'tds\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"dbOwner","db":"tds"}' }
   end

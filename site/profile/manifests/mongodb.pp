@@ -13,8 +13,7 @@ class profile::mongodb (
   $admin_user          = undef,
   $admin_password      = undef,
   $users               = {},
-  $roles               = {},
-  $collections         = {},
+  $roles               = {}
 ) {
 
   require ::profile::common::packages
@@ -202,9 +201,6 @@ class profile::mongodb (
   } ->
   class { '::profile::mongodb::rs_config':
     replset_name => $replset_name,
-  } ->
-  class { '::profile::mongodb::collections':
-    collections => $collections,
   }
 
   if $storage_device {
