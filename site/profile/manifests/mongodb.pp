@@ -13,7 +13,8 @@ class profile::mongodb (
   $admin_user          = undef,
   $admin_password      = undef,
   $users               = {},
-  $roles               = {}
+  $roles               = {},
+  $swap_ensure         = 'present'
 ) {
 
   require ::profile::common::packages
@@ -43,7 +44,7 @@ class profile::mongodb (
   }
 
   swap_file::files { 'mongo_swap':
-    ensure       => present,
+    ensure       => $swap_ensure,
     swapfile     => '/mnt/mongo.swap',
     swapfilesize => $::memorysize,
   }

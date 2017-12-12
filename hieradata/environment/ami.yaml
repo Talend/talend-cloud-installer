@@ -34,6 +34,7 @@ activemq::service_ensure: 'stopped'
 activemq::service_enable: false
 profile::mongodb::service_ensure: 'stopped'
 profile::mongodb::service_enable: false
+profile::mongodb::swap_ensure: 'absent'
 dataprep_dataset::service_ensure: 'stopped'
 dataprep_dataset::service_enable: false
 profile::elasticsearch::status: 'disabled'
