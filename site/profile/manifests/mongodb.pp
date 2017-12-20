@@ -137,6 +137,13 @@ class profile::mongodb (
       before              => Class['::mongodb::client']
     }
   } else {
+    if $::environment == 'ami' or $::environment == 'vagrant' {
+      class { 'profile::build_time_facts':
+        facts_hash => {
+          'mongodb_forced_version' => $::mongodb_forced_version,
+        }
+      }
+    }
     class {'::mongodb::globals':
       version             => $::mongodb_forced_version,
       manage_package_repo => true,
