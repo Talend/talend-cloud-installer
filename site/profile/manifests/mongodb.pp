@@ -130,7 +130,7 @@ class profile::mongodb (
     before  => Class['::mongodb::server']
   }
 
-  if empty($::mongodb_version) {
+  if empty($::mongodb_forced_version) {
     class {'::mongodb::globals':
       manage_package_repo => true,
       manage_pidfile      => false,
@@ -138,7 +138,7 @@ class profile::mongodb (
     }
   } else {
     class {'::mongodb::globals':
-      version             => $::mongodb_version,
+      version             => $::mongodb_forced_version,
       manage_package_repo => true,
       manage_pidfile      => false,
       before              => Class['::mongodb::client']

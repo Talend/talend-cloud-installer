@@ -146,7 +146,7 @@ suites:
         cfn_resource_name: InstanceA
         storage_device: /dev/sdb
         mongo_replset_auth_enable: true
-        mongodb_version: 3.0.15-1.el7
+        mongodb_forced_version: 3.0.15-1.el7
     verifier:
       patterns:
         - 'spec/acceptance/mongodb_versioned_spec.rb'
