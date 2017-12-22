@@ -34,7 +34,6 @@ class profile::mongodb (
   $_mongo_nodes = suffix(split(regsubst($mongodb_nodes, '[\s\[\]\"]', '', 'G'), ','), ':27017')
   $mongo_auth_flag_path = "${dbpath}/mongo_auth.flag"
 
-  $mongo_auth_already_enabled = str2bool(inline_template("<%= File.exist?('${mongo_auth_flag_path}') %>"))
   $mongo_auth_asked = str2bool($replset_auth_enable)
 
   if empty($admin_user) or empty($admin_password){
@@ -64,7 +63,7 @@ class profile::mongodb (
       }
     }
 
-    if $mongo_auth_asked or $mongo_auth_already_enabled {
+    if $mongo_auth_asked {
       $keyfile = '/var/lib/mongo/shared_key'
     } else {
       $keyfile = undef
@@ -123,6 +122,13 @@ class profile::mongodb (
     command => 'sysctl --system'
   }
 
+  class { '::profile::mongodb::verify_auth':
+    auth_wanted => $mongo_auth_asked,
+    flag_file   => $mongo_auth_flag_path,
+    require     => [Class['::profile::common::mount_device'], Class['::mongodb::server::config']],
+    before      => Class['::mongodb::server::service']
+  }
+
   class { '::profile::common::mount_device':
     device  => $storage_device,
     path    => $dbpath,
@@ -174,10 +180,11 @@ class profile::mongodb (
   }
 
 
+
   class { '::mongodb::client':
   } ->
   class { '::mongodb::server':
-    auth           => $mongo_auth_already_enabled,
+    auth           => $mongo_auth_asked,
     bind_ip        => [$::ipaddress, '127.0.0.1'],
     replset        => $replset_name,
     replset_config => $replset_config,
@@ -196,7 +203,6 @@ class profile::mongodb (
   profile::mongodb::wait_for_mongod { 'before auth':
   } ->
   class { '::profile::mongodb::auth':
-    auth_already_enabled => $mongo_auth_already_enabled,
     auth_wanted          => $mongo_auth_asked,
   } ->
   profile::mongodb::wait_for_mongod { 'after auth':
