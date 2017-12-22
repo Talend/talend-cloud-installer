@@ -41,6 +41,16 @@ class profile::base {
     noop    => false,
   }
 
+  # Also needed for custom facts
+  file {
+    '/etc/facter':
+      ensure => directory;
+
+    '/etc/facter/facts.d':
+      ensure  => directory,
+      require => File['/etc/facter'];
+  }
+
   create_resources('limits::fragment', hiera('limits::fragment', {}))
 
 }
