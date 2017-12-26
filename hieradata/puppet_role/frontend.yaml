@@ -47,6 +47,7 @@ tic::frontend::sts_password: "%{::master_password}"
 tic::frontend::sts_username: 'admin'
 tic::frontend::tcomp_static_ips: "%{::vpc_nat_ips}"
 tic::frontend::tdp_url: "%{::tdp_url}"
+tic::frontend::tds_url: "%{::tds_url}"
 tic::frontend::tmc_url: "%{::tmc_url}"
 tic::frontend::trial_service_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::web_samples_account_name: "sample"
