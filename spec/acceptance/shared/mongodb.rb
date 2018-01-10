@@ -22,11 +22,11 @@ shared_examples 'profile::mongodb' do
   end
 
   describe 'Verifying swap' do
-    describe file('/mnt/mongo.swap') do
+    describe file('/var/lib/mongo/mongo.swap') do
       it { should be_file }
     end
     describe command('/sbin/swapon') do
-      its(:stdout) { should include '/mnt/mongo.swap file' }
+      its(:stdout) { should include '/var/lib/mongo/mongo.swap file' }
     end
   end
 

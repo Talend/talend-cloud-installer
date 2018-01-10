@@ -42,12 +42,6 @@ class profile::mongodb (
     $create_admin = true
   }
 
-  swap_file::files { 'mongo_swap':
-    ensure       => $swap_ensure,
-    swapfile     => '/mnt/mongo.swap',
-    swapfilesize => $::memorysize,
-  }
-
   # explicitly only support replica sets of size 3
   if size($_mongo_nodes) == 3 {
     if empty($::mongodb_replset_name) {
@@ -223,6 +217,13 @@ class profile::mongodb (
       owner                   => 'mongod',
       group                   => 'mongod',
       fixup_ownership_require => Package['mongodb_server']
+    }
+
+    swap_file::files { 'mongo_swap':
+      ensure       => $swap_ensure,
+      swapfile     => "${dbpath}/mongo.swap",
+      swapfilesize => $::memorysize,
+      require      => Class['::profile::common::mount_device::fixup_ownership']
     }
   }
 
