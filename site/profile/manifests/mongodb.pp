@@ -14,7 +14,8 @@ class profile::mongodb (
   $admin_password      = undef,
   $users               = {},
   $roles               = {},
-  $swap_ensure         = 'present'
+  $swap_ensure         = 'present',
+  $mongodb_yaml_profile_name = '',
 ) {
 
   require ::profile::common::packages
@@ -35,6 +36,12 @@ class profile::mongodb (
   $mongo_auth_flag_path = "${dbpath}/mongo_auth.flag"
 
   $mongo_auth_asked = str2bool($replset_auth_enable)
+
+  if empty($mongodb_yaml_profile_name){
+    $mongodb_yaml_profile = {}
+  } else {
+    $mongodb_yaml_profile = hiera($mongodb_yaml_profile_name, {})
+  }
 
   if empty($admin_user) or empty($admin_password){
     $create_admin = false

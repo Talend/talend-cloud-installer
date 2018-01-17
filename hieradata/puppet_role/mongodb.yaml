@@ -7,6 +7,7 @@ mongodb::server::verbose: true
 profile::mongodb::replset_auth_enable: '%{::mongo_replset_auth_enable}'
 profile::mongodb::mongodb_nodes: "%{::mongodb_nodes}"
 profile::mongodb::storage_device: "%{::storage_device}"
+profile::mongodb::mongodb_yaml_profile_name: "%{::mongodb_yaml_profile_name}"
 
 profile::mongodb::admin_user: "sreadmin"
 profile::mongodb::admin_password: "%{::master_password}"
