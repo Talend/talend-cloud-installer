@@ -120,3 +120,11 @@ cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/mongodb/mongod.log":
      path: '/var/log/mongodb/mongod.log'
      datetime_format: '%b %d %H:%M:%S'
+
+# IPAAS MongoDB replicaset profile
+mongodb_ipaas_replicaset:
+  replset_name: 'tipaas'
+
+# TDS MongoDB replicaset profile
+mongodb_tds_replicaset:
+  replset_name: 'tds'
