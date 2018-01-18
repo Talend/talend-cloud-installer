@@ -54,6 +54,8 @@ tic::frontend::web_samples_account_name: "sample"
 tic::frontend::web_use_ssl: false
 tic::frontend::webhooks_service_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
 tic::frontend::workspace_url: "/ipaas/services"
+tic::frontend::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
+tic::frontend::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true

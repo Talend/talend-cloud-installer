@@ -136,7 +136,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-tic
   specs:
-    talend-tic (0.2.9.4)
+    talend-tic (0.2.9.5)
 
 GITHUBTARBALL
   remote: Talend/puppet-user_accounts
