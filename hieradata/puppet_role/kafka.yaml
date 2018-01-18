@@ -106,6 +106,7 @@ kafka_applications_cluster_ha:
     impact-analysis-offsets:
       partitions: 1
     publication: {}
+    dqDictionary: {}
 
 kafka_applications_cluster_simple:
   kafka_topics_default_partitions: 2
@@ -140,6 +141,7 @@ kafka_applications_cluster_simple:
     impact-analysis-offsets:
       partitions: 1
     publication: {}
+    dqDictionary: {}
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:
