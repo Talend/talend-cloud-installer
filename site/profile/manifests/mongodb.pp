@@ -43,6 +43,12 @@ class profile::mongodb (
     $mongodb_yaml_profile = hiera($mongodb_yaml_profile_name, {})
   }
 
+  if has_key($mongodb_yaml_profile, 'replset_name') {
+    $_replset_name = $mongodb_yaml_profile['replset_name']
+  } else {
+    $_replset_name = $_replset_name
+  }
+
   if empty($admin_user) or empty($admin_password){
     $create_admin = false
   } else {
@@ -51,10 +57,10 @@ class profile::mongodb (
 
   # explicitly only support replica sets of size 3
   if size($_mongo_nodes) == 3 {
-    if empty($::mongodb_replset_name) {
+    if empty($_replset_name) {
       $replset_name = 'tipaas'
     } else {
-      $replset_name = $::mongodb_replset_name
+      $replset_name = $_replset_name
     }
 
     $replset_config = {
