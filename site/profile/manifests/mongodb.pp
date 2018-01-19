@@ -56,9 +56,9 @@ class profile::mongodb (
   }
 
   if has_key($mongodb_yaml_profile, 'users') {
-    $users = deep_merge($users, $mongodb_yaml_profile['users'])
+    $_users = deep_merge($users, $mongodb_yaml_profile['users'])
   } else {
-    $users = $users
+    $_users = $users
   }
 
   if empty($admin_user) or empty($admin_password){
@@ -231,7 +231,7 @@ class profile::mongodb (
     roles => $roles,
   } ->
   class { '::profile::mongodb::users':
-    users => $users,
+    users => $_users,
   } ->
   class { '::profile::mongodb::rs_config':
     replset_name => $replset_name,
