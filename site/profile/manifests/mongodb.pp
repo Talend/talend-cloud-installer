@@ -15,7 +15,8 @@ class profile::mongodb (
   $users               = {},
   $roles               = {},
   $swap_ensure         = 'present',
-  $mongodb_yaml_profile_name = '',
+  $mongodb_yaml_profile_name = undef,
+  $users               = undef
 ) {
 
   require ::profile::common::packages
@@ -219,7 +220,6 @@ class profile::mongodb (
     admin_username => $admin_user,
     admin_password => $admin_password,
     storage_engine => $storage_engine,
-    smallfiles     => $smallfiles,
   } ->
   profile::mongodb::wait_for_mongod { 'before auth':
   } ->
