@@ -52,12 +52,6 @@ profile::mongodb::users:
         db: 'admin'
       - role: 'dbOwner'
         db: 'ipaas'
-  tpsvc_config:
-    db_address: 'configuration'
-    password: "%{::master_password}"
-    roles:
-      - role: 'dbOwner'
-        db: 'configuration'
   backup:
     db_address: 'admin'
     username: 'backup'
@@ -79,20 +73,6 @@ profile::mongodb::users:
     roles:
       - role: 'clusterMonitor'
         db: 'admin'
-  dq:
-    db_address: 'dqdict'
-    username: 'dqdict-user'
-    password: '%{::master_password}'
-    roles:
-      - role: 'dbOwner'
-        db: 'dqdict'
-  tds:
-    db_address: 'tds'
-    username: 'tds'
-    password: '%{::master_password}'
-    roles:
-      - role: 'dbOwner'
-        db: 'tds'
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
@@ -126,8 +106,30 @@ cloudwatchlog_files:
 mongodb_ipaas_replicaset:
   replset_name: 'tipaas'
   storage_engine: 'mmapv1'
+  users:
+    tpsvc_config:
+      db_address: 'configuration'
+      password: "%{::master_password}"
+      roles:
+        - role: 'dbOwner'
+          db: 'configuration'
+    dq:
+      db_address: 'dqdict'
+      username: 'dqdict-user'
+      password: '%{::master_password}'
+      roles:
+        - role: 'dbOwner'
+          db: 'dqdict'
 
 # TDS MongoDB replicaset profile
 mongodb_tds_replicaset:
   replset_name: 'tds'
   storage_engine: 'wiredTiger'
+  users:
+    tds:
+      db_address: 'tds'
+      username: 'tds'
+      password: '%{::master_password}'
+      roles:
+        - role: 'dbOwner'
+          db: 'tds'

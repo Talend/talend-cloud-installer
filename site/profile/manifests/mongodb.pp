@@ -55,6 +55,12 @@ class profile::mongodb (
     $storage_engine = $storage_engine
   }
 
+  if has_key($mongodb_yaml_profile, 'users') {
+    $users = deep_merge($users, $kafka_yaml_profile['users'])
+  } else {
+    $users = $users
+  }
+
   if empty($admin_user) or empty($admin_password){
     $create_admin = false
   } else {
