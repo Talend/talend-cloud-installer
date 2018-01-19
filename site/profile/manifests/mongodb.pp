@@ -49,6 +49,18 @@ class profile::mongodb (
     $_replset_name = $_replset_name
   }
 
+  if has_key($mongodb_yaml_profile, 'storage_engine') {
+    $storage_engine = $mongodb_yaml_profile['storage_engine']
+  } else {
+    $storage_engine = $storage_engine
+  }
+
+  if has_key($mongodb_yaml_profile, 'smallfiles') {
+    $smallfiles = $mongodb_yaml_profile['smallfiles']
+  } else {
+    $smallfiles = $smallfiles
+  }
+
   if empty($admin_user) or empty($admin_password){
     $create_admin = false
   } else {
@@ -205,7 +217,9 @@ class profile::mongodb (
     syslog         => true,
     create_admin   => $create_admin,
     admin_username => $admin_user,
-    admin_password => $admin_password
+    admin_password => $admin_password,
+    storage_engine => $storage_engine,
+    smallfiles     => $smallfiles,
   } ->
   profile::mongodb::wait_for_mongod { 'before auth':
   } ->
