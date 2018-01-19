@@ -16,7 +16,6 @@ class profile::mongodb (
   $roles               = {},
   $swap_ensure         = 'present',
   $mongodb_yaml_profile_name = undef,
-  $users               = undef
 ) {
 
   require ::profile::common::packages
@@ -57,7 +56,7 @@ class profile::mongodb (
   }
 
   if has_key($mongodb_yaml_profile, 'users') {
-    $users = deep_merge($users, $kafka_yaml_profile['users'])
+    $users = deep_merge($users, $mongodb_yaml_profile['users'])
   } else {
     $users = $users
   }
