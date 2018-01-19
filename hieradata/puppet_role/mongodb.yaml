@@ -126,10 +126,8 @@ cloudwatchlog_files:
 mongodb_ipaas_replicaset:
   replset_name: 'tipaas'
   storage_engine: 'mmapv1'
-  smallfiles: 'true'
 
 # TDS MongoDB replicaset profile
 mongodb_tds_replicaset:
   replset_name: 'tds'
   storage_engine: 'wiredTiger'
-  smallfiles: 'false'

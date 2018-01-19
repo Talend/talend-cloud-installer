@@ -55,12 +55,6 @@ class profile::mongodb (
     $storage_engine = $storage_engine
   }
 
-  if has_key($mongodb_yaml_profile, 'smallfiles') {
-    $smallfiles = $mongodb_yaml_profile['smallfiles']
-  } else {
-    $smallfiles = $smallfiles
-  }
-
   if empty($admin_user) or empty($admin_password){
     $create_admin = false
   } else {
