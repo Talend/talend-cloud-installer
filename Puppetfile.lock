@@ -52,9 +52,6 @@ FORGE
     puppetlabs-limits (0.1.0)
     puppetlabs-lvm (0.7.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
-    puppetlabs-mongodb (0.17.0)
-      puppetlabs-apt (< 3.0.0, >= 2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
     puppetlabs-ntp (4.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppetlabs-stdlib (4.14.0)
@@ -87,6 +84,15 @@ GIT
       puppet-archive (>= 1.0.0)
       puppetlabs-java (>= 1.4.2)
       puppetlabs-stdlib (>= 4.11.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-mongodb.git
+  ref: 0.18.x
+  sha: b2e9932b5ba90b8e0404885da35c94f1977210ad
+  specs:
+    puppetlabs-mongodb (0.18.0)
+      puppetlabs-apt (< 3.0.0, >= 2.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
 
 GIT
   remote: https://github.com/Talend/puppet-nexus.git
@@ -164,7 +170,7 @@ DEPENDENCIES
   puppetlabs-java (~> 1.0)
   puppetlabs-limits (~> 0.0)
   puppetlabs-lvm (~> 0.0)
-  puppetlabs-mongodb (~> 0.0)
+  puppetlabs-mongodb (>= 0)
   puppetlabs-ntp (~> 4.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-stdlib (~> 4.0)

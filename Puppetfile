@@ -49,3 +49,6 @@ mod 'talend-user_accounts', '0.x',
 mod 'puppetlabs-postgresql',
   :git => 'https://github.com/Talend/puppetlabs-postgresql.git',
   :ref => 'master'
+mod 'puppetlabs-mongodb',
+  :git => 'https://github.com/Talend/puppet-mongodb.git',
+  :ref => '0.18.x'

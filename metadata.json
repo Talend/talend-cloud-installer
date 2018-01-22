@@ -14,7 +14,6 @@
     {"name": "jfryman/selinux", "version_requirement": "0.x"},
     {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
     {"name": "puppetlabs/concat", "version_requirement": "1.x"},
-    {"name": "puppetlabs/mongodb", "version_requirement": "0.x"},
     {"name": "puppetlabs/tomcat", "version_requirement": "1.x"},
     {"name": "puppetlabs/java", "version_requirement": "1.x"},
     {"name": "puppetlabs/limits", "version_requirement": "0.x"},

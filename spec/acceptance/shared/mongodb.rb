@@ -30,6 +30,17 @@ shared_examples 'profile::mongodb' do
     end
   end
 
+  describe 'Verify MongoDB major version and facts' do
+    describe command('/usr/bin/facter -p mongodb_version') do
+      its(:stdout) { is_expected.to match(/^[2-3]/) }
+    end
+    describe command('/usr/bin/facter -p mongodb_is_master') do
+      # with auth enabled, the mongodb facter can't connect
+      its(:stdout) { is_expected.to match(/^(unknown)|(true)\n/) }
+    end
+  end
+
+
   describe 'mongod hugepages off' do
     describe command('/sbin/tuned-adm active') do
       its(:stdout) { should include 'No current active profile.' }
@@ -94,7 +105,10 @@ shared_examples 'profile::mongodb' do
       it { should be_file }
       its(:content) { should include 'security.authorization: enabled' }
     end
-    describe command('/usr/bin/mongo --quiet -u admin -p mybadpassword ipaas --eval "db.help();"') do
+    describe command('/usr/bin/mongo --quiet -u sreadmin -p mypassword admin --eval "db.help();"') do
+      its(:exit_status) { should eq 0 }
+    end
+    describe command('/usr/bin/mongo --quiet -u sreadmin -p mybadpassword admin --eval "db.help();"') do
       its(:exit_status) { should eq 1 }
     end
   end
