@@ -75,15 +75,6 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 1.0.0)
 
 GIT
-  remote: git://github.com/Talend/puppet-mongodb.git
-  ref: 0.18.x-test
-  sha: e3cc2b9808ea286bb194100e63f87939c5dad4b6
-  specs:
-    puppetlabs-mongodb (0.18.0)
-      puppetlabs-apt (< 3.0.0, >= 2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
-
-GIT
   remote: https://github.com/Talend/puppet-kafka.git
   ref: master
   sha: 9faf6a9acb9a26822fa502ce1b8affa8a68cb467
@@ -93,6 +84,15 @@ GIT
       puppet-archive (>= 1.0.0)
       puppetlabs-java (>= 1.4.2)
       puppetlabs-stdlib (>= 4.11.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-mongodb.git
+  ref: 0.18.x
+  sha: b2e9932b5ba90b8e0404885da35c94f1977210ad
+  specs:
+    puppetlabs-mongodb (0.18.0)
+      puppetlabs-apt (< 3.0.0, >= 2.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
 
 GIT
   remote: https://github.com/Talend/puppet-nexus.git

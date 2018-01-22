@@ -50,5 +50,5 @@ mod 'puppetlabs-postgresql',
   :git => 'https://github.com/Talend/puppetlabs-postgresql.git',
   :ref => 'master'
 mod 'puppetlabs-mongodb',
-  :git => 'git://github.com/Talend/puppet-mongodb.git',
-  :ref => '0.18.x-test'
+  :git => 'https://github.com/Talend/puppet-mongodb.git',
+  :ref => '0.18.x'
