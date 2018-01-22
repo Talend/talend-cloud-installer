@@ -39,19 +39,6 @@ profile::mongodb::roles:
     roles: []
 
 profile::mongodb::users:
-  admin:
-    db_address: 'ipaas'
-    username: 'admin'
-    password: "%{::master_password}"
-    roles:
-      - role: 'userAdminAnyDatabase'
-        db: 'admin'
-      - role: 'dbAdminAnyDatabase'
-        db: 'admin'
-      - role: 'readWriteAnyDatabase'
-        db: 'admin'
-      - role: 'dbOwner'
-        db: 'ipaas'
   backup:
     db_address: 'admin'
     username: 'backup'
@@ -107,6 +94,19 @@ mongodb_ipaas_replicaset:
   replset_name: 'tipaas'
   storage_engine: 'mmapv1'
   users:
+    admin:
+      db_address: 'ipaas'
+      username: 'admin'
+      password: "%{::master_password}"
+      roles:
+        - role: 'userAdminAnyDatabase'
+          db: 'admin'
+        - role: 'dbAdminAnyDatabase'
+          db: 'admin'
+        - role: 'readWriteAnyDatabase'
+          db: 'admin'
+        - role: 'dbOwner'
+          db: 'ipaas'
     tpsvc_config:
       db_address: 'configuration'
       password: "%{::master_password}"
