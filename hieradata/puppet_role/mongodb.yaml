@@ -90,7 +90,7 @@ cloudwatchlog_files:
      datetime_format: '%b %d %H:%M:%S'
 
 # IPAAS MongoDB replicaset profile
-mongodb_ipaas_replicaset:
+mongodb_default_profile:
   replset_name: 'tipaas'
   storage_engine: 'mmapv1'
   users:
@@ -122,7 +122,7 @@ mongodb_ipaas_replicaset:
           db: 'dqdict'
 
 # TDS MongoDB replicaset profile
-mongodb_tds_replicaset:
+mongodb_tds_profile:
   replset_name: 'tds'
   storage_engine: 'wiredTiger'
   users:
