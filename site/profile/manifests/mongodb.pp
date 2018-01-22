@@ -44,15 +44,15 @@ class profile::mongodb (
   }
 
   if has_key($mongodb_yaml_profile, 'replset_name') {
-    $_replset_name = $mongodb_yaml_profile['replset_name']
+    $replset_name = $mongodb_yaml_profile['replset_name']
   } else {
-    $_replset_name = $_replset_name
+    $replset_name = 'tipaas'
   }
 
   if has_key($mongodb_yaml_profile, 'storage_engine') {
     $storage_engine = $mongodb_yaml_profile['storage_engine']
   } else {
-    $storage_engine = $storage_engine
+    $storage_engine = 'mmapv1'
   }
 
   if has_key($mongodb_yaml_profile, 'users') {
@@ -67,28 +67,17 @@ class profile::mongodb (
     $create_admin = true
   }
 
-  # explicitly only support replica sets of size 3
-  if size($_mongo_nodes) == 3 {
-    if empty($_replset_name) {
-      $replset_name = 'tipaas'
-    } else {
-      $replset_name = $_replset_name
+  $replset_config = {
+    "${replset_name}" => {
+      ensure  => 'present',
+      members => $_mongo_nodes
     }
+  }
 
-    $replset_config = {
-      "${replset_name}" => {
-        ensure  => 'present',
-        members => $_mongo_nodes
-      }
-    }
-
-    if $mongo_auth_asked {
-      $keyfile = '/var/lib/mongo/shared_key'
-    } else {
-      $keyfile = undef
-    }
+  if $mongo_auth_asked {
+    $keyfile = '/var/lib/mongo/shared_key'
   } else {
-    $replset_name = undef
+    $keyfile = undef
   }
 
   file { 'mongod disable-transparent-hugepages':
