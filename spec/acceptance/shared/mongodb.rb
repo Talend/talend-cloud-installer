@@ -162,17 +162,6 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"restore","db":"admin"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u admin -p mypassword ipaas --eval "printjson(db.getUser(\'admin\'));" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"role":"userAdminAnyDatabase","db":"admin"}' }
-    its(:stdout) { should include '{"role":"dbAdminAnyDatabase","db":"admin"}' }
-    its(:stdout) { should include '{"role":"readWriteAnyDatabase","db":"admin"}' }
-    its(:stdout) { should include '{"role":"dbOwner","db":"ipaas"}' }
-  end
-
-  describe command('/usr/bin/mongo --quiet -u tpsvc_config -p mypassword configuration --eval "printjson(db.getUser(\'tpsvc_config\'));" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"role":"dbOwner","db":"configuration"}' }
-  end
-
   describe command('/usr/bin/mongo --quiet -u backup -p mypassword admin --eval "printjson(db.getUser(\'backup\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"backupRole","db":"admin"}' }
   end
@@ -185,13 +174,6 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"clusterMonitor","db":"admin"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u dqdict-user -p mypassword dqdict --eval "printjson(db.getUser(\'dqdict-user\'));" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"role":"dbOwner","db":"dqdict"}' }
-  end
-
-  describe command('/usr/bin/mongo --quiet -u tds -p mypassword tds --eval "printjson(db.getUser(\'tds\'));" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"role":"dbOwner","db":"tds"}' }
-  end
 
   describe 'Logrotate configuration' do
     describe file('/etc/logrotate.d/hourly/mongodb_log') do

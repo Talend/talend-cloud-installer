@@ -14,7 +14,8 @@ class profile::mongodb (
   $admin_password      = undef,
   $users               = {},
   $roles               = {},
-  $swap_ensure         = 'present'
+  $swap_ensure         = 'present',
+  $mongodb_yaml_profile_name = undef,
 ) {
 
   require ::profile::common::packages
@@ -36,6 +37,30 @@ class profile::mongodb (
 
   $mongo_auth_asked = str2bool($replset_auth_enable)
 
+  if empty($mongodb_yaml_profile_name){
+    $mongodb_yaml_profile = {}
+  } else {
+    $mongodb_yaml_profile = hiera($mongodb_yaml_profile_name, {})
+  }
+
+  if has_key($mongodb_yaml_profile, 'replset_name') {
+    $_replset_name = $mongodb_yaml_profile['replset_name']
+  } else {
+    $_replset_name = $_replset_name
+  }
+
+  if has_key($mongodb_yaml_profile, 'storage_engine') {
+    $storage_engine = $mongodb_yaml_profile['storage_engine']
+  } else {
+    $storage_engine = $storage_engine
+  }
+
+  if has_key($mongodb_yaml_profile, 'users') {
+    $_users = deep_merge($users, $mongodb_yaml_profile['users'])
+  } else {
+    $_users = $users
+  }
+
   if empty($admin_user) or empty($admin_password){
     $create_admin = false
   } else {
@@ -44,10 +69,10 @@ class profile::mongodb (
 
   # explicitly only support replica sets of size 3
   if size($_mongo_nodes) == 3 {
-    if empty($::mongodb_replset_name) {
+    if empty($_replset_name) {
       $replset_name = 'tipaas'
     } else {
-      $replset_name = $::mongodb_replset_name
+      $replset_name = $_replset_name
     }
 
     $replset_config = {
@@ -192,7 +217,8 @@ class profile::mongodb (
     syslog         => true,
     create_admin   => $create_admin,
     admin_username => $admin_user,
-    admin_password => $admin_password
+    admin_password => $admin_password,
+    storage_engine => $storage_engine,
   } ->
   profile::mongodb::wait_for_mongod { 'before auth':
   } ->
@@ -205,7 +231,7 @@ class profile::mongodb (
     roles => $roles,
   } ->
   class { '::profile::mongodb::users':
-    users => $users,
+    users => $_users,
   } ->
   class { '::profile::mongodb::rs_config':
     replset_name => $replset_name,
