@@ -52,9 +52,6 @@ FORGE
     puppetlabs-limits (0.1.0)
     puppetlabs-lvm (0.7.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
-    puppetlabs-mongodb (0.17.0)
-      puppetlabs-apt (< 3.0.0, >= 2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
     puppetlabs-ntp (4.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppetlabs-stdlib (4.14.0)
@@ -76,6 +73,15 @@ FORGE
       puppetlabs-stdlib (>= 3.2.1)
     yo61-logrotate (1.4.0)
       puppetlabs-stdlib (< 5.0.0, >= 1.0.0)
+
+GIT
+  remote: git://github.com/Talend/puppet-mongodb.git
+  ref: 0.18.x-test
+  sha: e3cc2b9808ea286bb194100e63f87939c5dad4b6
+  specs:
+    puppetlabs-mongodb (0.18.0)
+      puppetlabs-apt (< 3.0.0, >= 2.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
 
 GIT
   remote: https://github.com/Talend/puppet-kafka.git
@@ -164,7 +170,7 @@ DEPENDENCIES
   puppetlabs-java (~> 1.0)
   puppetlabs-limits (~> 0.0)
   puppetlabs-lvm (~> 0.0)
-  puppetlabs-mongodb (~> 0.0)
+  puppetlabs-mongodb (>= 0)
   puppetlabs-ntp (~> 4.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-stdlib (~> 4.0)
