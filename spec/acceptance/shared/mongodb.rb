@@ -105,10 +105,10 @@ shared_examples 'profile::mongodb' do
       it { should be_file }
       its(:content) { should include 'security.authorization: enabled' }
     end
-    describe command('/usr/bin/mongo --quiet -u sreadmin -p mypassword admin --eval "db.help();"') do
+    describe command('/usr/bin/mongo --norc --quiet -u sreadmin -p mypassword admin --eval "db.help();"') do
       its(:exit_status) { should eq 0 }
     end
-    describe command('/usr/bin/mongo --quiet -u sreadmin -p mybadpassword admin --eval "db.help();"') do
+    describe command('/usr/bin/mongo --norc --quiet -u sreadmin -p mybadpassword admin --eval "db.help();"') do
       its(:exit_status) { should eq 1 }
     end
   end
@@ -146,7 +146,7 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include 'xfs' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u sreadmin -p mypassword admin --eval "printjson(db.getUser(\'sreadmin\'));" | /usr/bin/tr -d "\t\n "') do
+  describe command('/usr/bin/mongo --norc --quiet -u sreadmin -p mypassword admin --eval "printjson(db.getUser(\'sreadmin\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"userAdmin","db":"admin"}' }
     its(:stdout) { should include '{"role":"readWrite","db":"admin"}' }
     its(:stdout) { should include '{"role":"dbAdmin","db":"admin"}' }
@@ -162,15 +162,15 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"restore","db":"admin"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u backup -p mypassword admin --eval "printjson(db.getUser(\'backup\'));" | /usr/bin/tr -d "\t\n "') do
+  describe command('/usr/bin/mongo --norc --quiet -u backup -p mypassword admin --eval "printjson(db.getUser(\'backup\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"backupRole","db":"admin"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u monitor -p mypassword admin --eval "printjson(db.getUser(\'monitor\'));" | /usr/bin/tr -d "\t\n "') do
+  describe command('/usr/bin/mongo --norc --quiet -u monitor -p mypassword admin --eval "printjson(db.getUser(\'monitor\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"clusterMonitor","db":"admin"}' }
   end
 
-  describe command('/usr/bin/mongo --quiet -u datadog -p mypassword admin --eval "printjson(db.getUser(\'datadog\'));" | /usr/bin/tr -d "\t\n "') do
+  describe command('/usr/bin/mongo --norc --quiet -u datadog -p mypassword admin --eval "printjson(db.getUser(\'datadog\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"clusterMonitor","db":"admin"}' }
   end
 

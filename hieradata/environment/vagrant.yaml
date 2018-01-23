@@ -7,6 +7,11 @@ tic::services::rt_flow_instance_profile: 'test-instance_profile'
 tic::services::rt_flow_t_release:         'my-release'
 tic::services::rt_flow_t_branch:          'my-branch'
 
+mongodb_tds_profile_overrode:
+  users:
+    provisioning:
+      password: 'isnotmasterpassword'
+
 profile::common::hosts::entries:
   mongo:
     entries: '[ "10.0.2.12", "10.0.2.23" ]'

@@ -88,7 +88,7 @@ GIT
 GIT
   remote: https://github.com/Talend/puppet-mongodb.git
   ref: 0.18.x
-  sha: b2e9932b5ba90b8e0404885da35c94f1977210ad
+  sha: e59ad3a9c30fc68ea903c445c1a37ea1ce6e74ef
   specs:
     puppetlabs-mongodb (0.18.0)
       puppetlabs-apt (< 3.0.0, >= 2.1.0)

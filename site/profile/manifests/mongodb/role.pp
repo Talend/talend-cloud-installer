@@ -17,7 +17,7 @@ define profile::mongodb::role (
     $roles_str      = regsubst(to_json_ex($roles), '\"', '\\"', 'G')
 
     if $::profile::mongodb::mongo_auth_already_enabled or $::profile::mongodb::mongo_auth_asked {
-      $create_role_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $create_role_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
           db.createRole({ \
@@ -25,26 +25,25 @@ define profile::mongodb::role (
           privileges: ${privileges_str}, \
           roles: ${roles_str} \
           });\""
-      $verify_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $verify_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
         printjson(db.getRole('${rolename}'));\" \
         | tr -d \"\t\n \" | grep -qv \"^null$\""
     } else {
-      $create_role_cmd = "mongo --quiet ${db_address} --eval \"db.createRole({ \
+      $create_role_cmd = "mongo --norc --quiet ${db_address} --eval \"db.createRole({ \
         role: '${rolename}', \
         privileges: ${privileges_str}, \
         roles: ${roles_str} \
         });\""
-      $verify_cmd = "mongo --quiet ${db_address} --eval \"printjson(db.getRole('${rolename}'));\" \
+      $verify_cmd = "mongo --norc --quiet ${db_address} --eval \"printjson(db.getRole('${rolename}'));\" \
         | tr -d \"\t\n \" | grep -qv \"^null$\""
     }
     exec { "Create MongoDB role : ${rolename}":
       path    => '/bin:/usr/bin',
       command => $create_role_cmd,
       unless  => $verify_cmd,
-      onlyif  => "grep -q true ${::profile::mongodb::is_primary::primary_flag_file}",
-      require => File[$::profile::mongodb::is_primary::primary_flag_file]
+      onlyif  => "grep -q true ${::profile::mongodb::is_primary::primary_flag_file}"
     }
   }
 }

@@ -1,5 +1,5 @@
 class profile::mongodb::is_primary (
-  $primary_flag_file = '/tmp/mongo_is_primary.flag'
+  $primary_flag_file = "${::profile::mongodb::dbpath}/mongo_is_primary.flag"
 ) {
 
   # $mongo_is_writable if we can write on this Mongo
@@ -11,31 +11,31 @@ class profile::mongodb::is_primary (
       }
     } else {
       # We need to know if we are on the primary server
-      file { $primary_flag_file:
-        ensure  => file
+      exec { 'wait_for_cluster_stabilization_on_creation':
+        path    => '/bin:/usr/bin',
+        command => "sleep 90 && touch ${primary_flag_file}",
+        creates => $primary_flag_file
       }
       if $::profile::mongodb::mongo_auth_already_enabled or $::profile::mongodb::mongo_auth_asked {
         exec { 'primary_flag_with_auth':
           path    => '/bin:/usr/bin',
-          command => "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+          command => "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
           -p ${::profile::mongodb::admin_password} --eval \"printjson(db.isMaster().ismaster);\" \
           | grep -q '^true$' \
           && echo \"true\" > ${primary_flag_file} \
-          || echo \"false\" > ${primary_flag_file}"
+          || echo \"false\" > ${primary_flag_file}",
+          require => Exec['wait_for_cluster_stabilization_on_creation']
         }
       } else {
         exec { 'primary_flag_without_auth':
           path    => '/bin:/usr/bin',
-          command => "mongo --quiet admin --eval \"printjson(db.isMaster().ismaster);\" \
-          | grep -q '\"ismaster\" : true' \
+          command => "mongo --norc --quiet admin --eval \"printjson(db.isMaster().ismaster);\" \
+          | grep -q '^true$' \
           && echo \"true\" > ${primary_flag_file} \
-          || echo \"false\" > ${primary_flag_file}"
+          || echo \"false\" > ${primary_flag_file}",
+          require => Exec['wait_for_cluster_stabilization_on_creation']
         }
       }
-    }
-  } else {
-    file { $primary_flag_file:
-      ensure => absent
     }
   }
 }

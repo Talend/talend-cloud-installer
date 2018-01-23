@@ -21,28 +21,28 @@ define profile::mongodb::collection (
     $index_options_str = regsubst(to_json_ex($index_options), '\"', '\\"', 'G')
 
     if $::profile::mongodb::mongo_auth_already_enabled or $::profile::mongodb::mongo_auth_asked {
-      $create_coll_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $create_coll_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
         db.createCollection('${collection_name}', ${options_str});\""
 
-      $create_index_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $create_index_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
         db.${collection_name}.createIndex(${index_keys_str}, ${index_options_str});\""
 
-      $verify_coll_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $verify_coll_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} \
         --eval \"db=db.getSiblingDB('${db_address}'); \
         printjson(db.getCollectionNames());\" | grep -q '\"${collection_name}\"'"
     } else {
-      $create_coll_cmd = "mongo --quiet ${db_address} \
+      $create_coll_cmd = "mongo --norc --quiet ${db_address} \
         --eval \"db.createCollection('${collection_name}', ${options_str});\""
 
-      $create_index_cmd = "mongo --quiet ${db_address} \
+      $create_index_cmd = "mongo --norc --quiet ${db_address} \
         --eval \"db.${collection_name}.createIndex(${index_keys_str}, ${index_options_str});\""
 
-      $verify_coll_cmd = "mongo --quiet ${db_address} \
+      $verify_coll_cmd = "mongo --norc --quiet ${db_address} \
         --eval \"printjson(db.getCollectionNames());\" | grep -q '\"${collection_name}\"'"
     }
 
@@ -50,8 +50,7 @@ define profile::mongodb::collection (
       path    => '/bin:/usr/bin',
       command => $create_coll_cmd,
       unless  => $verify_coll_cmd,
-      onlyif  => "grep -q true ${::profile::mongodb::is_primary::primary_flag_file}",
-      require => File[$::profile::mongodb::is_primary::primary_flag_file]
+      onlyif  => "grep -q true ${::profile::mongodb::is_primary::primary_flag_file}"
     }
 
     if str2bool($create_index) {

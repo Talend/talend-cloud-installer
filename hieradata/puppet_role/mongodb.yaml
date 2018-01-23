@@ -126,10 +126,14 @@ mongodb_tds_profile:
   replset_name: 'tds'
   storage_engine: 'wiredTiger'
   users:
-    tds:
-      db_address: 'tds'
-      username: 'tds'
+    provisioning:
+      db_address: 'admin'
+      username: 'provisioning'
       password: '%{::master_password}'
       roles:
-        - role: 'dbOwner'
-          db: 'tds'
+        - role: 'userAdminAnyDatabase'
+          db: 'admin'
+        - role: 'dbAdminAnyDatabase'
+          db: 'admin'
+        - role: 'readWriteAnyDatabase'
+          db: 'admin'

@@ -13,13 +13,10 @@ class profile::mongodb::rs_config (
       rs.reconfig(cfg);"
 
     if $::profile::mongodb::mongo_auth_already_enabled or $::profile::mongodb::mongo_auth_asked {
-      $reconfig_mongo_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
+      $reconfig_mongo_cmd = "mongo --norc --quiet admin -u ${::profile::mongodb::admin_user} \
         -p ${::profile::mongodb::admin_password} --eval '${mongo_cmd}'"
-      $reconfig_verify_cmd = "mongo --quiet admin -u ${::profile::mongodb::admin_user} \
-        -p ${::profile::mongodb::admin_password} --eval 'printjson(rs.status().set);' | grep -qv '^\"${_replset_settings}\"$'"
     } else {
-      $reconfig_mongo_cmd = "mongo --quiet admin --eval '${mongo_cmd}'"
-      $reconfig_verify_cmd = "mongo --quiet admin --eval 'printjson(rs.status().set);' | grep -qv '^\"${_replset_settings}\"$'"
+      $reconfig_mongo_cmd = "mongo --norc --quiet admin --eval '${mongo_cmd}'"
     }
 
     exec { 'Configure ReplicationSet settings':

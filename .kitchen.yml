@@ -150,25 +150,6 @@ suites:
     verifier:
       patterns:
         - 'spec/acceptance/mongodb_versioned_spec.rb'
-  - name: role-mongodb_default_profile
-    driver:
-      vagrantfiles:
-        - vagrant/second_disk.rb
-    provisioner:
-      custom_pre_install_command: |
-        sudo /usr/sbin/mkfs.xfs /dev/sdb
-        sudo /usr/bin/mount /dev/sdb /mnt
-        sudo /usr/bin/touch /mnt/mongod.lock
-        sudo /usr/bin/chown root:root /mnt/mongod.lock
-        sudo /usr/bin/umount /mnt
-      custom_facts:
-        puppet_role: mongodb
-        cfn_resource_name: InstanceA
-        storage_device: /dev/sdb
-        mongo_replset_auth_enable: true
-    verifier:
-      patterns:
-        - 'spec/acceptance/mongodb_default_profile_spec.rb'
   - name: role-mongodb_tds_profile
     driver:
       vagrantfiles:
@@ -185,6 +166,7 @@ suites:
         cfn_resource_name: InstanceA
         storage_device: /dev/sdb
         mongo_replset_auth_enable: true
+        mongodb_yaml_profile_name: mongodb_tds_profile
     verifier:
       patterns:
         - 'spec/acceptance/mongodb_tds_profile_spec.rb'

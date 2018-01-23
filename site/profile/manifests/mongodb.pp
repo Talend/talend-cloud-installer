@@ -38,15 +38,33 @@ class profile::mongodb (
   $mongo_auth_asked = str2bool($replset_auth_enable)
 
   if empty($mongodb_yaml_profile_name){
-    $mongodb_yaml_profile = {}
+    $_mongodb_yaml_profile_name = 'mongodb_default_profile'
   } else {
-    $mongodb_yaml_profile = hiera($mongodb_yaml_profile_name, {})
+    $_mongodb_yaml_profile_name = $mongodb_yaml_profile_name
   }
 
-  if has_key($mongodb_yaml_profile, 'replset_name') {
-    $replset_name = $mongodb_yaml_profile['replset_name']
+  # We can overide stuff with extra_file (replacing master_password for example)
+  $_mongodb_yaml_profile = hiera($_mongodb_yaml_profile_name, {})
+  $_mongodb_yaml_profile_overrode = hiera("${_mongodb_yaml_profile_name}_overrode", {})
+  $mongodb_yaml_profile = deep_merge($_mongodb_yaml_profile, $_mongodb_yaml_profile_overrode)
+
+  # explicitly only support replica sets of size 3
+  if size($_mongo_nodes) == 3 {
+    if has_key($mongodb_yaml_profile, 'replset_name') {
+      $replset_name = $mongodb_yaml_profile['replset_name']
+    } else {
+      $replset_name = 'tipaas'
+    }
+
+    $replset_config = {
+      "${replset_name}" => {
+        ensure  => 'present',
+        members => $_mongo_nodes
+      }
+    }
   } else {
-    $replset_name = 'tipaas'
+    $replset_name = undef
+    $replset_config = undef
   }
 
   if has_key($mongodb_yaml_profile, 'storage_engine') {
@@ -67,15 +85,11 @@ class profile::mongodb (
     $create_admin = true
   }
 
-  $replset_config = {
-    "${replset_name}" => {
-      ensure  => 'present',
-      members => $_mongo_nodes
-    }
-  }
-
   if $mongo_auth_asked {
-    $keyfile = '/var/lib/mongo/shared_key'
+    if empty($shared_key) {
+    } else {
+      $keyfile = '/var/lib/mongo/shared_key'
+    }
   } else {
     $keyfile = undef
   }
@@ -208,6 +222,7 @@ class profile::mongodb (
     admin_username => $admin_user,
     admin_password => $admin_password,
     storage_engine => $storage_engine,
+    store_creds    => true,
   } ->
   profile::mongodb::wait_for_mongod { 'before auth':
   } ->
@@ -215,6 +230,8 @@ class profile::mongodb (
     auth_wanted          => $mongo_auth_asked,
   } ->
   profile::mongodb::wait_for_mongod { 'after auth':
+  } ->
+  class { '::profile::mongodb::is_primary':
   } ->
   class { '::profile::mongodb::roles':
     roles => $roles,
