@@ -123,6 +123,9 @@ tic::services::notification_subscription_memcached_host: "%{::memcache_nodes}"
 
 tic::services::kms_key_alias: "%{::kms_key_alias}"
 
+tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
+tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
+
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'

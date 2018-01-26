@@ -146,6 +146,9 @@ tic::services::iam_service_url: "%{::tpsvc_iam_server_front_url}"
 tic::services::crypto_service_url: "%{::tpsvc_crypto_url}"
 tic::services::config_service_url: "%{::tpsvc_config_url}"
 
+tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
+tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
+
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'
