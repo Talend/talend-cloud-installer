@@ -55,7 +55,9 @@ class profile::kafka (
   if empty($kafka_yaml_profile_name){
     $kafka_yaml_profile = {}
   } else {
-    $kafka_yaml_profile = hiera($kafka_yaml_profile_name, {})
+    $_kafka_yaml_profile = hiera($kafka_yaml_profile_name, {})
+    $_kafka_yaml_profile_overrode = hiera(${kafka_yaml_profile_name}_overrode, {})
+    $kafka_yaml_profile = deep_merge($_kafka_yaml_profile, $_kafka_yaml_profile_overrode)
   }
 
   if has_key($kafka_yaml_profile, 'kafka_version') {

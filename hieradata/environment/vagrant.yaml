@@ -7,6 +7,12 @@ tic::services::rt_flow_instance_profile: 'test-instance_profile'
 tic::services::rt_flow_t_release:         'my-release'
 tic::services::rt_flow_t_branch:          'my-branch'
 
+kafka_applications_cluster_simple_overrode:
+  topics:
+    dqDictionary:
+      topic_options:
+        retention.bytes: "6442450944" # 6G
+
 mongodb_tds_profile_overrode:
   users:
     provisioning:
