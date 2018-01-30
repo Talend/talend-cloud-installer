@@ -56,7 +56,7 @@ class profile::kafka (
     $kafka_yaml_profile = {}
   } else {
     $_kafka_yaml_profile = hiera($kafka_yaml_profile_name, {})
-    $_kafka_yaml_profile_overrode = hiera(${kafka_yaml_profile_name}_overrode, {})
+    $_kafka_yaml_profile_overrode = hiera("${kafka_yaml_profile_name}_overrode", {})
     $kafka_yaml_profile = deep_merge($_kafka_yaml_profile, $_kafka_yaml_profile_overrode)
   }
 
