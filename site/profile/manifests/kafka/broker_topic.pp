@@ -28,7 +28,7 @@ define profile::kafka::broker_topic(
 
   if $ensure == 'present' {
     $topic_create_options  = inline_template('<% unless @topic_options.empty? %><% @topic_options.each do |key, value| %> --config <%= key %>=<%= value %><% end %><% end %>')
-    $topic_config_options  = inline_template('<% unless @topic_options.empty? %><% @topic_options.each do |key, value| %> --add-config <%= key %>=<%= value %><% end %><% end %>')
+    $topic_config_options  = inline_template('<% unless @topic_options.empty? %>--add-config "<% @topic_options.each do |key, value| %> <%= key %>=<%= value %>,<% end %>"<% end %>')
 
     unless empty($topic_options){
       exec { "configure topic ${name}":
