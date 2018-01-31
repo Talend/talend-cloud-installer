@@ -88,9 +88,6 @@ kafka_applications_cluster_ha:
     container-events: {}
     output: {}
     data-history: {}
-    category: {}
-    dictionary: {}
-    regex: {}
     schemas: {}
     schemas-references: {}
     dataset-changed: {}
@@ -105,7 +102,6 @@ kafka_applications_cluster_ha:
     userflow-changed: {}
     impact-analysis-offsets:
       partitions: 1
-    publication: {}
     dqDictionary:
       topic_options:
         retention.bytes: "5368709120" # 5G
@@ -126,9 +122,6 @@ kafka_applications_cluster_simple:
     container-events: {}
     output: {}
     data-history: {}
-    category: {}
-    dictionary: {}
-    regex: {}
     schemas: {}
     schemas-references: {}
     dataset-changed: {}
@@ -143,7 +136,6 @@ kafka_applications_cluster_simple:
     userflow-changed: {}
     impact-analysis-offsets:
       partitions: 1
-    publication: {}
     dqDictionary:
       topic_options:
         retention.bytes: "5368709120" # 5G
