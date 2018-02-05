@@ -126,6 +126,8 @@ tic::services::kms_key_alias: "%{::kms_key_alias}"
 tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
 tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
+tic::services::webhooks_external_url: "%{::webhooks_host}"
+
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'
