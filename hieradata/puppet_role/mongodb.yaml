@@ -120,6 +120,13 @@ mongodb_default_profile:
       roles:
         - role: 'dbOwner'
           db: 'dqdict'
+    tpsvc_provisioning:
+      db_address: 'provisioning'
+      username: 'tpsvc_provisioning'
+      password: '%{::master_password}'
+      roles:
+        - role: 'dbOwner'
+          db: 'provisioning'
 
 # TDS MongoDB replicaset profile
 mongodb_tds_profile:
