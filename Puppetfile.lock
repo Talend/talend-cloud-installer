@@ -54,7 +54,7 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
     puppetlabs-ntp (4.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
-    puppetlabs-stdlib (4.14.0)
+    puppetlabs-stdlib (4.25.0)
     puppetlabs-tomcat (1.6.0)
       puppet-staging (< 2.0.0, >= 0.4.1)
       puppetlabs-concat (< 3.0.0, >= 1.1.0)
@@ -93,6 +93,15 @@ GIT
     puppetlabs-mongodb (0.18.0)
       puppetlabs-apt (< 3.0.0, >= 2.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
+
+GIT
+  remote: https://github.com/Talend/puppet-monitoring.git
+  ref: 0.1.0.3
+  sha: 616a2abb6c3f62e9d210adab6bbc506a72533e5e
+  specs:
+    talend-monitoring (0.1.0)
+      puppet-archive (< 2.0.0, >= 1.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.20.0)
 
 GIT
   remote: https://github.com/Talend/puppet-nexus.git
@@ -183,6 +192,7 @@ DEPENDENCIES
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)
+  talend-monitoring (>= 0)
   talend-syncope (~> 0.0)
   talend-tic (~> 0.0)
   talend-user_accounts (~> 0.0)

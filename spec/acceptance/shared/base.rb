@@ -5,6 +5,7 @@ shared_examples 'profile::base' do
   it_behaves_like 'profile::common::packages'
   it_behaves_like 'profile::common::cloudwatch'
   it_behaves_like 'profile::common::cloudwatchlogs'
+  it_behaves_like 'profile::common::node_exporter'
   it_behaves_like 'profile::common::ssm'
 
   describe 'ntp configuration' do

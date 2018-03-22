@@ -20,6 +20,8 @@ class profile::base {
 
   include ::ntp
 
+  include monitoring::node_exporter
+
   profile::register_profile { 'base': order => 1, }
 
   if $::osfamily == 'RedHat' and $::selinux == 'true' {

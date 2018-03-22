@@ -45,3 +45,5 @@ profile::kafka::kafka_topics_config: ''
 
 ntp::service_ensure: 'stopped'
 ntp::service_enable: false
+
+monitoring::node_exporter::service_ensure: 'stopped'
