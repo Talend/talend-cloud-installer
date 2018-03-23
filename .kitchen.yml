@@ -39,6 +39,13 @@ verifier:
   extra_flags: '--require spec_helper -I spec/acceptance'
 
 suites:
+  - name: role-base
+    provisioner:
+      custom_facts:
+        puppet_role: base
+    verifier:
+      patterns:
+        - 'spec/acceptance/shared/base.rb'
   - name: role-frontend
     provisioner:
       custom_facts:
