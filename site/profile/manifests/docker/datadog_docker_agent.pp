@@ -19,6 +19,9 @@ class profile::docker::datadog_docker_agent (
       '/var/run/docker.sock:/var/run/docker.sock:ro',
       '/proc/:/host/proc/:ro',
       '/cgroup/:/host/sys/fs/cgroup:ro'
+    ],
+    env     => [
+      'LOG_LEVEL=INFO'
     ]
   }
 
