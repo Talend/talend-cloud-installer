@@ -4,7 +4,7 @@
 class profile::docker::datadog_docker_agent (
 
   $running = true,
-  $image   = 'datadog/docker-dd-agent:v12.6.5223'
+  $image   = 'datadog/docker-dd-agent:12.6.5223'
 
 ) {
 
