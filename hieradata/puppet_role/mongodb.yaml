@@ -127,6 +127,13 @@ mongodb_default_profile:
       roles:
         - role: 'dbOwner'
           db: 'provisioning'
+    tpsvc_dispatcher_events:
+      db_address: 'dispatcher_events'
+      username: 'tpsvc_dispatcher_events'
+      password: '%{::master_password}'
+      roles:
+        - role: 'dbOwner'
+          db: 'dispatcher_events'
 
 # TDS MongoDB replicaset profile
 mongodb_tds_profile:

@@ -17,4 +17,8 @@ shared_examples 'profile::mongodb_default_profile' do
   describe command('/usr/bin/mongo --norc --quiet -u tpsvc_provisioning -p mypassword provisioning --eval "printjson(db.getUser(\'tpsvc_provisioning\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"dbOwner","db":"provisioning"}' }
   end
+
+  describe command('/usr/bin/mongo --norc --quiet -u tpsvc_dispatcher_events -p mypassword dispatcher_events --eval "printjson(db.getUser(\'tpsvc_dispatcher_events\'));" | /usr/bin/tr -d "\t\n "') do
+    its(:stdout) { should include '{"role":"dbOwner","db":"dispatcher_events"}' }
+  end
 end
