@@ -5,7 +5,7 @@ class profile::docker::datadog_docker_agent (
 
   $running = true,
   $image   = 'datadog/docker-dd-agent:12.6.5223',
-  $dd_agent_key = '${::datadog_agent::api_key}'
+  $dd_agent_key = hiera('datadog_agent::api_key')
 
 ) {
 
