@@ -22,7 +22,6 @@ class profile::docker::datadog_docker_agent (
     env     => [
       'LOG_LEVEL=debug'
     ]
-    
   }
 
 }
