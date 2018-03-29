@@ -20,7 +20,8 @@ class profile::docker::datadog_docker_agent (
       '/cgroup/:/host/sys/fs/cgroup:ro'
     ],
     env     => [
-      'LOG_LEVEL=debug'
+      'LOG_LEVEL=debug',
+      DD_API_KEY_FILE='/etc/dd-agent/datadog.conf'
     ]
   }
 
