@@ -21,7 +21,7 @@ class profile::docker::datadog_docker_agent (
     ],
     env     => [
       'LOG_LEVEL=debug',
-      DD_API_KEY_FILE='/etc/dd-agent/datadog.conf'
+      API_KEY=$datadog::agent::api_key
     ]
   }
 
