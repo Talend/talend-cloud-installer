@@ -21,7 +21,7 @@ class profile::docker::datadog_docker_agent (
       '/sys/fs/cgroup:/sys/fs/cgroup:ro'
     ],
     env     => [
-       API_KEY=${api_key}
+      "API_KEY= ${api_key}"
     ]
   }
 
