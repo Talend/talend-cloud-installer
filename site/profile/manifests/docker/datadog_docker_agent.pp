@@ -4,7 +4,8 @@
 class profile::docker::datadog_docker_agent (
 
   $running = true,
-  $image   = 'datadog/docker-dd-agent:12.6.5223'
+  $image   = 'datadog/docker-dd-agent:12.6.5223',
+  $api_key = $datadog::agent::api_key
 
 ) {
 
@@ -21,7 +22,7 @@ class profile::docker::datadog_docker_agent (
     ],
     env     => [
       'LOG_LEVEL=debug',
-      API_KEY=$datadog::agent::api_key
+      'API_KEY=$api_key'
     ]
   }
 
