@@ -11,6 +11,9 @@ profile::docker::ecs_agent::running: true
 profile::docker::ecs_agent::cluster_name: "%{::cluster_name}"
 profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.17.2'
 
+profile::docker::datadog_docker_agent::running: true
+profile::docker::datadog_docker_agent::image: 'datadog/docker-dd-agent:12.6.5223'
+
 profile::docker::registry::ensure: '%{::registry_ensure}'
 profile::docker::registry::running: true
 profile::docker::registry::image: 'registry:2'
