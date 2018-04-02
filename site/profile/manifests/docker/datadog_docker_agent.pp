@@ -20,7 +20,8 @@ class profile::docker::datadog_docker_agent (
     ],
     env     => [
       "API_KEY=${dd_agent_key}",
-      'LOG_LEVEL=info'
+      'LOG_LEVEL=info',
+      'SD_BACKEND=docker'
     ]
   }
 
