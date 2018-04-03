@@ -24,18 +24,5 @@ class profile::docker::datadog_docker_agent (
       'DD_PROCESS_AGENT_ENABLED=true'
     ]
   }
-  file { "${datadog_agent::params::conf_dir}/docker_daemon.yaml":
-    ensure  => file,
-    owner   => $datadog_agent::params::dd_user,
-    group   => $datadog_agent::params::dd_group,
-    mode    => '0600',
-    source  => 'puppet:///modules/profile/docker_daemon.yaml',
-    require => Package[$datadog_agent::params::package_name],
-    notify  => Service[$datadog_agent::params::service_name]
-  }
-  exec { 'dd-agent docker membership':
-    command => '/usr/sbin/usermod -aG docker dd-agent',
-    require => User['dd-agent']
-  }
 
 }
