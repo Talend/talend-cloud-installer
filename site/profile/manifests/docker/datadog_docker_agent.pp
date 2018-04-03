@@ -37,6 +37,5 @@ class profile::docker::datadog_docker_agent (
     command => '/usr/sbin/usermod -aG docker dd-agent',
     require => User['dd-agent']
   }
-  
 
 }
