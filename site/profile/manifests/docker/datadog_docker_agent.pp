@@ -8,8 +8,8 @@ class profile::docker::datadog_docker_agent (
 ) {
 
   require ::profile::docker::host
-  profile::register_profile { 'datadog_docker_agent': }
   if hiera('profile::datadog_docker_agent::running'){
+    profile::register_profile { 'datadog_docker_agent': }
     docker::run { 'datadog-docker-agent':
       running      => $running,
       image        => $image,
