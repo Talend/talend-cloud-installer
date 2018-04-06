@@ -6,9 +6,7 @@ class role::ecs {
   require ::profile::docker::host
   require ::profile::docker::registry
   require ::profile::docker::ecs_agent
-  if hiera('profile::datadog_docker_agent::running'){
-    require ::profile::docker::datadog_docker_agent
-  }
+  require ::profile::docker::datadog_docker_agent
   require ::profile::common::jsons
 
   role::register_role { 'ecs': }
