@@ -3,12 +3,12 @@
 class profile::docker::datadog_docker_agent (
   $running = true,
   $image   = 'datadog/docker-dd-agent:12.6.5223',
-  $dd_agent_key = hiera('datadog_agent::api_key')
 
 ) {
 
   require ::profile::docker::host
   if hiera('profile::datadog_docker_agent::running'){
+    $dd_agent_key = hiera('datadog_agent::api_key')
     profile::register_profile { 'datadog_docker_agent': }
     docker::run { 'datadog-docker-agent':
       running      => $running,
