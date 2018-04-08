@@ -7,7 +7,7 @@ class profile::docker::datadog_docker_agent (
 ) {
 
   require ::profile::docker::host
-  # This is value from hiera file just to control installation of the docket for datadog which is ture only for staging and production
+  # This is value from hiera file just to control installation of the docker agent for datadog which is ture only for staging and production
   if hiera('profile::datadog_docker_agent::running'){
     $dd_agent_key = hiera('datadog_agent::api_key')
     profile::register_profile { 'datadog_docker_agent': }
