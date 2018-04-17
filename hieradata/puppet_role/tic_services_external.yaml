@@ -197,4 +197,3 @@ tic::services::karaf_features_install:
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
   - 'tipaas-healthcheck-service-core'
-  
