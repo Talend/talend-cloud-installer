@@ -193,7 +193,8 @@ tic::services::karaf_features_install:
   - 'tipaas-pairing-service'
   - 'tipaas-webhooks-service'
   - 'tipaas-logs-transfer-service-core'
-  - 'tipaas-healthcheck-service-core'
   - 'tipaas-account-manager-service'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
+  - 'tipaas-healthcheck-service-core'
+  
