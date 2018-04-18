@@ -31,7 +31,7 @@ transport:
   name: sftp
 
 platforms:
-  - name: centos-7.3
+  - name: centos-7.4
 
 verifier:
   name: serverspec
@@ -40,6 +40,10 @@ verifier:
 
 suites:
   - name: role-base
+    driver:
+      vm_name: base-tci
+      customize:
+        name: base-tci
     provisioner:
       custom_facts:
         puppet_role: base
@@ -47,6 +51,10 @@ suites:
       patterns:
         - 'spec/acceptance/shared/base.rb'
   - name: role-frontend
+    driver:
+      vm_name: frontend-tci
+      customize:
+        name: frontend-tci
     provisioner:
       custom_facts:
         puppet_role: frontend
@@ -54,6 +62,10 @@ suites:
       patterns:
         - 'spec/acceptance/frontend_spec.rb'
   - name: role-tic_services_internal
+    driver:
+      vm_name: tic-srv-internal-tci
+      customize:
+        name: tic-srv-internal-tci
     provisioner:
       custom_facts:
         puppet_role: tic_services_internal
@@ -61,6 +73,10 @@ suites:
       patterns:
         - 'spec/acceptance/tic_services_internal_spec.rb'
   - name: role-tic_services_external
+    driver:
+      vm_name: tic-srv-external-tci
+      customize:
+        name: tic-srv-external-tci
     provisioner:
       custom_facts:
         puppet_role: tic_services_external
@@ -68,6 +84,10 @@ suites:
       patterns:
         - 'spec/acceptance/tic_services_external_spec.rb'
   - name: role-activemq
+    driver:
+      vm_name: activemq-tci
+      customize:
+        name: activemq-tci
     provisioner:
       custom_facts:
         puppet_role: activemq
@@ -78,6 +98,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: elasticsearch-tci
+      customize:
+        name: elasticsearch-tci
     provisioner:
       custom_facts:
         puppet_role: elasticsearch
@@ -89,6 +112,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: nexus-tci
+      customize:
+        name: nexus-tci
     provisioner:
       custom_facts:
         puppet_role: nexus
@@ -98,6 +124,10 @@ suites:
       patterns:
         - 'spec/acceptance/nexus_spec.rb'
   - name: role-syncope
+    driver:
+      vm_name: syncope-tci
+      customize:
+        name: syncope-tci
     provisioner:
       custom_facts:
         puppet_role: syncope
@@ -105,6 +135,10 @@ suites:
       patterns:
         - 'spec/acceptance/syncope_spec.rb'
   - name: role-dataprep_dataset
+    driver:
+      vm_name: tdp-dataset-tci
+      customize:
+        name: tdp-dataset-tci
     provisioner:
       custom_facts:
         puppet_role: dataprep_dataset
@@ -112,6 +146,10 @@ suites:
       patterns:
         - 'spec/acceptance/dataprep_dataset_spec.rb'
   - name: role-zookeeper
+    driver:
+      vm_name: zookeeper-tci
+      customize:
+        name: zookeeper-tci
     provisioner:
       custom_facts:
         puppet_role: zookeeper
@@ -122,6 +160,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: mongodb-tci
+      customize:
+        name: mongodb-tci
     provisioner:
       custom_pre_install_command: |
         sudo /usr/sbin/mkfs.xfs /dev/sdb
@@ -141,6 +182,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: mongodb-versioned-tci
+      customize:
+        name: mongodb-versioned-tci
     provisioner:
       custom_pre_install_command: |
         sudo /usr/sbin/mkfs.xfs /dev/sdb
@@ -161,6 +205,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: mongodb-tds-tci
+      customize:
+        name: mongodb-tds-tci
     provisioner:
       custom_pre_install_command: |
         sudo /usr/sbin/mkfs.xfs /dev/sdb
@@ -178,6 +225,10 @@ suites:
       patterns:
         - 'spec/acceptance/mongodb_tds_profile_spec.rb'
   - name: role-test
+    driver:
+      vm_name: test-tci
+      customize:
+        name: test-tci
     provisioner:
       custom_facts:
         puppet_role: test
@@ -193,6 +244,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: test-launcher-tci
+      customize:
+        name: test-launcher-tci
     provisioner:
       custom_facts:
         puppet_role: test_launcher
@@ -209,6 +263,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: influxdb-tci
+      customize:
+        name: influxdb-tci
     provisioner:
       custom_facts:
         puppet_role: influxdb
@@ -220,6 +277,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: kafka-tci
+      customize:
+        name: kafka-tci
     provisioner:
       manifests_path: examples
       manifest: kafka.pp
@@ -234,8 +294,9 @@ suites:
         - 'spec/acceptance/kafka_spec.rb'
   - name: role-management_proxy
     driver:
-      vagrantfiles:
-        - vagrant/second_disk.rb
+      vm_name: management-proxy-tci
+      customize:
+        name: management-proxy-tci
     provisioner:
       manifests_path: examples
       manifest: management_proxy.pp
@@ -250,6 +311,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: ecs-tci
+      customize:
+        name: ecs-tci
     provisioner:
       custom_facts:
         puppet_role: ecs
@@ -261,6 +325,9 @@ suites:
     driver:
       vagrantfiles:
         - vagrant/second_disk.rb
+      vm_name: ami-ecs-tci
+      customize:
+        name: ami-ecs-tci
     provisioner:
       puppet_environment: ami
       custom_facts:
