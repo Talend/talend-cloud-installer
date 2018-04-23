@@ -48,5 +48,7 @@ class profile::docker::host (
   }
 
   # Monitor Docker daemon & containers
-  include monitoring::cadvisor
+  class { 'monitoring::cadvisor':
+    require => Class['::docker']
+  }
 }

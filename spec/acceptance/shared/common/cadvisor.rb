@@ -1,9 +1,4 @@
 shared_examples 'monitoring::cadvisor' do
-
-  describe user('cadvisor') do
-    it { should exist }
-  end
-
   describe service('cadvisor.service') do
     it { should be_enabled }
     it { should be_running }
@@ -13,5 +8,4 @@ shared_examples 'monitoring::cadvisor' do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include 'cadvisor_version_info{' }
   end
-
 end
