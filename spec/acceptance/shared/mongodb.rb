@@ -76,7 +76,7 @@ shared_examples 'profile::mongodb' do
       its(:content) { should match /\nmongod\s+soft\s+nproc\s+64000\s*\n/ }
       its(:content) { should match /\nmongod\s+hard\s+nproc\s+64000\s*\n/ }
     end
-    describe command('/bin/bash -c \'/bin/cat /proc/$(/bin/pgrep mongo)/limits\'') do
+    describe command('/bin/bash -c \'/bin/cat /proc/$(/bin/pgrep -x mongod)/limits\'') do
       its(:stdout) { should include 'Max processes             64000                64000                processes' }
     end
   end
@@ -209,4 +209,19 @@ shared_examples 'profile::mongodb' do
      it { should include '    DiskSpaceMongoDB:' }
   end
 
+  describe 'Mongodb exporter' do
+    describe user('mongodb_exporter') do
+      it { should exist }
+    end
+
+    describe service('mongodb_exporter.service') do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    describe command('/usr/bin/curl -v http://127.0.0.1:9216/metrics') do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should include 'mongodb_mongod_storage_engine' }
+    end
+  end
 end

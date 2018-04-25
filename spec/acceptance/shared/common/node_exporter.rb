@@ -1,5 +1,4 @@
 shared_examples 'monitoring::node_exporter' do
-
   describe user('node_exporter') do
     it { should exist }
   end
