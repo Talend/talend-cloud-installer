@@ -10,4 +10,4 @@ MODULES_PATH="${INSTALLER_PATH}/site:${INSTALLER_PATH}/modules"
  --hiera_config=${INSTALLER_PATH}/hiera.yaml\
  --modulepath=${MODULES_PATH}\
  --confdir=${INSTALLER_PATH}\
- /opt/talend-cloud-installer-current/manifests/site.pp
+ /opt/talend-cloud-installer-current/manifests/site.pp | tee >(logger -t talend-cloud-installer)
