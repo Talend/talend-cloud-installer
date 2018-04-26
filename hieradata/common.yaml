@@ -2,7 +2,6 @@
 message: "This node is using common data"
 sudo::purge: false
 
-python::virtualenv: 'present'
 python::pip: 'present'
 python::dev: 'present'
 
@@ -26,6 +25,9 @@ common_packages:
   'cloud-init':
     ensure: 'installed'
   'awscli':
+    ensure: 'installed'
+    provider: 'pip'
+  'virtualenv':
     ensure: 'installed'
     provider: 'pip'
   'lnav':

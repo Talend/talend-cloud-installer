@@ -1,5 +1,10 @@
 ---
 
+common_packages:
+  'virtualenv':
+    ensure: 'installed'
+    provider: 'pip'
+
 tic::services::rt_flow_ami_id:           'test-ami_id'
 tic::services::rt_flow_security_groups:  'test-security_groups'
 tic::services::rt_flow_instance_type:    'test-instance_type'

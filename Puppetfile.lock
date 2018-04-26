@@ -122,7 +122,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatch
   specs:
-    talend-cloudwatch (0.1.0.26)
+    talend-cloudwatch (0.1.0.27)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatchlogs
@@ -184,7 +184,7 @@ DEPENDENCIES
   saz-sudo (~> 3.0)
   stankevich-python (= 1.18.2)
   talend-activemq (~> 0.0)
-  talend-cloudwatch (~> 0.0)
+  talend-cloudwatch (~> 0.1.0.27)
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)

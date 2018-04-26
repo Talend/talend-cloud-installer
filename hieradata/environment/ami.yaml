@@ -1,8 +1,9 @@
 ---
 
 common_packages:
-  'python-virtualenv':
+  'virtualenv':
     ensure: 'installed'
+    provider: 'pip'
 
 tic::services::karaf_service_ensure: 'stopped'
 tic::services::karaf_service_enable: false
