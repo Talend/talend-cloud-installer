@@ -8,15 +8,19 @@
 #
 class profile::base {
 
-  include ::profile::common::packagecloud_repos
-  include ::profile::common::packages
-  include ::profile::common::cloudwatchlogs
-  include ::profile::common::ssm
+  class { '::profile::common::packagecloud_repos':
+  } ->
+  class { '::profile::common::packages':
+  } ->
+  class { '::profile::common::cloudwatch':
+  } ->
+  class { '::profile::common::cloudwatchlogs':
+  } ->
+  class { '::profile::common::ssm':
+  }
 
   include ::profile::common::concat
   include ::profile::common::accounts
-
-  include ::profile::common::cloudwatch
 
   include ::ntp
 
@@ -52,7 +56,5 @@ class profile::base {
       ensure  => directory,
       require => File['/etc/facter'];
   }
-
   create_resources('limits::fragment', hiera('limits::fragment', {}))
-
 }
