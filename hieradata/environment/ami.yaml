@@ -1,9 +1,5 @@
 ---
 
-common_packages:
-  'python-virtualenv':
-    ensure: 'installed'
-
 tic::services::karaf_service_ensure: 'stopped'
 tic::services::karaf_service_enable: false
 tic::frontend::tomcat_service_ensure: 'stopped'
