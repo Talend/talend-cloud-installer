@@ -2,10 +2,6 @@
 message: "This node is using common data"
 sudo::purge: false
 
-python::virtualenv: 'present'
-python::pip: 'present'
-python::dev: 'present'
-
 nginx::package_ensure: '1.12.1-1.el7.ngx'
 
 common_packages:
@@ -30,6 +26,8 @@ common_packages:
     provider: 'pip'
   'lnav':
     ensure: 'installed'
+  'python-virtualenv':
+    ensure: 'absent'
 
 packagecloud_repos:
   'talend/other':
