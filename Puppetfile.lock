@@ -127,7 +127,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatchlogs
   specs:
-    talend-cloudwatchlogs (0.2.1.1)
+    talend-cloudwatchlogs (0.2.1.2)
 
 GITHUBTARBALL
   remote: Talend/puppet-dataprep_dataset
