@@ -45,3 +45,4 @@ ntp::service_enable: false
 
 monitoring::node_exporter::service_ensure: 'stopped'
 monitoring::cadvisor::service_ensure: 'stopped'
+monitoring::mongodb_exporter::service_ensure: 'stopped'
