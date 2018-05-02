@@ -137,7 +137,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-monitoring
   specs:
-    talend-monitoring (0.1.0.14)
+    talend-monitoring (0.1.0.15)
 
 GITHUBTARBALL
   remote: Talend/puppet-syncope
@@ -188,7 +188,7 @@ DEPENDENCIES
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)
-  talend-monitoring (= 0.1.0.14)
+  talend-monitoring (= 0.1.0.15)
   talend-syncope (~> 0.0)
   talend-tic (~> 0.0)
   talend-user_accounts (~> 0.0)
