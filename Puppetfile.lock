@@ -117,7 +117,7 @@ GIT
 GITHUBTARBALL
   remote: Talend/puppet-activemq
   specs:
-    talend-activemq (0.3.1)
+    talend-activemq (0.3.2)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatch
@@ -142,7 +142,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-syncope
   specs:
-    talend-syncope (0.1.1.10)
+    talend-syncope (0.1.1.11)
 
 GITHUBTARBALL
   remote: Talend/puppet-tic
