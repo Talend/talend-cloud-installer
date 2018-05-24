@@ -96,6 +96,17 @@ cloudwatch::metrics:
     threshold         : 80
     comparisonoperator: "GreaterThanThreshold"
 
+  Memory:
+    type              : memory
+    params            : ''
+    unit              : Percent
+    description       : 'Get percentage of used memory'
+    statistic         : Maximum
+    period            : 300
+    evaluationperiods : 3
+    threshold         : 80
+    comparisonoperator: GreaterThanThreshold
+
 # Monitoring of installer-based components
 monitoring::node_exporter::version: '0.15.2'
 monitoring::node_exporter::port: 9100
