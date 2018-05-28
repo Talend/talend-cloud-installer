@@ -63,6 +63,10 @@ kafka_infra_logs_cluster_ha:
       topic_options:
         retention.ms: "43200000"      # 12h
         retention.bytes: "5368709120" #  5GB
+    systemlogs:
+      topic_options:
+        retention.ms: "43200000"      # 12h
+        retention.bytes: "5368709120" #  5GB
     zipkin: {}
 
 kafka_customers_logs_cluster_ha:
