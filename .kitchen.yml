@@ -288,7 +288,7 @@ suites:
         storage_device: /dev/sdb
         kafka_yaml_profile_name: "kafka_applications_cluster_simple"
         kafka_cluster_id: 'testing-kafka'
-        zookeeper_nodes: "127.0.0.1"
+        zookeeper_nodes: "127.0.0.1,not-existant.localdomain,not-existant2.localdomain"
     verifier:
       patterns:
         - 'spec/acceptance/kafka_spec.rb'
