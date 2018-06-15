@@ -58,8 +58,8 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     options => 'noatime,nodiratime'
   } ->
   class { '::nexus':
-    version         => '2.8.0',
-    revision        => '05',
+    version         => '2.14.8',
+    revision        => '01',
     nexus_root      => $nexus_root, # All directories and files will be relative to this
     nexus_port      => $_nexus_nodes_port,
     java_initmemory => $java_memory,
