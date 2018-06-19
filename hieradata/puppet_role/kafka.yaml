@@ -119,8 +119,7 @@ kafka_applications_cluster_ha:
     userflow-changed:
       topic_options:
         retention.ms: "3600000" # 1H
-    impact-analysis-offsets:
-      partitions: 1
+    impact-analysis-batch: {}
     dqDictionary:
       topic_options:
         retention.bytes: "5368709120" # 5G
@@ -175,8 +174,7 @@ kafka_applications_cluster_simple:
     userflow-changed:
       topic_options:
         retention.ms: "3600000" # 1H
-    impact-analysis-offsets:
-      partitions: 1
+    impact-analysis-batch: {}
     dqDictionary:
       topic_options:
         retention.bytes: "5368709120" # 5G
