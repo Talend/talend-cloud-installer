@@ -129,6 +129,9 @@ tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
 tic::services::webhooks_external_url: "%{::webhooks_host}"
 
+tic::services::eventsource_kafka_servers: "%{::kafka_app_entry_point}"
+tic::services::eventsource_kafka_topic: "%{::provisioning_kafka_topic}"
+
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
     path: '/opt/talend/ipaas/rt-infra/data/log/karaf.log'
@@ -187,4 +190,5 @@ tic::services::karaf_features_install:
   - 'tipaas-logs-transfer-service-client'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
+  - 'tipaas-kafkasource'
   - 'tipaas-healthcheck-service-core'
