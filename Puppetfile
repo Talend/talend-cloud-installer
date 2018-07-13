@@ -37,8 +37,11 @@ mod 'talend-syncope', '0.x',
   :github_tarball => 'Talend/puppet-syncope'
 mod 'talend-dataprep_dataset', '0.x',
   :github_tarball => 'Talend/puppet-dataprep_dataset'
-mod 'talend-activemq', '0.x',
-  :github_tarball => 'Talend/puppet-activemq'
+#mod 'talend-activemq', '0.x',
+#  :github_tarball => 'Talend/puppet-activemq'
+mod 'talend-activemq',
+  :git => 'https://github.com/Talend/puppet-activemq',
+  :ref => 'DEVOPS-4782-tuning-amq'
 mod 'talend-zookeeper', '0.x',
   :github_tarball => 'Talend/puppet-zookeeper'
 mod 'talend-kafka',
