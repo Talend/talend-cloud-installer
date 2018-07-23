@@ -1,9 +1,9 @@
 class profile::postgresql::activemq (
-  $pg_host     = $::activemq::pg_host,
-  $pg_port     = $::activemq::pg_port,
-  $pg_db       = $::activemq::pg_db,
-  $pg_username = $::activemq::pg_username,
-  $pg_password = $::activemq::pg_password
+  $pg_host     = $::activemq::persistence_pg_host,
+  $pg_port     = '5432',
+  $pg_db       = 'activemq',
+  $pg_username = 'activemq',
+  $pg_password = $::activemq::persistence_pg_password
 )
 {
   require ::activemq

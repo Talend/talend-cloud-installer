@@ -24,7 +24,9 @@ class profile::activemq {
     contain ::activemq
     contain ::profile::postgresql::provision
 
-    if ($::activemq::service_ensure == 'running') or ($::activemq::service_ensure == 'true') {
+    if (( $::activemq::persistence == 'postgres')
+      and (($::activemq::service_ensure == 'running')
+        or ($::activemq::service_ensure == 'true'))) {
         class { '::profile::postgresql::activemq':
           require => Class['::activemq']
         }
