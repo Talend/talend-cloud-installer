@@ -20,5 +20,4 @@ define profile::postgresql::provision_role {
     command     => "/usr/bin/cat ${files} | /usr/bin/psql -U ${user} -h ${host} -d ${dbname} -f - && touch ${creates}",
     creates     => $creates
   }
-
 }
