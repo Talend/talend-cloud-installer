@@ -47,6 +47,43 @@ postgresql::globals::default_connect_settings:
   PGDATABASE: "postgres"
   PGPASSWORD: "%{::master_password}"
 
+
+# The dict above must be the same than the one inside hieradata/puppet_role/activemq.yaml
+# + activemq
+profile::postgresql::roles:
+  ams:
+    files:
+      - /opt/activemq/lib/tipaas/ams.sql
+      - /opt/activemq/lib/tipaas/amqsec.sql
+  # The following roles shouldn't be placed here, as
+  # well as the ptic-postgresql-schemes package.
+  # The only reason is that the active mq instance A is
+  # used as a single point of postgresql provisioning.
+  scheduler:
+    files:
+      - /var/tmp/sql/scheduler.sql
+  lts:
+    files:
+      - /var/tmp/sql/lts.sql
+  cms:
+    files:
+      - /var/tmp/sql/cms.sql
+  config:
+    files:
+      - /var/tmp/sql/config.sql
+  pe:
+    files:
+      - /var/tmp/sql/pes.sql
+  webhooks:
+    files:
+      - /var/tmp/sql/webhooks.sql
+  notification_subscription:
+    files:
+      - /var/tmp/sql/notification-subscription.sql
+  activemq:
+    password: "%{::master_password}"
+    files: []
+
 sudo::configs:
   'vagrant':
     'content': "%vagrant ALL=(ALL) NOPASSWD: ALL"
@@ -59,8 +96,6 @@ tic::frontend::client_app_oidc_clientSecret: "iam-client-secret"
 tic::frontend::server_app_oidc_clientId: "iam-server"
 tic::frontend::server_app_oidc_clientSecret: "iam-server-secret"
 tic::frontend::help_url: "the-help-url"
-
-activemq::persistence: 'kahadb'
 
 profile::tic_services::ams_password_reset_url_template: "https://my-password-reset-host.com"
 profile::tic_services::rejected_data_bucket_data: '["rd-bucket", "rd-prefix"]'
