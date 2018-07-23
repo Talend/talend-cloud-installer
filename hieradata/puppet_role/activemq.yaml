@@ -42,18 +42,12 @@ profile::postgresql::roles:
   lts:
     files:
       - /var/tmp/sql/lts.sql
-  crypto:
-    files:
-      - /var/tmp/sql/crypto.sql
   cms:
     files:
       - /var/tmp/sql/cms.sql
   config:
     files:
       - /var/tmp/sql/config.sql
-  trial:
-    files:
-      - /var/tmp/sql/trial.sql
   pe:
     files:
       - /var/tmp/sql/pes.sql
