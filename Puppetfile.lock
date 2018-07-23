@@ -75,18 +75,6 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 1.0.0)
 
 GIT
-  remote: https://github.com/Talend/puppet-activemq
-  ref: DEVOPS-4782-tuning-amq
-  sha: b3fb147e2d036ccce4966885062b11fcc0dd68e6
-  specs:
-    talend-activemq (0.2.0)
-      computology-packagecloud (~> 0.0)
-      puppetlabs-java (~> 1.0)
-      puppetlabs-postgresql (~> 4.0)
-      puppetlabs-stdlib (< 5.0.0, >= 1.0.0)
-      puppetlabs-tomcat (~> 1.0)
-
-GIT
   remote: https://github.com/Talend/puppet-kafka.git
   ref: master
   sha: 9faf6a9acb9a26822fa502ce1b8affa8a68cb467
@@ -125,6 +113,11 @@ GIT
       puppetlabs-apt (< 3.0.0, >= 1.8.0)
       puppetlabs-concat (< 3.0.0, >= 1.1.0)
       puppetlabs-stdlib (~> 4.0)
+
+GITHUBTARBALL
+  remote: Talend/puppet-activemq
+  specs:
+    talend-activemq (0.3.6)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatch
@@ -190,7 +183,7 @@ DEPENDENCIES
   saz-rsyslog (~> 5.0)
   saz-sudo (~> 3.0)
   stankevich-python (= 1.18.2)
-  talend-activemq (>= 0)
+  talend-activemq (~> 0.0)
   talend-cloudwatch (~> 0.0)
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
