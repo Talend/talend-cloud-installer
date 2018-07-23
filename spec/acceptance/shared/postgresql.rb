@@ -14,11 +14,6 @@ shared_examples 'profile::postgresql' do |role, databases = []|
     it { should be_listening }
   end
 
-  describe 'ActiveMQ system user password' do
-    subject { command('PGPASSWORD=mypassword /usr/bin/psql -P pager -h localhost -U ams -d ams -c "select password from amqsec_system_users where username=\'admin\'"') }
-    its(:stdout) { should include 'mypassword' }
-  end
-
   databases.each do |db|
     describe command("PGPASSWORD=mypassword /usr/bin/psql -P pager -h localhost -U #{role} -d #{role} -c '\\dt'") do
       its(:stdout) { should include db }
