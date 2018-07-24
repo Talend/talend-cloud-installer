@@ -23,7 +23,7 @@ class profile::postgresql::activemq (
     ensure  => 'file',
     path    => "${amq_tuning_dir}/check_version_upgrade.sh",
     backup  => false,
-    content => file('profile/var/lib/activemq/check_version_upgrade.sh'),
+    content => file('profile/var/lib/activemq_tuning/check_version_upgrade.sh'),
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
@@ -34,7 +34,7 @@ class profile::postgresql::activemq (
     ensure  => 'file',
     path    => "${amq_tuning_dir}/postgresql_optimizations_table.sql",
     backup  => false,
-    content => file('profile/var/lib/activemq/postgresql_optimizations_table.sql'),
+    content => file('profile/var/lib/activemq_tuning/postgresql_optimizations_table.sql'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -45,7 +45,7 @@ class profile::postgresql::activemq (
     ensure  => 'file',
     path    => "${amq_tuning_dir}/postgresql_optimizations.sql",
     backup  => false,
-    content => file('profile/var/lib/activemq/postgresql_optimizations.sql'),
+    content => file('profile/var/lib/activemq_tuning/postgresql_optimizations.sql'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -65,7 +65,7 @@ class profile::postgresql::activemq (
 
   $exec_get_current_optimizations_versions = "psql -A -t -q -U ${pg_username} \
     -h ${pg_host} -d ${pg_db} \
-    -c 'SELECT MAX(version) FROM tmp_activemq_optimizations WHERE filename = \'postgresql_optimizations.sql\' \
+    -c \"SELECT MAX(version) FROM tmp_activemq_optimizations WHERE filename = 'postgresql_optimizations.sql';\" \
     -o ${amq_tuning_dir}/postgresql_optimizations_last_version.txt"
   exec { 'get_current_optimizations_versions':
     path        => '/usr/bin:/usr/sbin:/bin',
