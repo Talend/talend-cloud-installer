@@ -30,19 +30,33 @@ shared_examples 'profile::activemq' do
     its(:stdout) { should include '0.1' }
   end
 
-  describe 'ActiveMQ optimizations' do
-    subject { command('PGPASSWORD=mypassword /usr/bin/psql -q -h localhost -U activemq -d activemq -c \'\\d+ activemq_msgs\'') }
-    its(:stdout) { should include 'tmp_activemq_msgs_p_desc_idx' }
-    its(:stdout) { should include 'tmp_activemq_msgs_pc_asc_idx' }
-    its(:stdout) { should include 'tmp_activemq_msgs_pcx_asc_idx' }
-    its(:stdout) { should include 'tmp_activemq_msgs_pcp_idx' }
-    its(:stdout) { should include 'tmp_activemq_msgs_pxpc_asc_desc_idx' }
-    its(:stdout) { should include 'tmp_activemq_acks_c_idx' }
-    its(:stdout) { should include 'autovacuum_vacuum_cost_limit=2000' }
-    its(:stdout) { should include 'autovacuum_vacuum_cost_delay=10' }
-    its(:stdout) { should include 'autovacuum_vacuum_scale_factor=0' }
-    its(:stdout) { should include 'autovacuum_vacuum_threshold=5000' }
-    its(:stdout) { should include 'autovacuum_analyze_threshold=1000' }
-    its(:stdout) { should include 'autovacuum_analyze_scale_factor=0.01' }
+  describe 'get ActiveMQ optimizations from activemq_msgs' do
+    subject { command('PGPASSWORD=mypassword /usr/bin/psql -q -h localhost -U activemq -d activemq -c \'\\d+ activemq_msgs\' -o /tmp/activemq_msgs.struct') }
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe 'get ActiveMQ optimizations from activemq_acks' do
+    subject { command('PGPASSWORD=mypassword /usr/bin/psql -q -h localhost -U activemq -d activemq -c \'\\d+ activemq_acks\' -o /tmp/activemq_acks.struct') }
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe 'verifying ActiveMQ optimizations for activemq_msgs' do
+    subject { file('/tmp/activemq_msgs.struct') }
+    its(:content) { should include 'tmp_activemq_msgs_p_desc_idx' }
+    its(:content) { should include 'tmp_activemq_msgs_pc_asc_idx' }
+    its(:content) { should include 'tmp_activemq_msgs_pcx_asc_idx' }
+    its(:content) { should include 'tmp_activemq_msgs_pcp_idx' }
+    its(:content) { should include 'tmp_activemq_msgs_pxpc_asc_desc_idx' }
+    its(:content) { should include 'autovacuum_vacuum_cost_limit=2000' }
+    its(:content) { should include 'autovacuum_vacuum_cost_delay=10' }
+    its(:content) { should include 'autovacuum_vacuum_scale_factor=0' }
+    its(:content) { should include 'autovacuum_vacuum_threshold=5000' }
+    its(:content) { should include 'autovacuum_analyze_threshold=1000' }
+    its(:content) { should include 'autovacuum_analyze_scale_factor=0.01' }
+  end
+
+  describe 'verifying ActiveMQ optimizations for activemq_acks' do
+    subject { file('/tmp/activemq_acks.struct') }
+    its(:content) { should include 'tmp_activemq_acks_c_idx' }
   end
 end
