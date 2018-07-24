@@ -1,6 +1,7 @@
 class profile::postgresql::install {
 
   class { 'postgresql::globals':
+    version             => '9.5',
     encoding            => 'UTF8',
     locale              => 'en_NG',
     manage_package_repo => true,
