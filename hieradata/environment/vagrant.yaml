@@ -48,6 +48,8 @@ postgresql::globals::default_connect_settings:
   PGPASSWORD: "%{::master_password}"
 
 
+activemq::pg_host: "localhost"
+activemq::persistence_pg_host: "localhost"
 # The dict above must be the same than the one inside hieradata/puppet_role/activemq.yaml
 # + activemq
 profile::postgresql::roles:
