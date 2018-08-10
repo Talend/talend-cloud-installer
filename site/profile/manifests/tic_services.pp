@@ -16,6 +16,7 @@ class profile::tic_services (
   $confirm_email_external_url      = undef,
   $ams_password_reset_url_template = undef,
   $rejected_data_bucket_data       = undef,
+  $test_data_bucket_data           = undef,
   $flow_logs_bucket_data           = undef,
   $downloads_bucket_data           = undef,
 
@@ -105,6 +106,16 @@ class profile::tic_services (
     $rd_object_key_prefix = undef
   }
 
+  if $test_data_bucket_data {
+    $_test_data_bucket_data = split(regsubst($test_data_bucket_data, '[\s\[\]\"]', '', 'G'), ',')
+
+    $td_bucket_name       = $_test_data_bucket_data[0]
+    $td_object_key_prefix = $_test_data_bucket_data[1]
+  } else {
+    $td_bucket_name       = undef
+    $td_object_key_prefix = undef
+  }
+
   if $flow_logs_bucket_data {
     $_flow_logs_bucket_data = split(regsubst($flow_logs_bucket_data, '[\s\[\]\"]', '', 'G'), ',')
 
@@ -125,7 +136,7 @@ class profile::tic_services (
     $dl_object_key_prefix = undef
   }
 
-  $dts_prefix = pick_default($rd_object_key_prefix, undef)
+  $dts_prefix = pick_default($td_object_key_prefix, $rd_object_key_prefix, undef)
 
   if $confirm_email_external_url {
     $_confirm_email_external_url = $confirm_email_external_url
@@ -164,6 +175,7 @@ class profile::tic_services (
     confirm_email_external_url              => $_confirm_email_external_url,
     ams_password_reset_url_template         => $_ams_password_reset_url_template,
     dts_s3_bucket_rejected_data             => $rd_bucket_name,
+    dts_s3_bucket_test_data                 => $td_bucket_name,
     dts_s3_bucket_logs_data                 => $fl_bucket_name,
     dts_s3_bucket_downloads_data            => $dl_bucket_name,
     dts_s3_prefix                           => $dts_prefix,

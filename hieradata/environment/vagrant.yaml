@@ -101,6 +101,7 @@ tic::frontend::help_url: "the-help-url"
 
 profile::tic_services::ams_password_reset_url_template: "https://my-password-reset-host.com"
 profile::tic_services::rejected_data_bucket_data: '["rd-bucket", "rd-prefix"]'
+profile::tic_services::test_data_bucket_data: '["td-bucket", "td-prefix"]'
 profile::tic_services::flow_logs_bucket_data: '["fl-bucket", "fl-prefix"]'
 profile::tic_services::downloads_bucket_data: '["dl-bucket", "dl-prefix"]'
 
