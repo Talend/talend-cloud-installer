@@ -1,9 +1,5 @@
 ---
 
-common_packages:
-  'python-virtualenv':
-    ensure: 'installed'
-
 tic::services::karaf_service_ensure: 'stopped'
 tic::services::karaf_service_enable: false
 tic::frontend::tomcat_service_ensure: 'stopped'
@@ -26,6 +22,7 @@ docker::service_enable: false
 profile::docker::registry::ensure: 'absent'
 profile::docker::registry::running: false
 profile::docker::ecs_agent::running: false
+profile::datadog_docker_agent::running: false
 
 nexus::service_ensure: 'stopped'
 nexus::service_enable: false
@@ -34,6 +31,7 @@ activemq::service_ensure: 'stopped'
 activemq::service_enable: false
 profile::mongodb::service_ensure: 'stopped'
 profile::mongodb::service_enable: false
+profile::mongodb::swap_ensure: 'absent'
 dataprep_dataset::service_ensure: 'stopped'
 dataprep_dataset::service_enable: false
 profile::elasticsearch::status: 'disabled'
@@ -44,3 +42,9 @@ profile::kafka::kafka_topics_config: ''
 
 ntp::service_ensure: 'stopped'
 ntp::service_enable: false
+
+monitoring::node_exporter::service_ensure: 'stopped'
+monitoring::node_exporter::service_enable: false
+monitoring::cadvisor::service_ensure: 'stopped'
+monitoring::cadvisor::service_enable: false
+monitoring::mongodb_exporter::service_enable: false

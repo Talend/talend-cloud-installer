@@ -1,15 +1,7 @@
 class profile::mongodb::users (
-
-  $db_address = 'admin',
-  $users      = {},
-
+  $users = {},
 ) {
-
-  if $profile::mongodb::service_ensure == 'running' {
-    $instanceLogicalId = pick($::cfn_resource_name, $::ec2_userdata, '')
-    if $instanceLogicalId =~ /InstanceA/ {
+  if $::profile::mongodb::service_ensure == 'running' or $::profile::mongodb::service_ensure == 'present' {
       create_resources('profile::mongodb::user', $users)
-    }
   }
-
 }

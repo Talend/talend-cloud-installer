@@ -12,7 +12,7 @@ describe 'role::frontend' do
     it { should be_listening }
   end
 
-  describe command('/usr/bin/wget -O - http://127.0.0.1:8081') do
+  describe command('/usr/bin/wget -O - http://127.0.0.1:8081/ipaas') do
     its(:stdout) { should include '<title>Integration Cloud | Talend</title>' }
   end
 
@@ -47,13 +47,8 @@ describe 'role::frontend' do
   describe command('/usr/bin/ps ax | grep java') do
     its(:stdout) { should include '-Djava.awt.headless=true' }
     its(:stdout) { should include '-Xmx1024m' }
-    its(:stdout) { should include '-XX:MaxPermSize=256m' }
+    its(:stdout) { should include '-XX:MaxMetaspaceSize=512m' }
     its(:stdout) { should include '-Djava.io.tmpdir=/srv/tomcat/ipaas-srv/temp' }
-  end
-
-  describe file('/srv/tomcat/ipaas-srv/webapps/ROOT') do
-    it { should be_symlink }
-    it { should be_linked_to '/srv/tomcat/ipaas-srv/webapps/ipaas' }
   end
 
   %w(
@@ -88,6 +83,13 @@ describe 'role::frontend' do
     its(:content) { should include 'protocol="HTTP/1.1"' }
     its(:content) { should include 'connectionTimeout="20000"' }
     its(:content) { should include 'redirectPort="8443"' }
+  end
+
+  describe file('/srv/tomcat/ipaas-srv/conf/server.xml') do
+    its(:content) { should include 'className="org.apache.catalina.valves.RemoteIpValve"' }
+    its(:content) { should include 'protocolHeader="X-Forwarded-Proto"' }
+    its(:content) { should include 'remoteIpHeader="X-Forwarded-For"' }
+    its(:content) { should include 'internalProxies="${server.tomcat.internal-proxies}' }
   end
 
   describe file('/srv/tomcat/ipaas-srv/webapps/ipaas-server/WEB-INF/web.xml') do

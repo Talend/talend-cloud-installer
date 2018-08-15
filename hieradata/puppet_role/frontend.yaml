@@ -31,6 +31,7 @@ tic::frontend::flow_manager_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::iam_oidc_back_url: "%{::tpsvc_iam_oidc_back_url}"
 tic::frontend::iam_oidc_front_url: "%{::tpsvc_iam_oidc_front_url}"
 tic::frontend::java_home: "/usr/java/jre1.8.0_60"
+tic::frontend::java_max_metaspace_size: "%{::max_metaspace_size}"
 tic::frontend::logquery_tpsvc_service_url: "%{::tpsvc_logquery_url}"
 tic::frontend::logs_log_transfer_service_nodes: "%{::tic_services_external_nodes}"
 tic::frontend::notification_subscription_nodes: "%{::tic_services_internal_nodes}"
@@ -47,12 +48,16 @@ tic::frontend::sts_password: "%{::master_password}"
 tic::frontend::sts_username: 'admin'
 tic::frontend::tcomp_static_ips: "%{::vpc_nat_ips}"
 tic::frontend::tdp_url: "%{::tdp_url}"
+tic::frontend::tds_url: "%{::tds_url}"
 tic::frontend::tmc_url: "%{::tmc_url}"
+tic::frontend::dss_url: "%{::dss_url}"
 tic::frontend::trial_service_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::web_samples_account_name: "sample"
 tic::frontend::web_use_ssl: false
 tic::frontend::webhooks_service_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
 tic::frontend::workspace_url: "/ipaas/services"
+tic::frontend::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
+tic::frontend::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true

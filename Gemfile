@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'puppet', '~> 3.8'
 gem 'rake'
 gem 'tilt'
-gem 'librarian-puppet'
+gem 'librarian-puppet', '~> 3.0'
 
 group :test do
   gem 'metadata-json-lint'

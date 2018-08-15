@@ -14,7 +14,6 @@
     {"name": "jfryman/selinux", "version_requirement": "0.x"},
     {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
     {"name": "puppetlabs/concat", "version_requirement": "1.x"},
-    {"name": "puppetlabs/mongodb", "version_requirement": "0.x"},
     {"name": "puppetlabs/tomcat", "version_requirement": "1.x"},
     {"name": "puppetlabs/java", "version_requirement": "1.x"},
     {"name": "puppetlabs/limits", "version_requirement": "0.x"},
@@ -30,6 +29,7 @@
     {"name": "yo61/logrotate", "version_requirement": "1.x"},
     {"name": "stankevich/python", "version_requirement": "1.18.2" },
     {"name": "golja/influxdb", "version_requirement": "4.x"},
-    {"name": "saz/rsyslog", "version_requirement": "5.x"}
+    {"name": "saz/rsyslog", "version_requirement": "5.x"},
+    {"name": "petems/swap_file", "version_requirement": "4.x"}
   ]
 }

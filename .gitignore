@@ -14,3 +14,7 @@ site/profile/spec/fixtures
 build/
 *.swp
 .ruby-version
+packer.log
+packer/extra.yaml
+packer/template.json
+packer/*.rpm

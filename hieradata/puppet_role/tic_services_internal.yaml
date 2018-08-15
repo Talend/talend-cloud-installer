@@ -118,10 +118,19 @@ tic::services::scim_service_url: "%{::tpsvc_iam_scim_back_url}"
 tic::services::iam_service_url: "%{::tpsvc_iam_server_front_url}"
 tic::services::crypto_service_url: "%{::tpsvc_crypto_url}"
 tic::services::config_service_url: "%{::tpsvc_config_url}"
+tic::services::license_service_url: "%{::tmc_license_url}"
 
 tic::services::notification_subscription_memcached_host: "%{::memcache_nodes}"
 
 tic::services::kms_key_alias: "%{::kms_key_alias}"
+
+tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
+tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
+
+tic::services::webhooks_external_url: "%{::webhooks_host}"
+
+tic::services::eventsource_kafka_servers: "%{::kafka_app_entry_point}"
+tic::services::eventsource_kafka_topic: "%{::provisioning_kafka_topic}"
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/talend/ipaas/rt-infra/data/log/karaf.log":
@@ -147,7 +156,6 @@ tic::services::karaf_features_install:
   - 'ssh'
   - 'system'
   - 'wrap)'
-  - 'camel'
   - 'tipaas-crypto-service-core'
   - 'tipaas-amq-dependencies'
   - 'tipaas-crypto-service-client'
@@ -180,6 +188,7 @@ tic::services::karaf_features_install:
   - 'tipaas-notification-server'
   - 'tipaas-notification-sendgrid-webhook-service'
   - 'tipaas-logs-transfer-service-client'
-  - 'tipaas-healthcheck-service-core'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
+  - 'tipaas-kafkasource'
+  - 'tipaas-healthcheck-service-core'

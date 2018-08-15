@@ -8,17 +8,23 @@
 #
 class profile::base {
 
-  include ::profile::common::packagecloud_repos
-  include ::profile::common::packages
-  include ::profile::common::cloudwatchlogs
-  include ::profile::common::ssm
+  class { '::profile::common::packagecloud_repos':
+  } ->
+  class { '::profile::common::packages':
+  } ->
+  class { '::profile::common::cloudwatch':
+  } ->
+  class { '::profile::common::cloudwatchlogs':
+  } ->
+  class { '::profile::common::ssm':
+  }
 
   include ::profile::common::concat
   include ::profile::common::accounts
 
-  include ::profile::common::cloudwatch
-
   include ::ntp
+
+  include monitoring::node_exporter
 
   profile::register_profile { 'base': order => 1, }
 
@@ -41,6 +47,14 @@ class profile::base {
     noop    => false,
   }
 
-  create_resources('limits::fragment', hiera('limits::fragment', {}))
+  # Also needed for custom facts
+  file {
+    '/etc/facter':
+      ensure => directory;
 
+    '/etc/facter/facts.d':
+      ensure  => directory,
+      require => File['/etc/facter'];
+  }
+  create_resources('limits::fragment', hiera('limits::fragment', {}))
 }

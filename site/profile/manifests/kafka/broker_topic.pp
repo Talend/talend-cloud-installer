@@ -11,24 +11,21 @@
 #       cleanup.policy: 'delete'
 #       retention.ms: 18000000 #5 hours
 define profile::kafka::broker_topic(
-  $ensure             = 'present',
-  $zookeeper          = $::profile::kafka::zookeeper_cluster,
-  $zookeeper_path     = $::profile::kafka::zookeeper_kafkapath,
-  $replication_factor = 1,
-  $partitions         = 1,
-  $topic_options      = {} #https://kafka.apache.org/documentation/#topic-config
+  $ensure                   = 'present',
+  $zookeeper_connect_string = $::profile::kafka::zookeeper_connect,
+  $replication_factor       = 1,
+  $partitions               = 1,
+  $topic_options            = {} #https://kafka.apache.org/documentation/#topic-config
 ) {
 
-  $zookeeper_node_a   = values_at(split($zookeeper, ','), 0)
-
-  $_zookeeper          = "--zookeeper ${zookeeper_node_a}${zookeeper_path}"
+  $_zookeeper          = "--zookeeper ${zookeeper_connect_string}"
   $_replication_factor = "--replication-factor ${replication_factor}"
   $_partitions         = "--partitions ${partitions}"
 
 
   if $ensure == 'present' {
     $topic_create_options  = inline_template('<% unless @topic_options.empty? %><% @topic_options.each do |key, value| %> --config <%= key %>=<%= value %><% end %><% end %>')
-    $topic_config_options  = inline_template('<% unless @topic_options.empty? %><% @topic_options.each do |key, value| %> --add-config <%= key %>=<%= value %><% end %><% end %>')
+    $topic_config_options  = inline_template('<% unless @topic_options.empty? %>--add-config "<% @topic_options.each do |key, value| %> <%= key %>=<%= value %>,<% end %>"<% end %>')
 
     unless empty($topic_options){
       exec { "configure topic ${name}":

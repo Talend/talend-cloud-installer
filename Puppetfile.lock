@@ -25,9 +25,15 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     herculesteam-augeasproviders_shellvar (2.2.1)
       herculesteam-augeasproviders_core (< 3.0.0, >= 2.1.0)
+    herculesteam-augeasproviders_sysctl (2.2.0)
+      herculesteam-augeasproviders_core (< 3.0.0, >= 2.1.0)
     jfryman-selinux (0.4.0)
       puppetlabs-stdlib (>= 0)
     maestrodev-wget (1.7.3)
+    petems-swap_file (4.0.0)
+      herculesteam-augeasproviders_core (< 3.0.0, >= 2.1.0)
+      herculesteam-augeasproviders_sysctl (< 3.0.0, >= 2.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.7.0)
     puppet-archive (1.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppet-nginx (0.4.0)
@@ -46,12 +52,9 @@ FORGE
     puppetlabs-limits (0.1.0)
     puppetlabs-lvm (0.7.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
-    puppetlabs-mongodb (0.16.0)
-      puppetlabs-apt (< 3.0.0, >= 2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
     puppetlabs-ntp (4.2.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
-    puppetlabs-stdlib (4.14.0)
+    puppetlabs-stdlib (4.25.0)
     puppetlabs-tomcat (1.6.0)
       puppet-staging (< 2.0.0, >= 0.4.1)
       puppetlabs-concat (< 3.0.0, >= 1.1.0)
@@ -83,6 +86,15 @@ GIT
       puppetlabs-stdlib (>= 4.11.0)
 
 GIT
+  remote: https://github.com/Talend/puppet-mongodb.git
+  ref: 0.18.x
+  sha: e59ad3a9c30fc68ea903c445c1a37ea1ce6e74ef
+  specs:
+    puppetlabs-mongodb (0.18.0)
+      puppetlabs-apt (< 3.0.0, >= 2.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
+
+GIT
   remote: https://github.com/Talend/puppet-nexus.git
   ref: master
   sha: 7224a29b89e661eccfa1c2beacaf1e322e285536
@@ -105,17 +117,17 @@ GIT
 GITHUBTARBALL
   remote: Talend/puppet-activemq
   specs:
-    talend-activemq (0.3.1)
+    talend-activemq (0.3.2)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatch
   specs:
-    talend-cloudwatch (0.1.0.26)
+    talend-cloudwatch (0.1.0.28)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatchlogs
   specs:
-    talend-cloudwatchlogs (0.2.1.1)
+    talend-cloudwatchlogs (0.2.1.2)
 
 GITHUBTARBALL
   remote: Talend/puppet-dataprep_dataset
@@ -123,14 +135,19 @@ GITHUBTARBALL
     talend-dataprep_dataset (0.1.0.5)
 
 GITHUBTARBALL
+  remote: Talend/puppet-monitoring
+  specs:
+    talend-monitoring (0.1.0.17)
+
+GITHUBTARBALL
   remote: Talend/puppet-syncope
   specs:
-    talend-syncope (0.1.1.10)
+    talend-syncope (0.1.1.11)
 
 GITHUBTARBALL
   remote: Talend/puppet-tic
   specs:
-    talend-tic (0.2.7)
+    talend-tic (0.2.9.16)
 
 GITHUBTARBALL
   remote: Talend/puppet-user_accounts
@@ -140,7 +157,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-zookeeper
   specs:
-    talend-zookeeper (0.1.1.5)
+    talend-zookeeper (0.1.1.9)
 
 DEPENDENCIES
   camptocamp-accounts (~> 1.0)
@@ -151,13 +168,14 @@ DEPENDENCIES
   herculesteam-augeasproviders_shellvar (~> 2.0)
   hubspot-nexus (>= 0)
   jfryman-selinux (~> 0.0)
+  petems-swap_file (~> 4.0)
   puppet-nginx (~> 0.4.0)
   puppetlabs-concat (~> 1.0)
   puppetlabs-firewall (~> 1.0)
   puppetlabs-java (~> 1.0)
   puppetlabs-limits (~> 0.0)
   puppetlabs-lvm (~> 0.0)
-  puppetlabs-mongodb (~> 0.0)
+  puppetlabs-mongodb (>= 0)
   puppetlabs-ntp (~> 4.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-stdlib (~> 4.0)
@@ -170,6 +188,7 @@ DEPENDENCIES
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)
+  talend-monitoring (= 0.1.0.17)
   talend-syncope (~> 0.0)
   talend-tic (~> 0.0)
   talend-user_accounts (~> 0.0)

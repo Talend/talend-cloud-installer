@@ -9,7 +9,9 @@ profile::docker::host::storage_device: "%{::storage_device}"
 
 profile::docker::ecs_agent::running: true
 profile::docker::ecs_agent::cluster_name: "%{::cluster_name}"
-profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.15.1'
+profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.18.0'
+
+profile::datadog_docker_agent::image: 'datadog/docker-dd-agent:12.6.5223'
 
 profile::docker::registry::ensure: '%{::registry_ensure}'
 profile::docker::registry::running: true

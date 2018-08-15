@@ -8,9 +8,9 @@ nginx::config::server_tokens: 'off'
 nginx::config::keepalive_timeout: '5 5'
 nginx::config::client_body_buffer_size: '128k'
 nginx::config::client_max_body_size: '500M'
-nginx::config::proxy_connect_timeout: '3600'
-nginx::config::proxy_read_timeout: '3600'
-nginx::config::proxy_send_timeout: '3600'
+nginx::config::proxy_connect_timeout: '10'
+nginx::config::proxy_read_timeout: '60'
+nginx::config::proxy_send_timeout: '60'
 
 profile::nexus::nexus_nodes: "%{::nexus_nodes}"
 profile::nexus::nexus_nodes_port: "%{::nexus_nodes_port}"

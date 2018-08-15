@@ -9,13 +9,6 @@ class profile::build_time_facts($facts_hash) {
   validate_hash($facts_hash)
 
   file {
-    '/etc/facter':
-      ensure => directory;
-
-    '/etc/facter/facts.d':
-      ensure  => directory,
-      require => File['/etc/facter'];
-
     '/etc/facter/facts.d/build_time_facts.json':
       content => inline_template('<%= Hash[@facts_hash.sort_by { |key, val| key }].to_json %>'),
       require => File['/etc/facter/facts.d'];

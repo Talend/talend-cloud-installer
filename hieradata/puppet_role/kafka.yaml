@@ -63,6 +63,10 @@ kafka_infra_logs_cluster_ha:
       topic_options:
         retention.ms: "43200000"      # 12h
         retention.bytes: "5368709120" #  5GB
+    systemlogs:
+      topic_options:
+        retention.ms: "43200000"      # 12h
+        retention.bytes: "5368709120" #  5GB
     zipkin: {}
 
 kafka_customers_logs_cluster_ha:
@@ -88,24 +92,48 @@ kafka_applications_cluster_ha:
     container-events: {}
     output: {}
     data-history: {}
-    category: {}
-    dictionary: {}
-    regex: {}
     schemas: {}
     schemas-references: {}
-    dataset-changed: {}
-    datastore-changed: {}
-    app-to-runtime: {}
-    runtime-to-app: {}
+    dataset-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    datastore-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    app-to-runtime:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    runtime-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
     notifications: {}
-    websocket-to-app: {}
-    app-to-websocket: {}
-    logs-app-to-runtime: {}
-    logs-runtime-to-app: {}
-    userflow-changed: {}
-    impact-analysis-offsets:
-      partitions: 1
-    publication: {}
+    websocket-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    app-to-websocket:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    logs-runtime-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    userflow-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    impact-analysis-batch: {}
+    dqDictionary:
+      topic_options:
+        retention.bytes: "5368709120" # 5G
+        retention.ms: "648000000" # 7.5d
+    dataprep:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    dataprep-unique:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    dataprep-broadcast:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    provisioning: {}
 
 kafka_applications_cluster_simple:
   kafka_topics_default_partitions: 2
@@ -122,24 +150,51 @@ kafka_applications_cluster_simple:
     container-events: {}
     output: {}
     data-history: {}
-    category: {}
-    dictionary: {}
-    regex: {}
     schemas: {}
     schemas-references: {}
-    dataset-changed: {}
-    datastore-changed: {}
-    app-to-runtime: {}
-    runtime-to-app: {}
+    dataset-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    datastore-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    app-to-runtime:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    runtime-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
     notifications: {}
-    websocket-to-app: {}
-    app-to-websocket: {}
-    logs-app-to-runtime: {}
-    logs-runtime-to-app: {}
-    userflow-changed: {}
-    impact-analysis-offsets:
-      partitions: 1
-    publication: {}
+    websocket-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    app-to-websocket:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    logs-app-to-runtime:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    logs-runtime-to-app:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    userflow-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+    impact-analysis-batch: {}
+    dqDictionary:
+      topic_options:
+        retention.bytes: "5368709120" # 5G
+        retention.ms: "648000000" # 7.5d
+    dataprep:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    dataprep-unique:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    dataprep-broadcast:
+      topic_options:
+        retention.ms: "1800000" # 30min
+    provisioning: {}
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:

@@ -35,7 +35,7 @@ describe 'role::tic_services_external' do
   describe 'Service configuration' do
     subject { file('/opt/talend/ipaas/rt-infra/etc/karaf-wrapper.conf').content }
     it { should match /wrapper.jvm_kill.delay\s*=\s*5/ }
-    it { should match /wrapper.java.additional.10\s*=\s*-XX:MaxPermSize=256m/ }
+    it { should match /wrapper.java.additional.10\s*=\s*-XX:MaxMetaspaceSize=256m/ }
     it { should match /wrapper.java.additional.11\s*=\s*-Dcom.sun.management.jmxremote.port=7199/ }
     it { should match /wrapper.java.additional.12\s*=\s*-Dcom.sun.management.jmxremote.authenticate=false/ }
     it { should match /wrapper.java.additional.13\s*=\s*-Dcom.sun.management.jmxremote.ssl=false/ }

@@ -87,6 +87,15 @@ shared_examples 'profile::kafka' do
     it { should include 'container-events' }
     it { should_not include 'tpsvclogs' }
     it { should_not include 'zipkin' }
+    it { should include 'provisioning' }
+  end
+
+  #Verifying topics creation
+  describe "Verifying topic creation on zookeeper '" + zookeepernodes + "' for dataprep" do
+    subject { command('/opt/kafka/bin/kafka-topics.sh --list --zookeeper "'+ zookeepernodes + '"').stdout }
+    it { should include 'dataprep' }
+    it { should include 'dataprep-unique' }
+    it { should include 'dataprep-broadcast' }
   end
 
   describe "Verifying topic sharding on zookeeper '" + zookeepernodes + "' for dispatcher" do
@@ -99,6 +108,11 @@ shared_examples 'profile::kafka' do
   describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for dispatcher" do
     subject { command('/opt/kafka/bin/kafka-configs.sh --zookeeper "'+ zookeepernodes + '" --entity-type topics --entity-name dispatcher --describe').stdout }
     it { should include 'retention.bytes=536870912' }
+  end
+
+  describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for dqDictionary" do
+    subject { command('/opt/kafka/bin/kafka-configs.sh --zookeeper "'+ zookeepernodes + '" --entity-type topics --entity-name dqDictionary --describe').stdout }
+    it { should include 'retention.bytes=6442450944' }
   end
 
   #Verifying topic usability
