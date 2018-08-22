@@ -127,7 +127,7 @@ tic::services::kms_key_alias: "%{::kms_key_alias}"
 tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
 tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
-tic::services::webhooks_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-service"
+tic::services::webhooks_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
 
 tic::services::eventsource_kafka_servers: "%{::kafka_app_entry_point}"
 tic::services::eventsource_kafka_topic: "%{::provisioning_kafka_topic}"
