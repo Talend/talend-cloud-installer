@@ -134,6 +134,9 @@ kafka_applications_cluster_ha:
       topic_options:
         retention.ms: "1800000" # 30min
     provisioning: {}
+    rating-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
 
 kafka_applications_cluster_simple:
   kafka_topics_default_partitions: 2
@@ -195,6 +198,9 @@ kafka_applications_cluster_simple:
       topic_options:
         retention.ms: "1800000" # 30min
     provisioning: {}
+    rating-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:
