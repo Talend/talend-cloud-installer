@@ -3,7 +3,7 @@
 #
 
 class profile::kafka (
-  $kafka_version           = '0.10.2.1',
+  $kafka_version           = '1.1.1',
   $scala_version           = '2.11',
   $kafka_datapath          = '/var/lib/kafka',
   $storage_device          = undef,
@@ -44,7 +44,8 @@ class profile::kafka (
     'zookeeper.connect'             => $zookeeper_connect,
     'log.dir'                       => $kafka_datapath,
     'log.dirs'                      => $kafka_datapath,
-    'inter.broker.protocol.version' => $kafka_version,
+    'inter.broker.protocol.version' => $kafka_version, #for rolling update, override in extrafile
+    'log.message.format.version'    => $kafka_version, #for rolling update, override in extrafile
     'advertised.host.name'          => $::ipaddress,
     'auto.create.topics.enable'     => $kafka_topics_autocreate,
     'log.cleanup.policy'            => 'delete',
