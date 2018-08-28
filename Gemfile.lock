@@ -21,7 +21,7 @@ GEM
       json_pure
     json (2.0.1)
     json_pure (2.0.1)
-    kitchen-puppet (1.42.0)
+    kitchen-puppet (1.45.3)
       net-ssh (~> 3)
       test-kitchen (~> 1.4)
     kitchen-ssh (0.0.12)
