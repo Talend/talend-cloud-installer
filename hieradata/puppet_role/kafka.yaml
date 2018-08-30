@@ -51,8 +51,8 @@ profile::kafka::kafka_broker_config:
 
 # We can have several kafka cluster
 kafka_infra_logs_cluster_ha:
-  kafka_topics_default_partitions: 6
-  kafka_topics_default_replication: 1
+  kafka_topics_default_partitions: 12
+  kafka_topics_default_replication: 2
   kafka_broker_config:
     log.cleanup.policy: 'delete'
     log.retention.bytes: "536870912" # 512MB
@@ -70,8 +70,8 @@ kafka_infra_logs_cluster_ha:
     zipkin: {}
 
 kafka_customers_logs_cluster_ha:
-  kafka_topics_default_partitions: 6
-  kafka_topics_default_replication: 1
+  kafka_topics_default_partitions: 12
+  kafka_topics_default_replication: 2
   log_level: 'INFO'
   topics:
     tpsvclogs:
@@ -80,7 +80,7 @@ kafka_customers_logs_cluster_ha:
         retention.bytes: "10737418240" # 10GB
 
 kafka_applications_cluster_ha:
-  kafka_topics_default_partitions: 6
+  kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   kafka_broker_config:
     log.cleanup.policy: 'delete'
