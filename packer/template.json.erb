@@ -22,7 +22,21 @@
       "type": "amazon-chroot",
       "name": "amazon",
       "source_ami": "{{user `source_ami`}}",
+      <% if not ENV.has_key?('NETWORK_OPT') or ENV['NETWORK_OPT'] == 'None' %>
       "ami_name": "talend-tic-{{user `ami_name`}}-{{user `ami_version`}}-{{timestamp}}-{{user `ami_type`}}",
+      <% else %>
+      "ami_name": "talend-tic-{{user `ami_name`}}-{{user `ami_version`}}-{{timestamp}}-{{user `ami_type`}}-<%= ENV['NETWORK_OPT'] %>",
+      <% end %>
+      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'Intel82599VF' %>
+      "sriov_support": true,
+      <% else %>
+      "sriov_support": false,
+      <% end %>
+      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'ENA' %>
+      "ena_support": true,
+      <% else %>
+      "ena_support": false,
+      <% end %>
       "ami_description": "{{user `ami_description`}}",
       <% if ENV.has_key?('REGIONS') and ENV['REGIONS'].length > 0 %>
       "ami_regions": ["<%= ENV['REGIONS'].split(',').join('","') %>"],
