@@ -16,8 +16,11 @@ if [ -z "${CURRENT_VERSION}" ]; then
   exit 0
 fi
 
-if [ "${AWAITED_VERSION}" > "${CURRENT_VERSION}" ]; then
+compare_result=$(echo "${AWAITED_VERSION} > ${CURRENT_VERSION}" | bc -l)
+if [ "${compare_result}" == "1" ]; then
+  # expression is verified, we need to update
   exit 0
 else
+  # We don't need to update
   exit 1
 fi
