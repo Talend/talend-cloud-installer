@@ -116,10 +116,12 @@ shared_examples 'profile::kafka' do
     it { should include 'ReplicationFactor:1' }
   end
 
-  describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for dispatcher" do
-    subject { command('/opt/kafka/bin/kafka-configs.sh --zookeeper "'+ zookeepernodes + '" --entity-type topics --entity-name dataset-changed --describe').stdout }
+  describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for app-to-runtime" do
+    subject { command('/opt/kafka/bin/kafka-configs.sh --zookeeper "'+ zookeepernodes + '" --entity-type topics --entity-name app-to-runtime --describe').stdout }
     it { should include 'retention.ms=3600000' }
     it { should include 'segment.ms=300000' }
+    it { should include 'retention.bytes=268435456' }
+    it { should include 'max.message.bytes=10485760' }
   end
 
   describe "Verifying topic configuration on zookeeper '" + zookeepernodes + "' for dqDictionary" do
