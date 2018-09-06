@@ -46,45 +46,58 @@ cloudwatch::metrics:
 # Default profile
 profile::kafka::kafka_broker_config:
   log.cleanup.policy: 'delete'
-  log.retention.bytes: "536870912" # 512MB
+  log.retention.bytes: "268435456" # 256 MiB, per partition
+  log.segment.bytes: "134217728"   # 128 MiB max per segment
+  log.roll.ms: "1200000"           # a segment will be used (written) for max 20mn (after 20mn, a new file is created)
   log.retention.ms: "43200000"     # 12h
 
 # We can have several kafka cluster
-kafka_infra_logs_cluster_ha:
+kafka_infra_logs_cluster_ha: # estimated max cluster size: 102 GiB + customers offsets => 60GiB per node
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
+  log_level: 'INFO'
   kafka_broker_config:
     log.cleanup.policy: 'delete'
-    log.retention.bytes: "536870912" # 512MB
+    log.retention.bytes: "268435456" # 256 MiB, per partition
+    log.segment.bytes: "134217728"   # 128 MiB max per segment
+    log.roll.ms: "1200000"           # a segment will be used (written) for max 20mn (after 20mn, a new file is created)
     log.retention.ms: "43200000"     # 12h
-  log_level: 'INFO'
   topics:
     tpsvclogs:
       topic_options:
         retention.ms: "43200000"      # 12h
-        retention.bytes: "5368709120" #  5GB
+        retention.bytes: "2147483648" # 2 GiB per partition
     systemlogs:
       topic_options:
         retention.ms: "43200000"      # 12h
-        retention.bytes: "5368709120" #  5GB
+        retention.bytes: "2147483648" # 2 GiB per partition
     zipkin: {}
 
-kafka_customers_logs_cluster_ha:
+kafka_customers_logs_cluster_ha: # estimated max cluster size: 96 GiB + customers offsets => 50GiB per node
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   log_level: 'INFO'
+  kafka_broker_config:
+    log.cleanup.policy: 'delete'
+    log.retention.bytes: "268435456" # 256 MiB, per partition
+    log.segment.bytes: "134217728"   # 128 MiB max per segment
+    log.roll.ms: "1200000"           # a segment will be used (written) for max 20mn (after 20mn, a new file is created)
+    log.retention.ms: "43200000"     # 12h
   topics:
     tpsvclogs:
       topic_options:
-        retention.ms: "43200000"       # 12h
-        retention.bytes: "10737418240" # 10GB
+        retention.ms: "43200000"      # 12h
+        retention.bytes: "4294967296" # 4GiB per partition
 
-kafka_applications_cluster_ha:
+kafka_applications_cluster_ha: # estimated max cluster size: 78 GiB + customers offsets = 30 GiB per node
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
+  log_level: 'INFO'
   kafka_broker_config:
     log.cleanup.policy: 'delete'
-    log.retention.bytes: "536870912" # 512MB
+    log.retention.bytes: "134217728" # 128 MiB, per partition => default topic sizing: 12 * 128MiB * 2 = 3 GB per topic on cluster
+    log.segment.bytes: "67108864"    # 64 MiB max per segment
+    log.roll.ms: "1200000"           # a segment will be used (written) for max 20mn (after 20mn, a new file is created)
     log.retention.ms: "43200000"     # 12h
   topics:
     dispatcher: {}
@@ -97,58 +110,71 @@ kafka_applications_cluster_ha:
     dataset-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     datastore-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     app-to-runtime:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     runtime-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     notifications: {}
     websocket-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     app-to-websocket:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     logs-runtime-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     userflow-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     impact-analysis-batch: {}
     dqDictionary:
       topic_options:
-        retention.bytes: "5368709120" # 5G
+        retention.bytes: "536870912" # 512 MiB per partition => 12GiB per cluster
         retention.ms: "648000000" # 7.5d
+        segment.ms: "3600000"     # 1h
     dataprep:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     dataprep-unique:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     dataprep-broadcast:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     provisioning: {}
     rating-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
 
-kafka_applications_cluster_simple:
+kafka_applications_cluster_simple:   # estimated max data size: 27 GiB + customer_offsets
   kafka_topics_default_partitions: 2
   kafka_topics_default_replication: 1
   kafka_broker_config:
     log.cleanup.policy: 'delete'
-    log.retention.bytes: "536870912" # 512MB
+    log.retention.bytes: "536870912" # 512MiB
+    log.segment.bytes: "67108864"    # 64 MiB max per segment
+    log.roll.ms: "1200000"           # a segment will be used (written) for max 20mn (after 20mn, a new file is created)
     log.retention.ms: "43200000"     # 12h
   topics:
-    dispatcher:
-      topic_options:
-        retention.bytes: "536870912"
+    dispatcher: {}
     container-manager: {}
     container-events: {}
     output: {}
@@ -158,49 +184,63 @@ kafka_applications_cluster_simple:
     dataset-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     datastore-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     app-to-runtime:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     runtime-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     notifications: {}
     websocket-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     app-to-websocket:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     logs-app-to-runtime:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     logs-runtime-to-app:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     userflow-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     impact-analysis-batch: {}
     dqDictionary:
       topic_options:
-        retention.bytes: "5368709120" # 5G
+        retention.bytes: "2684354560" # 2,5GiB
         retention.ms: "648000000" # 7.5d
+        segment.ms: "3600000"     # 1h
     dataprep:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     dataprep-unique:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     dataprep-broadcast:
       topic_options:
         retention.ms: "1800000" # 30min
+        segment.ms: "300000"    # 5mn
     provisioning: {}
     rating-changed:
       topic_options:
         retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
 
 # Example of tuning for profiling kafka:
 # <kafka_yaml_profile_name>:
