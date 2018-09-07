@@ -92,6 +92,7 @@ class profile::postgresql::activemq (
     path        => '/usr/bin:/usr/sbin:/bin',
     environment => "PGPASSWORD=${pg_password}",
     command     => "psql -U ${pg_username} -h ${pg_host} -d ${pg_db} -q -f ${amq_tuning_dir}/postgresql_optimizations.sql",
+    timeout     => 0,
     onlyif      => $only_if_version_optimizations_check,
     require     => [
       Exec['stopping_activemq'],
