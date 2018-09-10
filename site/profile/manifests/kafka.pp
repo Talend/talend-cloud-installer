@@ -103,6 +103,9 @@ class profile::kafka (
     $_kafka_topics_config = $kafka_topics_config
   }
 
+  $java_xmx = floor($::memorysize_mb * 0.70)
+  $java_xms = floor($::memorysize_mb * 0.50)
+
   class { '::profile::common::mount_device':
     device  => $storage_device,
     path    => $kafka_datapath,
@@ -115,6 +118,7 @@ class profile::kafka (
   } ->
   class { '::kafka::broker':
     config                     => $broker_config,
+    heap_opts                  => "-Xms${java_xms}m -Xmx${java_xmx}m",
     service_requires_zookeeper => false
   }
 
