@@ -45,11 +45,6 @@ shared_examples 'profile::kafka' do
     it { should include 'managed by Puppet' }
   end
 
-  describe 'Cloudwatch Kafka specific' do
-     subject { file('/opt/cloudwatch-agent/metrics.yaml').content }
-     it { should include '    DiskSpaceKafka:' }
-  end
-
   describe 'Kafka configuration' do
     subject { file('/opt/kafka/config/server.properties').content }
     it { should include 'managed by Puppet' }

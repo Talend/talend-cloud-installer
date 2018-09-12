@@ -25,8 +25,6 @@ class profile::mongodb (
   include ::profile::common::rsyslog
   include ::profile::common::concat
   # $dbpath configured in hiera for monitoring
-  # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
-  include ::profile::common::cloudwatch
   include ::profile::common::cloudwatchlogs
 
   profile::register_profile { 'mongodb': }

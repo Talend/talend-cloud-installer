@@ -39,8 +39,6 @@ packagecloud_repos:
 cloudwatchlogs::region: "%{::region}"
 profile::common::ssm::region: "%{::region}"
 
-cloudwatch::namespace: "talend-cloud/%{::main_stack}/%{::puppet_role}"
-
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/cfn-init.log":
     path: '/var/log/cfn-init.log'
@@ -83,18 +81,6 @@ postgresql::globals::default_connect_settings:
 
 profile::postgresql::hostname: "%{::postgres_nodes}"
 profile::postgresql::password: "%{::master_password}"
-
-cloudwatch::metrics:
-  DiskSpace:
-    type              : diskspace
-    params            : '-f /'
-    unit              : Percent
-    description       : 'Percentage of used disk space for root filesystem'
-    statistic         : 'Average'
-    period            : 300
-    evaluationperiods : 3
-    threshold         : 80
-    comparisonoperator: "GreaterThanThreshold"
 
 # Monitoring of installer-based components
 monitoring::node_exporter::version: '0.15.2'

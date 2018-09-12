@@ -24,8 +24,6 @@ class profile::kafka (
   require ::profile::java
   include ::logrotate
   include ::profile::common::concat
-  # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
-  include ::profile::common::cloudwatch
   include ::profile::common::cloudwatchlogs
 
   profile::register_profile { 'kafka': }

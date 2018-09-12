@@ -15,8 +15,6 @@ class profile::nexus (
   include ::nginx
   include ::profile::common::concat
   # $nexus_root configured in hiera for monitoring
-  # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
-  include ::profile::common::cloudwatch
   include ::profile::common::cloudwatchlogs
 
   profile::register_profile { 'nexus': }

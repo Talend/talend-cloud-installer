@@ -72,18 +72,6 @@ logrotate::rules:
     compress: true
     postrotate: '/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true'
 
-cloudwatch::metrics:
-  DiskSpaceMongoDB:
-    type              : diskspace
-    params            : '-f /var/lib/mongo'
-    unit              : Percent
-    description       : 'Percentage of used disk space for mongodb data'
-    statistic         : 'Average'
-    period            : 300
-    evaluationperiods : 3
-    threshold         : 80
-    comparisonoperator: "GreaterThanThreshold"
-
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/mongodb/mongod.log":
      path: '/var/log/mongodb/mongod.log'

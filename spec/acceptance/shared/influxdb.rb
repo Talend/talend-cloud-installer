@@ -41,10 +41,4 @@ shared_examples 'profile::influxdb' do
     it { should include 'missingok' }
     it { should include 'dateext' }
   end
-
-  describe 'Cloudwatch InfluxDB specific' do
-    subject { file('/opt/cloudwatch-agent/metrics.yaml').content }
-    it { should include '    DiskSpaceInfluxDB:' }
-  end
-
 end

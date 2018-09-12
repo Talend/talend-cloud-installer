@@ -30,19 +30,6 @@ cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/opt/kafka/logs/kafka-authorizer.log":
     path: '/opt/kafka/logs/kafka-authorizer.log'
 
-
-cloudwatch::metrics:
-  DiskSpaceKafka:
-    type              : diskspace
-    params            : '-f /var/lib/kafka'
-    unit              : Percent
-    description       : 'Percentage of used disk space for kafka topics'
-    statistic         : 'Average'
-    period            : 300
-    evaluationperiods : 3
-    threshold         : 80
-    comparisonoperator: "GreaterThanThreshold"
-
 # Default profile
 profile::kafka::kafka_broker_config:
   log.cleanup.policy: 'delete'

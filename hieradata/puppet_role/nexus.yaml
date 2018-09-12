@@ -27,15 +27,3 @@ cloudwatchlog_files:
     path: '/srv/sonatype-work/nexus/logs/nexus.log'
   "/talend/tic/%{::main_stack}/%{::puppet_role}/srv/sonatype-work/nexus/logs/request.log":
     path: '/srv/sonatype-work/nexus/logs/request.log'
-
-cloudwatch::metrics:
-  DiskSpaceNexus:
-    type              : diskspace
-    params            : '-f /srv'
-    unit              : Percent
-    description       : 'Percentage of used disk space for nexus'
-    statistic         : 'Average'
-    period            : 300
-    evaluationperiods : 3
-    threshold         : 80
-    comparisonoperator: "GreaterThanThreshold"
