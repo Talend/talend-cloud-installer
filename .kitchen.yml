@@ -176,6 +176,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA
@@ -198,6 +202,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA
@@ -221,6 +229,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA
