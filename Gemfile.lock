@@ -21,7 +21,7 @@ GEM
       json_pure
     json (2.0.1)
     json_pure (2.0.1)
-    kitchen-puppet (1.48.2)
+    kitchen-puppet (1.45.3)
       net-ssh (~> 3)
       test-kitchen (~> 1.4)
     kitchen-ssh (0.0.12)
@@ -137,7 +137,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  kitchen-puppet (~> 1.48.2)
+  kitchen-puppet
   kitchen-ssh
   kitchen-sync
   kitchen-vagrant

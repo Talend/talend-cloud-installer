@@ -19,7 +19,7 @@ end
 group :system_tests do
   gem 'test-kitchen'
   gem 'kitchen-ssh'
-  gem 'kitchen-puppet', '~> 1.48.2'
+  gem 'kitchen-puppet'
   gem 'kitchen-sync'
   gem 'kitchen-verifier-serverspec'
   gem 'net-ssh'
