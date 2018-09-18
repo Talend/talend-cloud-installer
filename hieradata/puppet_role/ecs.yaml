@@ -21,3 +21,8 @@ profile::docker::registry::filesystem_device: '%{::registry_device}'
 profile::docker::registry::s3_region: '%{::registry_s3_region}'
 profile::docker::registry::s3_bucket: '%{::registry_s3_bucket}'
 profile::docker::registry::s3_prefix: '%{::registry_s3_prefix}'
+
+profile::docker::registry::registries:
+  '%{::artifactory_url}':
+    username: '%{::artifactory_username}'
+    password: '%{::artifactory_password}'
