@@ -139,6 +139,14 @@ class profile::kafka (
     notify  => Service['kafka']
   }
 
+  file { '/usr/local/bin/kafka-topics-mgmt.sh':
+    ensure => 'present',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/profile/usr/local/bin/kafka-topics-mgmt.sh'
+  }
+
   # For debugging
   #  notice(inline_template("
   #<%- require 'json' -%>

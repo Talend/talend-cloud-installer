@@ -45,6 +45,11 @@ shared_examples 'profile::kafka' do
     it { should include 'managed by Puppet' }
   end
 
+  describe 'Kafka management tool' do
+    subject { file('/usr/local/bin/kafka-topics-mgmt.sh').content }
+    it { should include 'managed by Puppet' }
+  end
+
   describe 'Kafka configuration' do
     subject { file('/opt/kafka/config/server.properties').content }
     it { should include 'managed by Puppet' }
@@ -94,6 +99,11 @@ shared_examples 'profile::kafka' do
     it { should_not include 'tpsvclogs' }
     it { should_not include 'zipkin' }
     it { should include 'provisioning' }
+  end
+
+  describe "Verifying kafka-topics-mgmt.sh" do
+    subject { command('/usr/local/bin/kafka-topics-mgmt.sh -l -s -d').stdout }
+    it { should include 'options are mutually exclusive' }
   end
 
   #Verifying topics creation
