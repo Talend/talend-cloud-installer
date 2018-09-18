@@ -183,6 +183,7 @@ fGetReplicationFactor(){
 #Return 0 if no change needed on partitions
 fChangePartitionNeeded(){
   topic=$1
+  test -z "${_PARTITIONS}" && return 0
   current_partitions=$(fGetPartitionCount $topic)
   if [ ${_PARTITIONS} -eq ${current_partitions} ]; then
     return 0
