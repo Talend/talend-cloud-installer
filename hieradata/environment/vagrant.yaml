@@ -149,3 +149,13 @@ role::management_proxy::elasticsearch:
     auth_password: "%{::master_password}"
 
 profile::test_launcher::tmc_pswseed: 'test_tmc_pswseed'
+
+profile::datadog_docker_agent::running: false
+
+profile::docker::registry::registries:
+  'registry.example.com':
+    username: 'test'
+    password: '12345'
+  'another_registry.example.com':
+    username: 'my_user'
+    password: 'my_password'

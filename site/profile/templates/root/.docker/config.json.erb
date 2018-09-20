@@ -1,0 +1,13 @@
+<%- require "base64" -%>
+{
+  "auths": {
+  <%- @registries.each_with_index do |(server, credentials), index| -%>
+  <%- if credentials["username"] != nil and credentials["password"] != nil -%>
+  <%- encoded_credentials = Base64.strict_encode64("#{credentials["username"]}:#{credentials["password"]}") -%>
+    "<%= server %>": {
+      "auth": "<%= encoded_credentials %>"
+    }<%= ',' if index < (@registries.size - 1) %>
+  <%- end -%>
+  <%- end -%>
+  }
+}

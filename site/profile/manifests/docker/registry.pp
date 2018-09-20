@@ -66,7 +66,16 @@ class profile::docker::registry (
     }
 
     # Configure access to authenticated registries
-    create_resources(docker::registry, $registries)
+    file { '/root/.docker':
+      ensure => 'directory',
+      owner  => 'root',
+      mode   => '0750',
+    } ->
+    file { '/root/.docker/config.json':
+      ensure  => 'file',
+      content => template('profile/root/.docker/config.json.erb'),
+      mode    => '0600',
+    }
 
   } else {
     notice('Skipping Docker Registry initialization due to the ensure parameter was set to absent.')

@@ -27,4 +27,15 @@ describe 'role::ecs' do
     its(:content) { should include '"some_strings":["string1","string2"]' }
     its(:content) { should include '"some_urls":["https://url1.com/uri","http://localhost/uri"]' }
   end
+
+  describe file('/root/.docker/config.json') do
+    its(:content) { should include '"registry.example.com":' }
+    its(:content) { should include '"auth": "dGVzdDoxMjM0NQ=="' }
+  end
+
+  describe file('/root/.docker/config.json') do
+    its(:content) { should include '"another_registry.example.com":' }
+    its(:content) { should include '"auth": "bXlfdXNlcjpteV9wYXNzd29yZA=="' }
+  end
+
 end
