@@ -65,7 +65,7 @@ class profile::docker::registry (
       env     => join_keys_to_values(merge($options, $env), '='),
     }
 
-    # Configure access to authenticated registries
+    # Configure access to authenticated registries
     file { '/root/.docker':
       ensure => 'directory',
       owner  => 'root',
