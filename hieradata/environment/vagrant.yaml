@@ -152,6 +152,7 @@ profile::test_launcher::tmc_pswseed: 'test_tmc_pswseed'
 
 profile::datadog_docker_agent::running: false
 
+profile::docker::registry::enabled: true
 profile::docker::registry::registries:
   'registry.example.com':
     username: 'test'

@@ -13,14 +13,31 @@ class profile::docker::registry (
   $s3_bucket         = undef,
   $s3_prefix         = undef,
   $env               = {},
+  $enabled           = false,
   $registries        = {},
 
 ) {
 
   require ::profile::docker::host
+  profile::register_profile { 'docker_registry': }
+
+  if $enabled {
+    # Configure access to authenticated registries
+    file { '/root/.docker':
+      ensure => 'directory',
+      owner  => 'root',
+      mode   => '0750',
+    } ->
+    file { '/root/.docker/config.json':
+      ensure  => 'file',
+      content => template('profile/root/.docker/config.json.erb'),
+      mode    => '0600',
+    }
+  } else {
+    notice('Skipping Docker registries configuration due to the enabled parameter value.')
+  }
 
   if 'absent' != $ensure {
-    profile::register_profile { 'docker_registry': }
 
     if 'filesystem' == $storage_driver {
       validate_absolute_path($filesystem_path)
@@ -63,18 +80,6 @@ class profile::docker::registry (
       ports   => '127.0.0.1:5000:5000',
       volumes => $volumes,
       env     => join_keys_to_values(merge($options, $env), '='),
-    }
-
-    # Configure access to authenticated registries
-    file { '/root/.docker':
-      ensure => 'directory',
-      owner  => 'root',
-      mode   => '0750',
-    } ->
-    file { '/root/.docker/config.json':
-      ensure  => 'file',
-      content => template('profile/root/.docker/config.json.erb'),
-      mode    => '0600',
     }
 
   } else {
