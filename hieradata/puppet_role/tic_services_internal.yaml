@@ -174,7 +174,6 @@ tic::services::karaf_features_install:
   - 'tipaas-data-transfer-service-client'
   - 'tipaas-container-management-service'
   - 'tipaas-artifact-manager-service'
-  - 'tipaas-schema-discovery-service-core'
   - 'tipaas-custom-resources-service'
   - 'tipaas-bookkeeper-service'
   - 'tipaas-scheduler'
