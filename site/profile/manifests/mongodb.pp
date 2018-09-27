@@ -137,9 +137,29 @@ class profile::mongodb (
     notify => Exec['mongod sysctl apply']
   }
 
+  file { 'ensure mongod user limits':
+    ensure => file,
+    path   => '/etc/security/limits.d/mongod.conf',
+    source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
+    notify => Exec['systemctl reload for mongo'],
+    before => Class['mongodb::server']
+  }
+
   exec { 'mongod sysctl apply':
-    path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
-    command => 'sysctl --system'
+    path        => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command     => 'sysctl --system',
+    refreshonly => true
+  }
+
+  exec { 'systemctl reload for mongo':
+    path        => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command     => 'systemctl daemon-reload',
+    refreshonly => true,
+    before      => Class['::mongodb::server::service'],
+    require     => Package['mongodb_server']
   }
 
   class { '::profile::mongodb::verify_auth':
@@ -187,14 +207,6 @@ class profile::mongodb (
     require => Package['mongodb_server'],
     before  => Class['mongodb::server::service']
   } ->
-  file { 'ensure mongod user limits':
-    ensure => file,
-    path   => '/etc/security/limits.d/mongod.conf',
-    source => 'puppet:///modules/profile/etc/security/limits.d/mongod.conf',
-    mode   => '0644',
-    owner  => 'root',
-    group  => 'root',
-  } ->
   rsyslog::snippet { '10_mongod':
     content => ":programname,contains,\"mongod\" /var/log/mongodb/mongod.log;CloudwatchAgentEOL\n& stop",
   }
@@ -206,6 +218,7 @@ class profile::mongodb (
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
+    notify  => Exec['systemctl reload for mongo'],
     require => Package['mongodb_server'],
     before  => Class['mongodb::server::service']
   }

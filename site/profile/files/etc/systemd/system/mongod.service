@@ -2,3 +2,7 @@
 .include /usr/lib/systemd/system/mongod.service
 [Service]
 Type=simple
+# open files
+LimitNOFILE=128000
+# processes/threads
+LimitNPROC=128000
