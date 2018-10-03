@@ -79,5 +79,7 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
   class { 'profile::nexus::nginx':
     nexus_nodes => $_nexus_nodes,
   }
+  class { 'profile::nexus::nexus_mem_check':
+  }
 
 }
