@@ -1,7 +1,9 @@
 #
 # ActiveMQ service profile
 #
-class profile::activemq {
+class profile::activemq(
+  $with_postgresql_optimizations = true,
+){
 
   require ::profile::common::packagecloud_repos
   require ::profile::java
@@ -27,9 +29,15 @@ class profile::activemq {
     if (( $::activemq::persistence == 'postgres')
       and (($::activemq::service_ensure == 'running')
         or ($::activemq::service_ensure == 'true'))) {
+      if (str2bool($with_postgresql_optimizations)) {
         class { '::profile::postgresql::activemq':
           require => Class['::activemq']
         }
+      } else {
+        notify{'Database optimizations explicitely ignored':
+          require => Class['::activemq']
+        }
+      }
     }
 
   } else {
