@@ -2,12 +2,13 @@
 
 class profile::nexus::nexus_mem_check(
   $nexus_cron_hours = '*',
-  $nexus_cron_minute = '10'
+  $nexus_cron_minute = '*/10'
 ){
   file { '/usr/local/bin/nexus_mem_check.sh':
     source  => 'puppet:///modules/profile/usr/local/bin/nexus_mem_check.sh',
     mode    => '0755',
     owner   => 'root',
+    group   => 'root',
     require => Package[awscli];
   }
   cron{
