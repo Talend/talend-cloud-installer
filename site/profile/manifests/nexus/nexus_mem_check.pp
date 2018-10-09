@@ -20,5 +20,7 @@ class profile::nexus::nexus_mem_check(
         hour    => $nexus_cron_hours,
         minute  => $nexus_cron_minute
     }
+  }else{
+    notice('nexus restart script / cron not needed for this environment')
   }
 }
