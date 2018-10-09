@@ -4,6 +4,7 @@ class profile::nexus::nexus_mem_check(
   $nexus_cron_hours = '*',
   $nexus_cron_minute = '*/10'
 ){
+  if hiera('profile::nexus_restart_cron::enable'){
   file { '/usr/local/bin/nexus_mem_check.sh':
     source  => 'puppet:///modules/profile/usr/local/bin/nexus_mem_check.sh',
     mode    => '0755',
@@ -11,7 +12,6 @@ class profile::nexus::nexus_mem_check(
     group   => 'root',
     require => Package[awscli];
   }
-  if hiera('profile::nexus_restart_cron::enable'){
     cron{
       'nexus_memory_check':
         ensure  => 'present',
