@@ -11,12 +11,14 @@ class profile::nexus::nexus_mem_check(
     group   => 'root',
     require => Package[awscli];
   }
-  cron{
-    'nexus_memory_check':
-      ensure  => 'present',
-      command => '/usr/local/bin/nexus_mem_check.sh',
-      user    => 'root',
-      hour    => $nexus_cron_hours,
-      minute  => $nexus_cron_minute
+  if hiera('profile::nexus_restart_cron::enable'){
+    cron{
+      'nexus_memory_check':
+        ensure  => 'present',
+        command => '/usr/local/bin/nexus_mem_check.sh',
+        user    => 'root',
+        hour    => $nexus_cron_hours,
+        minute  => $nexus_cron_minute
+    }
   }
 }

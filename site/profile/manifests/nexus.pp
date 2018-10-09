@@ -79,9 +79,7 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
   class { 'profile::nexus::nginx':
     nexus_nodes => $_nexus_nodes,
   }
-  if hiera('profile::nexus_restart_cron::enable'){
-    class { 'profile::nexus::nexus_mem_check':
-    }
+  class { 'profile::nexus::nexus_mem_check':
   }
 
 }
