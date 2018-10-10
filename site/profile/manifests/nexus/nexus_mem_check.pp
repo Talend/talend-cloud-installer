@@ -2,7 +2,7 @@
 
 class profile::nexus::nexus_mem_check(
   $nexus_cron_hours = '*',
-  $nexus_cron_minute = '*/10'
+  $nexus_cron_minute = '*/10',
   $ec2_userdata = pick_default($::ec2_userdata, '')
 ){
   if $ec2_userdata =~ /InstanceA/ {
