@@ -1,13 +1,12 @@
 # this is class to check nexus memory and restart nexus service if memory is below 500mb and other two instances under elb are in-service
 
 class profile::nexus::nexus_mem_check(
-  $nexus_cron_hours = '*',
-  $nexus_cron_minute = '*/10',
+  $nexus_cron_hours = '*'
 ){
   $nexus_cron_minute= $::cfn_resource_name ? {
-    InstanceA => '0,10,20,30,40,50',
-    InstanceB => '3,13,23,33,43,53',
-    InstanceC => '6,16,26,36,46,56',
+    InstanceA => '*/10',
+    InstanceB => '3-59/10',
+    InstanceC => '6-59/10',
     undef     => 'No Value'
   }
   if hiera('profile::nexus_restart_cron::enable'){
