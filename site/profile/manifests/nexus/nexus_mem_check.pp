@@ -4,14 +4,15 @@ class profile::nexus::nexus_mem_check(
   $nexus_cron_hours = '*',
   $nexus_cron_minute = '*/10'
   $ec2_userdata = pick_default($::ec2_userdata, '')
+){
   if $ec2_userdata =~ /InstanceA/ {
     $nexus_cron_minute = '0,10,20,30,40,50'
-  } elseif ($ec2_userdata =~ /InstanceB/) {
+  }elsif $ec2_userdata =~ /InstanceB/ {
     $nexus_cron_minute = '3,13,23,33,43,53'
-  } else {
+  }else{
     $nexus_cron_minute = '6,16,26,36,46,56'
   }
-){
+
   if hiera('profile::nexus_restart_cron::enable'){
     file { '/usr/local/bin/nexus_mem_check.sh':
       source => 'puppet:///modules/profile/usr/local/bin/nexus_mem_check.sh',
