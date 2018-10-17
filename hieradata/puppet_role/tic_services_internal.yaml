@@ -111,6 +111,7 @@ tic::services::zookeeper_prefix: "/subenv/talend/role/bookkeeper"
 
 tic::services::dispatcher_input_queue: "ipaas.talend.dispatcher.input.queue"
 tic::services::dispatcher_response_queue: "ipaas.talend.dispatcher.response.queue"
+tic::services::dispatcher_redis_host: "%{::redis_nodes}"
 
 tic::services::tipaas_email_subject: "Confirmation Required for Talend Integration Cloud Trial"
 
