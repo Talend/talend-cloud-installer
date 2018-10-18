@@ -8,7 +8,7 @@ common_packages:
   'ptic-postgresql-schemes':
     ensure: '2.0-4'
 
-activemq::version: 'installed'
+activemq::version: '5.15.7-3'
 activemq::jmx_enabled: true
 activemq::network_password: "%{::master_password}"
 activemq::network_user: 'activemq'
