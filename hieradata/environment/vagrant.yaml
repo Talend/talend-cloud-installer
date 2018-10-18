@@ -160,3 +160,5 @@ profile::docker::registry::registries:
   'another_registry.example.com':
     username: 'my_user'
     password: 'my_password'
+
+profile::nexus::nexus_mem_check::enabled: true
