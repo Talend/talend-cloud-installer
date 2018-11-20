@@ -3,7 +3,7 @@
 # script to check memory utilization and restart nexus process
 
 free=$(free -mt | grep Mem | awk '{print $7}')
-## check if free memory is less or equals to  500MB
+## check if available  memory is less or equals to  500MB
 if [[ "$free" -le 500  ]]; then
   INSTANCE_COUNT=1
   INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
