@@ -154,6 +154,10 @@ kafka_applications_cluster_ha: # estimated max cluster size: 84 GiB + customers 
       topic_options:
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
+    sharing-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
 
 kafka_applications_cluster_simple:   # estimated max data size: 27 GiB + customer_offsets
   kafka_topics_default_partitions: 2
@@ -233,6 +237,10 @@ kafka_applications_cluster_simple:   # estimated max data size: 27 GiB + custome
         segment.ms: "300000"    # 5mn
     provisioning: {}
     rating-changed:
+      topic_options:
+        retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
+    sharing-changed:
       topic_options:
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
