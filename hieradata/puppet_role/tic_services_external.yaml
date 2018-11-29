@@ -176,7 +176,6 @@ tic::services::karaf_features_install:
   - 'ssh'
   - 'system'
   - 'wrap)'
-  - 'tipaas-crypto-service-client'
   - 'tipaas-artifact-manager-client-runtime'
   - 'tipaas-bookkeeper-client'
   - 'tipaas-account-manager-client'
