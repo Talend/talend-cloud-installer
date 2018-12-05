@@ -83,7 +83,7 @@ class profile::tic_services (
   $nexus_url_host = url_parse($_cms_nexus_url, 'host')
   $nexus_url_port = url_parse($_cms_nexus_url, 'port')
   $nexus_url_path = url_parse($_cms_nexus_url, 'path')
-  $__cms_nexus_url = "${nexus_url_scheme}://{{username}}:{{password}}@${nexus_url_host}:${nexus_url_port}${nexus_url_path}/content/repositories/{{accountid}}@id={{accountid}}.release,${nexus_url_scheme}://{{username}}:{{password}}@${nexus_url_host}:${nexus_url_port}${nexus_url_path}/content/repositories/{{accountid}}-snapshots@snapshots@id={{accountid}}.snapshot"
+  $__cms_nexus_url = "${nexus_url_scheme}://{{username}}:{{password}}@${nexus_url_host}:${nexus_url_port}${nexus_url_path}/content/repositories/{{accountid}}@id={{accountid}}.release"
 
   if $custom_resources_bucket_data {
     $_custom_resources_bucket_data = split(regsubst($custom_resources_bucket_data, '[\s\[\]\"]', '', 'G'), ',')
