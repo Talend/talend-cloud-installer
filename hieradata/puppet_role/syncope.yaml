@@ -15,6 +15,7 @@ syncope::ams_security_db_user: 'ams'
 syncope::ams_security_db_pass: "%{::master_password}"
 syncope::ipaas_crypto_url: "%{::ipaas_crypto_url}"
 syncope::tpsvc_crypto_url: "%{::tpsvc_crypto_url}"
+syncope::ams_security_version: "%{::ams_service_version}"
 
 profile::postgresql::roles:
   syncope:
