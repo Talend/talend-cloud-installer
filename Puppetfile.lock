@@ -128,7 +128,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-monitoring
   specs:
-    talend-monitoring (0.1.0.18)
+    talend-monitoring (0.1.0.20)
 
 GITHUBTARBALL
   remote: Talend/puppet-syncope
