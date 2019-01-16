@@ -94,4 +94,5 @@ monitoring::mongodb_exporter::version: '0.3.1'
 monitoring::mongodb_exporter::port: 9216
 
 monitoring::jmx_exporter::version: '0.3.1'
+monitoring::jmx_exporter::user: 'root'
 jmx_exporter_port: 9404
