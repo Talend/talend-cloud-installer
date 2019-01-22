@@ -81,7 +81,7 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 108 GiB + custome
     events-to-platform:
       topic_options:
         retention.ms: "43200000"      # 12h
-        retention.bytes: "4294967296" # 512MiB per partition
+        retention.bytes: "536870912" # 512MiB per partition
 
 kafka_applications_cluster_ha: # estimated max cluster size: 90 GiB (22 topics with default + 3 with custom size) + customers offsets  => 50 GiB per node with security
   kafka_topics_default_partitions: 12
