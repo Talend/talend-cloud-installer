@@ -3,6 +3,8 @@
 profile::zookeeper::zookeeper_nodes: "%{::zookeeper_nodes}"
 zookeeper::backup_enable: true
 zookeeper::backup_bucket_name: "%{::backup_bucket}"
+monitoring::jmx_exporter::jmx_exporter_service: 'zookeeper'
+zookeeper::zookeeper_java_env: "SERVER_JVMFLAGS=-javaagent:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/jmx_prometheus_javaagent-%{hiera('monitoring::jmx_exporter::version')}.jar=%{hiera('jmx_exporter_port')}:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/zookeeper.yaml"
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/tomcat/logs/catalina.out":

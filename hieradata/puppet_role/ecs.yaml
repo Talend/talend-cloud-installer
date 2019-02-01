@@ -9,7 +9,7 @@ profile::docker::host::storage_device: "%{::storage_device}"
 
 profile::docker::ecs_agent::running: true
 profile::docker::ecs_agent::cluster_name: "%{::cluster_name}"
-profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.18.0'
+profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.20.2'
 
 profile::datadog_docker_agent::image: 'datadog/docker-dd-agent:12.6.5223'
 
@@ -21,3 +21,9 @@ profile::docker::registry::filesystem_device: '%{::registry_device}'
 profile::docker::registry::s3_region: '%{::registry_s3_region}'
 profile::docker::registry::s3_bucket: '%{::registry_s3_bucket}'
 profile::docker::registry::s3_prefix: '%{::registry_s3_prefix}'
+
+profile::docker::registry::enabled: '%{::registry_enabled}'
+profile::docker::registry::registries:
+  '%{::registry_url}':
+    username: '%{::registry_username}'
+    password: '%{::registry_password}'

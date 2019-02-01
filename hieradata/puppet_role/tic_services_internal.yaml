@@ -111,6 +111,7 @@ tic::services::zookeeper_prefix: "/subenv/talend/role/bookkeeper"
 
 tic::services::dispatcher_input_queue: "ipaas.talend.dispatcher.input.queue"
 tic::services::dispatcher_response_queue: "ipaas.talend.dispatcher.response.queue"
+tic::services::dispatcher_redis_host: "%{::redis_nodes}"
 
 tic::services::tipaas_email_subject: "Confirmation Required for Talend Integration Cloud Trial"
 
@@ -127,7 +128,7 @@ tic::services::kms_key_alias: "%{::kms_key_alias}"
 tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
 tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
-tic::services::webhooks_external_url: "%{::webhooks_host}"
+tic::services::webhooks_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
 
 tic::services::eventsource_kafka_servers: "%{::kafka_app_entry_point}"
 tic::services::eventsource_kafka_topic: "%{::provisioning_kafka_topic}"
@@ -156,9 +157,7 @@ tic::services::karaf_features_install:
   - 'ssh'
   - 'system'
   - 'wrap)'
-  - 'tipaas-crypto-service-core'
   - 'tipaas-amq-dependencies'
-  - 'tipaas-crypto-service-client'
   - 'tipaas-artifact-manager-client-runtime'
   - 'tipaas-bookkeeper-client'
   - 'tipaas-account-manager-client'
@@ -174,7 +173,6 @@ tic::services::karaf_features_install:
   - 'tipaas-data-transfer-service-client'
   - 'tipaas-container-management-service'
   - 'tipaas-artifact-manager-service'
-  - 'tipaas-schema-discovery-service-core'
   - 'tipaas-custom-resources-service'
   - 'tipaas-bookkeeper-service'
   - 'tipaas-scheduler'

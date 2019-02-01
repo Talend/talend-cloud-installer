@@ -13,11 +13,29 @@ shared_examples 'profile::mongodb' do
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
     end
     describe command('/sbin/sysctl -a') do
-      its(:stdout) { should include 'kernel.pid_max = 64000' }
-      its(:stdout) { should include 'kernel.threads-max = 64000' }
-      its(:stdout) { should include 'fs.file-max = 98384' }
+      its(:stdout) { should include 'kernel.pid_max = 128000' }
+      its(:stdout) { should include 'kernel.threads-max = 128000' }
+      its(:stdout) { should include 'fs.file-max = 500000' }
       its(:stdout) { should include 'net.ipv4.tcp_keepalive_time = 120' }
       its(:stdout) { should include 'vm.zone_reclaim_mode = 0' }
+    end
+    describe command('/bin/cat /proc/sys/fs/file-max') do
+      its(:stdout) { should include '500000' }
+    end
+  end
+
+  describe 'Verifying mongod systemd override' do
+    describe file('/etc/systemd/system/mongod.service') do
+      it { should be_file }
+      its(:content) { should include '# File managed by Puppet, do not edit manually' }
+      its(:content) { should include 'Type=simple' }
+      its(:content) { should include 'LimitNOFILE=128000' }
+      its(:content) { should include 'LimitNPROC=128000' }
+    end
+    describe command('/bin/systemctl --no-pager show mongod.service') do
+      its(:stdout) { should include 'Type=simple' }
+      its(:stdout) { should include 'LimitNOFILE=128000' }
+      its(:stdout) { should include 'LimitNPROC=128000' }
     end
   end
 
@@ -32,7 +50,7 @@ shared_examples 'profile::mongodb' do
 
   describe 'Verify MongoDB major version and facts' do
     describe command('/usr/bin/facter -p mongodb_version') do
-      its(:stdout) { is_expected.to match(/^[2-3]/) }
+      its(:stdout) { is_expected.to match(/^[3]/) }
     end
     describe command('/usr/bin/facter -p mongodb_is_master') do
       # with auth enabled, the mongodb facter can't connect
@@ -73,11 +91,12 @@ shared_examples 'profile::mongodb' do
     describe file('/etc/security/limits.d/mongod.conf') do
       it { should be_file }
       its(:content) { should include '# File managed by Puppet, do not edit manually' }
-      its(:content) { should match /\nmongod\s+soft\s+nproc\s+64000\s*\n/ }
-      its(:content) { should match /\nmongod\s+hard\s+nproc\s+64000\s*\n/ }
+      its(:content) { should match /\nmongod\s+soft\s+nproc\s+128000\s*\n/ }
+      its(:content) { should match /\nmongod\s+hard\s+nproc\s+128000\s*\n/ }
     end
     describe command('/bin/bash -c \'/bin/cat /proc/$(/bin/pgrep -x mongod)/limits\'') do
-      its(:stdout) { should include 'Max processes             64000                64000                processes' }
+      its(:stdout) { should match /\nMax processes\s+128000\s+128000\s+processes\s*\n/ }
+      its(:stdout) { should match /\nMax open files\s+128000\s+128000\s+files\s*\n/ }
     end
   end
 
@@ -189,6 +208,13 @@ shared_examples 'profile::mongodb' do
     end
   end
 
+  describe 'credential storage' do
+    describe file('/root/.mongorc.js') do
+      it { should be_file }
+      its(:content) { should include ' db.auth(\'sreadmin\', \'mypassword\')' }
+    end
+  end
+
   %w(
     mongo0.com
     mongo0.net
@@ -202,11 +228,6 @@ shared_examples 'profile::mongodb' do
     describe host(h) do
       it { should be_resolvable.by('hosts') }
     end
-  end
-
-  describe 'Cloudwatch MongoDB specific' do
-     subject { file('/opt/cloudwatch-agent/metrics.yaml').content }
-     it { should include '    DiskSpaceMongoDB:' }
   end
 
   describe 'Mongodb exporter' do

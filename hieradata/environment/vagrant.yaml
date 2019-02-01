@@ -47,6 +47,45 @@ postgresql::globals::default_connect_settings:
   PGDATABASE: "postgres"
   PGPASSWORD: "%{::master_password}"
 
+
+activemq::pg_host: "localhost"
+activemq::persistence_pg_host: "localhost"
+# The dict above must be the same than the one inside hieradata/puppet_role/activemq.yaml
+# + activemq
+profile::postgresql::roles:
+  ams:
+    files:
+      - /opt/activemq/lib/tipaas/ams.sql
+      - /opt/activemq/lib/tipaas/amqsec.sql
+  # The following roles shouldn't be placed here, as
+  # well as the ptic-postgresql-schemes package.
+  # The only reason is that the active mq instance A is
+  # used as a single point of postgresql provisioning.
+  scheduler:
+    files:
+      - /var/tmp/sql/scheduler.sql
+  lts:
+    files:
+      - /var/tmp/sql/lts.sql
+  cms:
+    files:
+      - /var/tmp/sql/cms.sql
+  config:
+    files:
+      - /var/tmp/sql/config.sql
+  pe:
+    files:
+      - /var/tmp/sql/pes.sql
+  webhooks:
+    files:
+      - /var/tmp/sql/webhooks.sql
+  notification_subscription:
+    files:
+      - /var/tmp/sql/notification-subscription.sql
+  activemq:
+    password: "%{::master_password}"
+    files: []
+
 sudo::configs:
   'vagrant':
     'content': "%vagrant ALL=(ALL) NOPASSWD: ALL"
@@ -60,11 +99,8 @@ tic::frontend::server_app_oidc_clientId: "iam-server"
 tic::frontend::server_app_oidc_clientSecret: "iam-server-secret"
 tic::frontend::help_url: "the-help-url"
 
-activemq::persistence: 'kahadb'
-
 profile::tic_services::ams_password_reset_url_template: "https://my-password-reset-host.com"
 profile::tic_services::rejected_data_bucket_data: '["rd-bucket", "rd-prefix"]'
-profile::tic_services::test_data_bucket_data: '["td-bucket", "td-prefix"]'
 profile::tic_services::flow_logs_bucket_data: '["fl-bucket", "fl-prefix"]'
 profile::tic_services::downloads_bucket_data: '["dl-bucket", "dl-prefix"]'
 
@@ -113,3 +149,16 @@ role::management_proxy::elasticsearch:
     auth_password: "%{::master_password}"
 
 profile::test_launcher::tmc_pswseed: 'test_tmc_pswseed'
+
+profile::datadog_docker_agent::running: false
+
+profile::docker::registry::enabled: true
+profile::docker::registry::registries:
+  'registry.example.com':
+    username: 'test'
+    password: '12345'
+  'another_registry.example.com':
+    username: 'my_user'
+    password: 'my_password'
+
+profile::nexus::nexus_mem_check::enabled: true

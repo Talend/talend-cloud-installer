@@ -13,6 +13,10 @@ class profile::zookeeper (
   include ::profile::common::concat
   include ::profile::common::cloudwatchlogs
 
+  class { '::monitoring::jmx_exporter':
+    before => Class['::zookeeper'],
+  }
+
   profile::register_profile { 'zookeeper': }
 
   # "['10.72.4.7', '10.72.5.111', '10.72.6.51']" => ["10.72.4.7", "10.72.5.111", "10.72.6.51"]

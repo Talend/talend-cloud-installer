@@ -100,10 +100,12 @@ shared_examples 'profile::nexus' do
   describe command('/usr/bin/sudo -i -u nexus ulimit -n') do
     its(:stdout) { should include '65535' }
   end
-
-  describe 'Cloudwatch Nexus specific' do
-    subject { file('/opt/cloudwatch-agent/metrics.yaml').content }
-    it { should include '    DiskSpaceNexus:' }
+ 
+  describe file('/usr/local/bin/nexus_mem_check.sh') do
+    it { should be_file }
   end
 
+  describe command ('/usr/bin/sudo crontab -l')do
+    its(:stdout) {should include '/usr/local/bin/nexus_mem_check.sh' }
+  end
 end

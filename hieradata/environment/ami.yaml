@@ -9,7 +9,6 @@ zookeeper::service_ensure: 'stopped'
 zookeeper::service_enable: false
 nginx::service_ensure: 'stopped'
 cloudwatchlogs::service_ensure: 'stopped'
-profile::common::cloudwatch::include: false
 profile::common::cloudwatchlogs::include: false
 profile::common::ssm::include: false
 profile::postgresql::service_ensure: 'stopped'

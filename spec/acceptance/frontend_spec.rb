@@ -63,6 +63,7 @@ describe 'role::frontend' do
   talend-ipaas-web
   talend-ipaas-web-services
   talend-ipaas-web-server
+  talend-ipaas-web-tasks-and-plans-administration
   talend-ipaas-web-memcache-libs).each do |p|
     describe package(p) do
       it { should be_installed }

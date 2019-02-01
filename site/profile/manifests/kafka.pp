@@ -3,7 +3,7 @@
 #
 
 class profile::kafka (
-  $kafka_version           = '0.10.2.1',
+  $kafka_version           = '1.1.1',
   $scala_version           = '2.11',
   $kafka_datapath          = '/var/lib/kafka',
   $storage_device          = undef,
@@ -24,9 +24,11 @@ class profile::kafka (
   require ::profile::java
   include ::logrotate
   include ::profile::common::concat
-  # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
-  include ::profile::common::cloudwatch
   include ::profile::common::cloudwatchlogs
+
+  class { '::monitoring::jmx_exporter':
+    before => Class['::kafka'],
+  }
 
   profile::register_profile { 'kafka': }
 
@@ -44,7 +46,8 @@ class profile::kafka (
     'zookeeper.connect'             => $zookeeper_connect,
     'log.dir'                       => $kafka_datapath,
     'log.dirs'                      => $kafka_datapath,
-    'inter.broker.protocol.version' => $kafka_version,
+    'inter.broker.protocol.version' => $kafka_version, #for rolling update, override in extrafile
+    'log.message.format.version'    => $kafka_version, #for rolling update, override in extrafile
     'advertised.host.name'          => $::ipaddress,
     'auto.create.topics.enable'     => $kafka_topics_autocreate,
     'log.cleanup.policy'            => 'delete',
@@ -102,6 +105,9 @@ class profile::kafka (
     $_kafka_topics_config = $kafka_topics_config
   }
 
+  $java_xmx = floor($::memorysize_mb * 0.70)
+  $java_xms = floor($::memorysize_mb * 0.50)
+
   class { '::profile::common::mount_device':
     device  => $storage_device,
     path    => $kafka_datapath,
@@ -114,6 +120,7 @@ class profile::kafka (
   } ->
   class { '::kafka::broker':
     config                     => $broker_config,
+    heap_opts                  => "-Xms${java_xms}m -Xmx${java_xmx}m",
     service_requires_zookeeper => false
   }
 
@@ -126,6 +133,16 @@ class profile::kafka (
     notify  => Service['kafka']
   }
 
+  if $storage_device {
+    class { '::profile::common::mount_device::fixup_ownership':
+      path    => $kafka_datapath,
+      owner   => 'kafka',
+      group   => 'kafka',
+      require => [ User['kafka'], Group['kafka'] ],
+      notify  => Service['kafka']
+    }
+  }
+
   file { '/opt/kafka/config/log4j.properties':
     ensure  => 'present',
     owner   => 'kafka',
@@ -134,6 +151,14 @@ class profile::kafka (
     content => template('profile/opt/kafka/config/log4j.properties.erb'),
     require => File['/opt/kafka/config'],
     notify  => Service['kafka']
+  }
+
+  file { '/usr/local/bin/kafka-topics-mgmt.sh':
+    ensure => 'present',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/profile/usr/local/bin/kafka-topics-mgmt.sh'
   }
 
   # For debugging

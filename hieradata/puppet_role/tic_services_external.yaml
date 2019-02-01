@@ -131,7 +131,6 @@ tic::services::crypto_secondary_regions: "%{::kms_secondary_region}"
 tic::services::tipaas_email_subject: "Confirmation Required for Talend Integration Cloud Trial"
 
 profile::tic_services::rejected_data_bucket_data: "%{::rejecteddatabucket}"
-profile::tic_services::test_data_bucket_data: "%{::testdatabucket}"
 profile::tic_services::flow_logs_bucket_data: "%{::flowlogsbucket}"
 profile::tic_services::downloads_bucket_data: "%{::downloadsbucket}"
 
@@ -177,7 +176,6 @@ tic::services::karaf_features_install:
   - 'ssh'
   - 'system'
   - 'wrap)'
-  - 'tipaas-crypto-service-client'
   - 'tipaas-artifact-manager-client-runtime'
   - 'tipaas-bookkeeper-client'
   - 'tipaas-account-manager-client'

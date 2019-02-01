@@ -12,6 +12,12 @@ provisioner:
   ignore_spec_fixtures: true
   puppet_environment: vagrant
   require_chef_for_busser: false
+  # We reproduce with custom_pre_install_command what is done as pre-install in packer/template.json.erb
+  custom_pre_install_command: |
+    sudo yum clean all
+    sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+    sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+    sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
   custom_facts:
     main_stack: test_main
     sub_stack: test_sub
@@ -31,7 +37,7 @@ transport:
   name: sftp
 
 platforms:
-  - name: centos-7.4
+  - name: centos-7.5
 
 verifier:
   name: serverspec
@@ -170,6 +176,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA
@@ -192,6 +202,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA
@@ -215,6 +229,10 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo yum clean all
+        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+        sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
         cfn_resource_name: InstanceA

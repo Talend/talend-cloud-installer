@@ -86,15 +86,6 @@ GIT
       puppetlabs-stdlib (>= 4.11.0)
 
 GIT
-  remote: https://github.com/Talend/puppet-mongodb.git
-  ref: 0.18.x
-  sha: e59ad3a9c30fc68ea903c445c1a37ea1ce6e74ef
-  specs:
-    puppetlabs-mongodb (0.18.0)
-      puppetlabs-apt (< 3.0.0, >= 2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.4.0)
-
-GIT
   remote: https://github.com/Talend/puppet-nexus.git
   ref: master
   sha: 7224a29b89e661eccfa1c2beacaf1e322e285536
@@ -117,12 +108,7 @@ GIT
 GITHUBTARBALL
   remote: Talend/puppet-activemq
   specs:
-    talend-activemq (0.3.2)
-
-GITHUBTARBALL
-  remote: Talend/puppet-cloudwatch
-  specs:
-    talend-cloudwatch (0.1.0.28)
+    talend-activemq (0.4.3)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatchlogs
@@ -135,19 +121,24 @@ GITHUBTARBALL
     talend-dataprep_dataset (0.1.0.5)
 
 GITHUBTARBALL
+  remote: Talend/puppet-mongodb
+  specs:
+    puppetlabs-mongodb (0.18.1)
+
+GITHUBTARBALL
   remote: Talend/puppet-monitoring
   specs:
-    talend-monitoring (0.1.0.17)
+    talend-monitoring (0.1.0.21)
 
 GITHUBTARBALL
   remote: Talend/puppet-syncope
   specs:
-    talend-syncope (0.1.1.11)
+    talend-syncope (0.1.1.13)
 
 GITHUBTARBALL
   remote: Talend/puppet-tic
   specs:
-    talend-tic (0.2.9.16)
+    talend-tic (0.2.9.29)
 
 GITHUBTARBALL
   remote: Talend/puppet-user_accounts
@@ -157,7 +148,7 @@ GITHUBTARBALL
 GITHUBTARBALL
   remote: Talend/puppet-zookeeper
   specs:
-    talend-zookeeper (0.1.1.9)
+    talend-zookeeper (0.1.1.14)
 
 DEPENDENCIES
   camptocamp-accounts (~> 1.0)
@@ -175,7 +166,7 @@ DEPENDENCIES
   puppetlabs-java (~> 1.0)
   puppetlabs-limits (~> 0.0)
   puppetlabs-lvm (~> 0.0)
-  puppetlabs-mongodb (>= 0)
+  puppetlabs-mongodb (= 0.18.1)
   puppetlabs-ntp (~> 4.0)
   puppetlabs-postgresql (>= 0)
   puppetlabs-stdlib (~> 4.0)
@@ -184,11 +175,10 @@ DEPENDENCIES
   saz-sudo (~> 3.0)
   stankevich-python (= 1.18.2)
   talend-activemq (~> 0.0)
-  talend-cloudwatch (~> 0.0)
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)
-  talend-monitoring (= 0.1.0.17)
+  talend-monitoring (= 0.1.0.21)
   talend-syncope (~> 0.0)
   talend-tic (~> 0.0)
   talend-user_accounts (~> 0.0)

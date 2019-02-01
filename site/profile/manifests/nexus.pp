@@ -15,8 +15,6 @@ class profile::nexus (
   include ::nginx
   include ::profile::common::concat
   # $nexus_root configured in hiera for monitoring
-  # FIXME rework cloudwatch to add defines and so manage easily each mount in each profiles
-  include ::profile::common::cloudwatch
   include ::profile::common::cloudwatchlogs
 
   profile::register_profile { 'nexus': }
@@ -80,6 +78,8 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
 
   class { 'profile::nexus::nginx':
     nexus_nodes => $_nexus_nodes,
+  }
+  class { 'profile::nexus::nexus_mem_check':
   }
 
 }

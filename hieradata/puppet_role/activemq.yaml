@@ -1,15 +1,16 @@
 ---
 java::distribution: "jre"
-java::package: "jre1.8.0_60"
-java::version: "1.8.0_60-fcs"
-java::java_home: "/usr/java/jre1.8.0_60"
+java::package: "jre1.8"
+java::version: "1.8.0_181-fcs"
+java::java_home: "/usr/java/jre1.8.0_181-amd64"
 
 common_packages:
   'ptic-postgresql-schemes':
     ensure: '2.0-4'
 
-activemq::version: 'installed'
+activemq::version: '5.15.7-4'
 activemq::jmx_enabled: true
+activemq::jmx_agent_opts: "-javaagent:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/jmx_prometheus_javaagent-%{hiera('monitoring::jmx_exporter::version')}.jar=%{hiera('jmx_exporter_port')}:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/activemq.yaml"
 activemq::network_password: "%{::master_password}"
 activemq::network_user: 'activemq'
 activemq::brokers: '%{::activemq_nodes}'
@@ -26,6 +27,9 @@ activemq::persistence_pg_host: "%{::activemq_postgres_nodes}"
 activemq::persistence_pg_password: "%{::master_password}"
 activemq::dispatcher_response_queue: "ipaas.talend.dispatcher.response.queue"
 activemq::inactive_timeout_before_cleanup: 60000
+activemq::ams_security_version: '%{::ams_plugin_version}'
+
+monitoring::jmx_exporter::jmx_exporter_service: 'activemq'
 
 profile::postgresql::roles:
   ams:
@@ -42,18 +46,12 @@ profile::postgresql::roles:
   lts:
     files:
       - /var/tmp/sql/lts.sql
-  crypto:
-    files:
-      - /var/tmp/sql/crypto.sql
   cms:
     files:
       - /var/tmp/sql/cms.sql
   config:
     files:
       - /var/tmp/sql/config.sql
-  trial:
-    files:
-      - /var/tmp/sql/trial.sql
   pe:
     files:
       - /var/tmp/sql/pes.sql

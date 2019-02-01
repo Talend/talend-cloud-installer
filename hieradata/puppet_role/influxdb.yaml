@@ -14,18 +14,6 @@ logrotate::rules:
     rotate_every: 'day'
     compress: true
 
-cloudwatch::metrics:
-  DiskSpaceInfluxDB:
-    type              : diskspace
-    params            : '-f /var/lib/influxdb'
-    unit              : Percent
-    description       : 'Percentage of used disk space for influxdb data'
-    statistic         : 'Average'
-    period            : 300
-    evaluationperiods : 3
-    threshold         : 80
-    comparisonoperator: "GreaterThanThreshold"
-
 profile::common::cloudwatchlogs::recursive: false
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::sub_stack}/%{::puppet_role}/var/log/cfn-init.log":

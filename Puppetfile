@@ -26,8 +26,6 @@ metadata
 
 mod 'talend-tic', '0.x',
   :github_tarball => 'Talend/puppet-tic'
-mod 'talend-cloudwatch', '0.x',
-  :github_tarball => 'Talend/puppet-cloudwatch'
 mod 'talend-cloudwatchlogs', '0.x',
   :github_tarball => 'Talend/puppet-cloudwatchlogs'
 mod 'hubspot-nexus',
@@ -49,8 +47,7 @@ mod 'talend-user_accounts', '0.x',
 mod 'puppetlabs-postgresql',
   :git => 'https://github.com/Talend/puppetlabs-postgresql.git',
   :ref => 'master'
-mod 'puppetlabs-mongodb',
-  :git => 'https://github.com/Talend/puppet-mongodb.git',
-  :ref => '0.18.x'
-mod 'talend-monitoring', '0.1.0.17',
+mod 'puppetlabs-mongodb', '0.18.1',
+  :github_tarball => 'Talend/puppet-mongodb'
+mod 'talend-monitoring', '0.1.0.21',
   :github_tarball => 'Talend/puppet-monitoring'
