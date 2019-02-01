@@ -184,7 +184,6 @@ tic::services::karaf_features_install:
   - 'tipaas-notification-subscription-service'
   - 'tipaas-notification-manager'
   - 'tipaas-notification-server'
-  - 'tipaas-notification-sendgrid-webhook-service'
   - 'tipaas-logs-transfer-service-client'
   - 'tipaas-tpsvc-crypto-client'
   - 'tpsvc-config-client'
