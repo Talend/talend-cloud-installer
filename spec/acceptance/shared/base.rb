@@ -16,6 +16,14 @@ shared_examples 'profile::base' do
     it { should include 'server 3.amazon.pool.ntp.org iburst' }
   end
 
+  describe 'logrotate for syslog configuration' do
+    subject { file('/etc/logrotate.d/syslog').content }
+    it { should include 'rotate 8' }
+    it { should include 'daily' }
+    it { should include 'compress' }
+    it { should include 'delaycompress' }
+  end
+
   describe 'ntp sync' do
     subject { command('ntpstat').stdout }
     it { should include 'synchronised to' }

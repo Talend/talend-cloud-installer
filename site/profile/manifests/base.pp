@@ -19,6 +19,7 @@ class profile::base {
 
   include ::profile::common::concat
   include ::profile::common::accounts
+  include ::profile::common::logrotate
 
   include ::ntp
 
