@@ -53,6 +53,8 @@ profile::mongodb::users:
     roles:
       - role: 'clusterMonitor'
         db: 'admin'
+      - role: 'read'
+        db: 'local'
   datadog:
     db_address: 'admin'
     username: 'datadog'
