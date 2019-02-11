@@ -106,6 +106,10 @@ describe 'role::frontend' do
     it { should_not be_installed }
   end
 
+  describe package('jre1.8') do
+    it { should be_installed.with_version('1.8.0_181-fcs') }
+  end
+
   describe 'Catalina logs logrotate configuration' do
     subject { file('/etc/logrotate.d/hourly/catalina_out').content }
     it { should include '/srv/tomcat/ipaas-srv/logs/catalina.*' }

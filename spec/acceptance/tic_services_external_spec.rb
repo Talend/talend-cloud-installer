@@ -74,6 +74,10 @@ describe 'role::tic_services_external' do
     it { should be_installed }
   end
 
+  describe package('jre1.8') do
+    it { should be_installed.with_version('1.8.0_181-fcs') }
+  end
+
   describe 'Data Transfer Service configuration' do
     subject { file('/opt/talend/ipaas/rt-infra/etc/org.talend.ipaas.rt.dts.core.cfg').content }
     it { should_not include 's3.bucket.name.test.data=td-bucket' }

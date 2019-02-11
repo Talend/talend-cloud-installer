@@ -97,6 +97,10 @@ describe 'role::tic_services_internal' do
     it { should be_installed }
   end
 
+  describe package('jre1.8') do
+    it { should be_installed.with_version('1.8.0_181-fcs') }
+  end
+
   describe 'CMS configuration' do
     subject { file('/opt/talend/ipaas/rt-infra/etc/org.talend.ipaas.rt.cms.config.cfg').content }
     it { should include 'karaf/org.ops4j.pax.url.mvn/org.ops4j.pax.url.mvn.repositories=http://{{username}}:{{password}}@10.0.2.12' }

@@ -1,13 +1,13 @@
 ---
 java::distribution: "jre"
-java::package: "jre1.8.0_60"
-java::version: "1.8.0_60-fcs"
-java::java_home: "/usr/java/jre1.8.0_60"
+java::package: "jre1.8"
+java::version: "1.8.0_181-fcs"
+java::java_home: "/usr/java/jre1.8.0_181-amd64"
 profile::java::packages:
   'jre-jce':
-    ensure: '1.8.0_60-fcs'
+    ensure: '1.8.0_181-fcs'
 
-tic::services::java_home: "/usr/java/jre1.8.0_60"
+tic::services::java_home: "/usr/java/jre1.8.0_181-amd64"
 
 profile::common::hosts::entries:
   mongo:
