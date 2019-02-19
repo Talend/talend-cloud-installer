@@ -122,10 +122,10 @@ describe 'role::tic_services_internal' do
   end
 
   describe file('/var/tmp/init_configuration_service.json') do
-    its(:content) { should include 'nodeman.subnet.default.us-east-1' }
-    its(:content) { should include 'nodeman.subnets.failover.us-east-1' }
+    its(:content) { should include 'nodeman_subnet_default_us-east-1' }
+    its(:content) { should include 'nodeman_subnets_failover_us-east-1' }
     its(:content) { should include '"value": "subnet-aaaaaaaa"' }
-    its(:content) { should include '"value": ["subnet-bbbbbbbb", "subnet-cccccccc"]' }
+    its(:content) { should include '"value": "subnet-bbbbbbbb,subnet-cccccccc"' }
     its(:content) { should include '"value": "my-branch"' }
   end
 

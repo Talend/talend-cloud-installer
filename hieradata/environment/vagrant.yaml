@@ -90,9 +90,6 @@ sudo::configs:
   'vagrant':
     'content': "%vagrant ALL=(ALL) NOPASSWD: ALL"
 
-tic::services::init_configuration_service::username: "%{::services_username}"
-tic::services::init_configuration_service::password: "%{::services_password}"
-
 tic::frontend::client_app_oidc_clientId: "iam-client"
 tic::frontend::client_app_oidc_clientSecret: "iam-client-secret"
 tic::frontend::server_app_oidc_clientId: "iam-server"

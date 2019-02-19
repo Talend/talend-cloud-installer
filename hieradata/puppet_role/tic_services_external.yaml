@@ -184,7 +184,6 @@ tic::services::karaf_features_install:
   - 'tipaas-plan-executor-client'
   - 'tipaas-flow-manager-client'
   - 'tipaas-container-management-service-client'
-  - 'tipaas-configuration-service-client'
   - 'tipaas-webhooks-client'
   - 'tipaas-notification-client'
   - 'tipaas-notification-subscription-client'
