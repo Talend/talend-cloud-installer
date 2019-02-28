@@ -17,6 +17,8 @@ provisioner:
     sudo yum clean all
     sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
     sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+    sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
+    sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
     sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
   custom_facts:
     main_stack: test_main
@@ -37,7 +39,7 @@ transport:
   name: sftp
 
 platforms:
-  - name: centos-7.5
+  - name: centos-7.6
 
 verifier:
   name: serverspec
@@ -179,6 +181,8 @@ suites:
         sudo yum clean all
         sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
+        sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
         sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
@@ -205,6 +209,8 @@ suites:
         sudo yum clean all
         sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
+        sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
         sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
@@ -232,6 +238,8 @@ suites:
         sudo yum clean all
         sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
+        sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
+        sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
         sudo gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc
       custom_facts:
         puppet_role: mongodb
