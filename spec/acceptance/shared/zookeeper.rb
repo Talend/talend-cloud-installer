@@ -6,6 +6,10 @@ shared_examples 'profile::zookeeper' do
     /opt/apache-tomcat/logs/catalina.out
   )
 
+  describe command('/usr/bin/sleep 120') do
+    its(:exit_status) { should eq 0 }
+  end
+
   describe port(2181) do
     it { should be_listening }
   end
