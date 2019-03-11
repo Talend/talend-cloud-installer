@@ -45,7 +45,7 @@ GEM
     metadata-json-lint (0.0.11)
       json
       spdx-licenses (~> 1.0)
-    minitar (0.5.4)
+    minitar (0.8)
     mixlib-install (1.2.2)
       artifactory
       mixlib-shellout
@@ -156,4 +156,4 @@ DEPENDENCIES
   vagrant-wrapper
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
