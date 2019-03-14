@@ -1,5 +1,5 @@
 ---
-
+zookeeper::exhibitor_version: "1.7.1-1"
 profile::zookeeper::zookeeper_nodes: "%{::zookeeper_nodes}"
 zookeeper::backup_enable: true
 zookeeper::backup_bucket_name: "%{::backup_bucket}"
@@ -9,3 +9,5 @@ zookeeper::zookeeper_java_env: "SERVER_JVMFLAGS=-javaagent:/opt/jmx_exporter-%{h
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/opt/tomcat/logs/catalina.out":
     path: '/opt/apache-tomcat/logs/catalina.out'
+  "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/zookeeper/zookeeper.log":
+    path: '/var/log/zookeeper/zookeeper.log*'
