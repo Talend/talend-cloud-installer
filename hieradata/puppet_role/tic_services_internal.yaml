@@ -130,8 +130,9 @@ tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"
 
 tic::services::webhooks_url: "http://%{::tic_services_external_nodes}:8181/services/webhooks-admin"
 
-tic::services::redis_session_host: "%{::redis_sessions_host}"
-tic::services::redis_session_port: "%{::redis_sessions_port}"
+tic::services::redis_cache_host: "%{::redis_cache_host}"
+tic::services::redis_cache_port: "%{::redis_cache_port}"
+tic::services::redis_cache_db_tmc: "%{::redis_cache_db_tmc}"
 
 tic::services::eventsource_kafka_servers: "%{::kafka_app_entry_point}"
 tic::services::eventsource_kafka_topic: "%{::provisioning_kafka_topic}"
