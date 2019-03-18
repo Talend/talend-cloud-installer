@@ -77,6 +77,7 @@
         "yum clean all",
         "rpm -Uv --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
         "yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init",
+        "gem install aws-sdk-core -v 3.46.2 --no-ri --no-rdoc",
         "gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc",
         "puppet module install camptocamp-ruby && puppet apply -e 'include ruby::gems'",
         "puppet module install camptocamp-augeas && puppet apply -e 'include ::augeas'",
