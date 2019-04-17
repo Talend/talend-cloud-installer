@@ -83,7 +83,7 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 108 GiB + custome
         retention.ms: "43200000"      # 12h
         retention.bytes: "536870912" # 512MiB per partition
 
-kafka_applications_cluster_ha: # estimated max cluster size: 96 GiB (24 topics with default + 3 with custom size) + customers offsets  => 50 GiB per node with security
+kafka_applications_cluster_ha: # estimated max cluster size: 99 GiB (25 topics with default + 3 with custom size) + customers offsets  => 50 GiB per node with security
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   log_level: 'INFO'
@@ -177,8 +177,12 @@ kafka_applications_cluster_ha: # estimated max cluster size: 96 GiB (24 topics w
       topic_options:
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
+    tsd-semantic-update:
+      topic_options:
+        retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
 
-kafka_applications_cluster_simple:   # estimated max data size: 30 GiB (24 topics with default + 3 with custom size) + customer_offsets
+kafka_applications_cluster_simple:   # estimated max data size: 31 GiB (25 topics with default + 3 with custom size) + customer_offsets
   kafka_topics_default_partitions: 2
   kafka_topics_default_replication: 1
   kafka_broker_config:
@@ -268,6 +272,10 @@ kafka_applications_cluster_simple:   # estimated max data size: 30 GiB (24 topic
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
     tpsvc-engines-events:
+      topic_options:
+        retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
+    tsd-semantic-update:
       topic_options:
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
