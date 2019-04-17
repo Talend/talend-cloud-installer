@@ -5,6 +5,7 @@
 class profile::kafka (
   $kafka_version           = '1.1.1',
   $scala_version           = '2.11',
+  $kafka_mirror_url        = 'https://archive.apache.org/dist',
   $kafka_datapath          = '/var/lib/kafka',
   $storage_device          = undef,
   $zookeeper_nodes         = '[ "127.0.0.1" ]', # A string f.e. '[ "10.0.2.12", "10.0.2.23" ]'
@@ -75,6 +76,12 @@ class profile::kafka (
     $_scala_version = $scala_version
   }
 
+  if has_key($kafka_yaml_profile, 'kafka_mirror_url') {
+    $_kafka_mirror_url = $kafka_yaml_profile['kafka_mirror_url']
+  } else {
+    $_kafka_mirror_url = $kafka_mirror_url
+  }
+
   if has_key($kafka_yaml_profile, 'log_level') {
     $_log_level = $kafka_yaml_profile['log_level']
   } else {
@@ -116,6 +123,7 @@ class profile::kafka (
   class { '::kafka':
     version       => $_kafka_version,
     scala_version => $_scala_version,
+    mirror_url    => $_kafka_mirror_url,
     install_java  => false,
   } ->
   class { '::kafka::broker':
