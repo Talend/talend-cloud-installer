@@ -74,8 +74,9 @@
         }
       },
       "inline": [
+        "rpm -Uv --replacepkgs http://release-archives.puppet.com/yum/puppetlabs-release-el-7.noarch.rpm",
         "yum clean all",
-        "rpm -Uv --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
+        "sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo",
         "yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init",
         "gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc",
         "puppet module install camptocamp-ruby && puppet apply -e 'include ruby::gems'",

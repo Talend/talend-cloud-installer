@@ -14,8 +14,9 @@ provisioner:
   require_chef_for_busser: false
   # We reproduce with custom_pre_install_command what is done as pre-install in packer/template.json.erb
   custom_pre_install_command: |
+    sudo rpm -U --replacepkgs http://release-archives.puppet.com/yum/puppetlabs-release-el-7.noarch.rpm
+    sudo sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo
     sudo yum clean all
-    sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
     sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
     sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
     sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
@@ -178,8 +179,9 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo rpm -U --replacepkgs http://release-archives.puppet.com/yum/puppetlabs-release-el-7.noarch.rpm
+        sudo sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo
         sudo yum clean all
-        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
         sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
         sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
@@ -206,8 +208,9 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo rpm -U --replacepkgs http://release-archives.puppet.com/yum/puppetlabs-release-el-7.noarch.rpm
+        sudo sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo
         sudo yum clean all
-        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
         sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
         sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
@@ -235,8 +238,9 @@ suites:
         sudo /usr/bin/touch /mnt/mongod.lock
         sudo /usr/bin/chown root:root /mnt/mongod.lock
         sudo /usr/bin/umount /mnt
+        sudo rpm -U --replacepkgs http://release-archives.puppet.com/yum/puppetlabs-release-el-7.noarch.rpm
+        sudo sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo
         sudo yum clean all
-        sudo rpm -U --replacepkgs http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
         sudo yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init
         sudo puppet module install camptocamp-ruby && sudo puppet apply -e "include ruby::gems"
         sudo puppet module install camptocamp-augeas && sudo puppet apply -e "include ::augeas"
