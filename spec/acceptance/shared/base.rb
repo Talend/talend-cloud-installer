@@ -19,7 +19,7 @@ shared_examples 'profile::base' do
   describe 'logrotate for syslog file properties' do
     subject { file('/etc/logrotate.d/syslog') }
     it { should be_owned_by 'root' }
-    it { should be_grouped_by 'root' }
+    it { should be_grouped_into 'root' }
     it { should be_mode 644 }
   end
 
