@@ -16,6 +16,13 @@ shared_examples 'profile::base' do
     it { should include 'server 3.amazon.pool.ntp.org iburst' }
   end
 
+  describe 'logrotate for syslog file properties' do
+    subject { file('/etc/logrotate.d/syslog') }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_by 'root' }
+    it { should be_mode 644 }
+  end
+
   describe 'logrotate for syslog configuration' do
     subject { file('/etc/logrotate.d/syslog').content }
     it { should include 'rotate 8' }

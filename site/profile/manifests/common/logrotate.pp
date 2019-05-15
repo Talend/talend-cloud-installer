@@ -6,5 +6,7 @@ class profile::common::logrotate {
     ensure => file,
     source => 'puppet:///modules/profile/etc/logrotate.d/syslog',
     mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
   }
 }
