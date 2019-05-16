@@ -62,6 +62,14 @@ profile::mongodb::users:
     roles:
       - role: 'clusterMonitor'
         db: 'admin'
+  mdreadonly:
+    db_address: 'admin'
+    username: 'mdreadonly'
+    password: '%{::master_password}'
+    roles:
+      - role: 'read'
+        db: 'admin'
+      
 
 logrotate::ensure: 'present'
 logrotate::hieramerge: true
