@@ -193,7 +193,7 @@ shared_examples 'profile::mongodb' do
     its(:stdout) { should include '{"role":"clusterMonitor","db":"admin"}' }
   end
   
-  describe command('/usr/bin/mongo --norc --quiet -u mdreadonly -p mypassword admin --eval "printjson(db.getUser(\'datadog\'));" | /usr/bin/tr -d "\t\n "') do
+  describe command('/usr/bin/mongo --norc --quiet -u mdreadonly -p mypassword admin --eval "printjson(db.getUser(\'mdreadonly\'));" | /usr/bin/tr -d "\t\n "') do
     its(:stdout) { should include '{"role":"read","db":"admin"}' }
   end
 
