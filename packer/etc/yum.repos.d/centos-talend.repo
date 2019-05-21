@@ -1,6 +1,6 @@
 [CentOS]
 name=centos
-baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190208/centos/7/x86_64/base
+baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190517/centos/7/x86_64/base
 gpgcheck=1
 gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 enabled=1
@@ -8,7 +8,7 @@ s3_enabled=true
 
 [CentOS-updates]
 name=centos
-baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190208/centos/7/x86_64/updates
+baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190517/centos/7/x86_64/updates
 gpgcheck=1
 gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 enabled=1
@@ -16,7 +16,7 @@ s3_enabled=true
 
 [talend-epel]
 name=talend-epel
-baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190208/centos/7/x86_64/epel
+baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/20190517/centos/7/x86_64/epel
 gpgcheck=1
 gpgkey=http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
 enabled=1
