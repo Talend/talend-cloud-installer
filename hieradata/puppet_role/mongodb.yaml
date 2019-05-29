@@ -67,7 +67,7 @@ profile::mongodb::users:
     username: 'mdreadonly'
     password: '%{::master_password}'
     roles:
-      - role: 'read'
+      - role: 'readAnyDatabase'
         db: 'admin'
 
 logrotate::ensure: 'present'
