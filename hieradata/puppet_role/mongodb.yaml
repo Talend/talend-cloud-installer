@@ -1,5 +1,5 @@
 ---
-mongodb::globals::version: '3.4.16-1.el7'
+mongodb::globals::version: '3.6.12-1.el7'
 mongodb::globals::mongos_package_name: 'mongodb-org'
 mongodb::server::verbose: true
 # mongodb::server::verbositylevel: 'v'  # from 'v' to 'vvvvv' in extrafile

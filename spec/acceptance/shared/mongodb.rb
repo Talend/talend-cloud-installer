@@ -48,6 +48,12 @@ shared_examples 'profile::mongodb' do
     end
   end
 
+  describe 'Verify MongoDB version' do
+    describe command('/usr/bin/rpm -q mongodb-org-server') do
+      its(:stdout) { should include 'mongodb-org-server-3.6.12-1' }
+    end
+  end
+
   describe 'Verify MongoDB major version and facts' do
     describe command('/usr/bin/facter -p mongodb_version') do
       its(:stdout) { is_expected.to match(/^[3]/) }
@@ -84,6 +90,7 @@ shared_examples 'profile::mongodb' do
       its(:content) { should include '#mongodb.conf - generated from Puppet' }
       its(:content) { should include '#System Log' }
       its(:content) { should include 'systemLog.destination: syslog' }
+      its(:content) { should include 'net.bindIp: ' }
     end
   end
 
