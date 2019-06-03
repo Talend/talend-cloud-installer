@@ -194,7 +194,7 @@ shared_examples 'profile::mongodb' do
   end
  
   describe command('/usr/bin/mongo --norc --quiet -u mdreadonly -p mypassword admin --eval "printjson(db.getUser(\'mdreadonly\'));" | /usr/bin/tr -d "\t\n "') do
-    its(:stdout) { should include '{"role":"read","db":"admin"}' }
+    its(:stdout) { should include '{"role":"readAnyDatabase","db":"admin"}' }
   end
 
 
