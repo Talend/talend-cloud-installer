@@ -30,6 +30,9 @@
       <% if ENV.has_key?('ACCOUNTS') and ENV['ACCOUNTS'].length > 0 %>
       "ami_users": ["<%= ENV['ACCOUNTS'].split(',').join('","') %>"],
       <% end %>
+      <% if ENV.has_key?('NETWORK_OPT') %>
+      "ena_support": "true",
+      <% end %>
       "tags": {
         <% if ENV.has_key?('TAGS') and ENV['TAGS'].length > 0 %>
         <%= ENV['TAGS'].split(',').map{|v| "\"#{v.split('=').join('": "')}\""}.join(',') %>,
