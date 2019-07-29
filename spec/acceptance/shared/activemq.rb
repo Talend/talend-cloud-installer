@@ -21,6 +21,10 @@ shared_examples 'profile::activemq' do
     it { should_not be_installed }
   end
 
+  describe package('postgresql11') do
+    it { should be_installed }
+  end
+
   describe file('/opt/activemq/conf/activemq.xml') do
     its(:content) { should include '<queue physicalName="ipaas.talend.dispatcher.response.queue"/>' }
   end
