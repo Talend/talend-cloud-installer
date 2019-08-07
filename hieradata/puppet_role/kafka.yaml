@@ -83,7 +83,7 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 108 GiB + custome
         retention.ms: "43200000"      # 12h
         retention.bytes: "536870912" # 512MiB per partition
 
-kafka_applications_cluster_ha: # estimated max cluster size: 108 GiB (24 topics with default -3 GiB-  + 4 with custom size) + customers offsets  => 55 GiB per node with security
+kafka_applications_cluster_ha: # estimated max cluster size: 96 GiB (24 topics with default -3 GiB-  + 3 with custom size) + customers offsets  => 55 GiB per node with security
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   log_level: 'INFO'
@@ -139,11 +139,6 @@ kafka_applications_cluster_ha: # estimated max cluster size: 108 GiB (24 topics 
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
     impact-analysis-batch: {}
-    dqDictionary:
-      topic_options:
-        retention.bytes: "536870912" # 512 MiB per partition => 12GiB per cluster
-        retention.ms: "648000000"    # 7.5d
-        segment.ms: "3600000"        # 1h
     dataprep:
       topic_options:
         retention.ms: "1800000" # 30min
@@ -183,7 +178,7 @@ kafka_applications_cluster_ha: # estimated max cluster size: 108 GiB (24 topics 
         retention.ms: "648000000"    # 7.5d
         segment.ms: "3600000"        # 1h
 
-kafka_applications_cluster_simple:   # estimated max data size: 35 GiB (24 topics with default + 4 with custom size) + customer_offsets
+kafka_applications_cluster_simple:   # estimated max data size: 30 GiB (24 topics with default + 3 with custom size) + customer_offsets
   kafka_topics_default_partitions: 2
   kafka_topics_default_replication: 1
   kafka_broker_config:
@@ -238,11 +233,6 @@ kafka_applications_cluster_simple:   # estimated max data size: 35 GiB (24 topic
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
     impact-analysis-batch: {}
-    dqDictionary:
-      topic_options:
-        retention.bytes: "2684354560" # 2,5GiB => 5GiB per topic
-        retention.ms: "648000000" # 7.5d
-        segment.ms: "3600000"     # 1h
     dataprep:
       topic_options:
         retention.ms: "1800000" # 30min
