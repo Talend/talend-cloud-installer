@@ -50,7 +50,7 @@ shared_examples 'profile::mongodb' do
 
   describe 'Verify MongoDB version' do
     describe command('/usr/bin/rpm -q mongodb-org-server') do
-      its(:stdout) { should include 'mongodb-org-server-3.6.12-1' }
+      its(:stdout) { should include 'mongodb-org-server-3.6.13-1' }
     end
   end
 
