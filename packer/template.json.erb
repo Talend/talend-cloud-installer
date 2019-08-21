@@ -7,7 +7,8 @@
     "packagecloud_master_token": "{{env `PACKAGECLOUD_MASTER_TOKEN`}}",
     "installer_version": "",
     "source_ami": "",
-    "ami_description": ""
+    "ami_description": "",
+    "repository_id": "{{env `REPOSITORY_ID`}}"
   },
   "builders": [
     {
@@ -30,12 +31,20 @@
       <% if ENV.has_key?('ACCOUNTS') and ENV['ACCOUNTS'].length > 0 %>
       "ami_users": ["<%= ENV['ACCOUNTS'].split(',').join('","') %>"],
       <% end %>
+      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'ENA' %>
+      "ena_support": true,
+      <% end %>
+      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'Intel82599VF' %>
+      "sriov_support": true,
+      <% end %>
       "tags": {
         <% if ENV.has_key?('TAGS') and ENV['TAGS'].length > 0 %>
         <%= ENV['TAGS'].split(',').map{|v| "\"#{v.split('=').join('": "')}\""}.join(',') %>,
         <% end %>
         "puppet_role": "{{user `puppet_role`}}",
-        "installer_version": "{{user `installer_version`}}"
+        "installer_version": "{{user `installer_version`}}",
+        "repository_id": "{{user `repository_id`}}",
+        "root_ami": "{{user `source_ami`}}"
       }
     }
   ],
@@ -52,6 +61,13 @@
       "only": ["amazon"],
       "source": "{{template_dir}}/etc/yum.repos.d/",
       "destination": "/etc/yum.repos.d"
+    },
+    {
+      "type": "shell",
+      "only": ["amazon"],
+      "inline": [
+        "sed -i 's/__REPOSITORY_ID__/{{user `repository_id`}}/g' /etc/yum.repos.d/*"
+      ]
     },
     {
       "type": "file",
