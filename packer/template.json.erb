@@ -23,7 +23,13 @@
       "type": "amazon-chroot",
       "name": "amazon",
       "source_ami": "{{user `source_ami`}}",
+      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'ENA' %>
+      "ami_name": "talend-tic-{{user `ami_name`}}-{{user `ami_version`}}-{{timestamp}}-ena-{{user `ami_type`}}",
+      <% elsif ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'Intel82599VF' %>
+      "ami_name": "talend-tic-{{user `ami_name`}}-{{user `ami_version`}}-{{timestamp}}-sriov-{{user `ami_type`}}",
+      <% else %>
       "ami_name": "talend-tic-{{user `ami_name`}}-{{user `ami_version`}}-{{timestamp}}-{{user `ami_type`}}",
+      <% end %>
       "ami_description": "{{user `ami_description`}}",
       <% if ENV.has_key?('REGIONS') and ENV['REGIONS'].length > 0 %>
       "ami_regions": ["<%= ENV['REGIONS'].split(',').join('","') %>"],
@@ -33,8 +39,7 @@
       <% end %>
       <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'ENA' %>
       "ena_support": true,
-      <% end %>
-      <% if ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'Intel82599VF' %>
+      <% elsif ENV.has_key?('NETWORK_OPT') and ENV['NETWORK_OPT'] == 'Intel82599VF' %>
       "sriov_support": true,
       <% end %>
       "tags": {
