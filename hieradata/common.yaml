@@ -5,6 +5,9 @@ sudo::purge: false
 nginx::package_ensure: '1.12.1-1.el7.ngx'
 
 common_packages:
+  'rake':
+    ensure: '12.3.3'
+    provider: 'gem'
   'hiera-eyaml':
     ensure: 'installed'
     provider: 'gem'
