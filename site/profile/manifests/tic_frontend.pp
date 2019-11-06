@@ -11,6 +11,10 @@ class profile::tic_frontend (
   include ::logrotate
   include ::profile::common::concat
 
+  class { '::monitoring::jmx_exporter':
+    before => Class['::tic::frontend'],
+  }
+
   profile::register_profile { 'tic_frontend': }
 
   if size($version) > 0 {

@@ -8,6 +8,9 @@ profile::java::packages:
     ensure: '1.8.0_181-fcs'
 
 tic::services::java_home: "/usr/java/jre1.8.0_181-amd64"
+tic::services::java_opts: "-javaagent:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/jmx_prometheus_javaagent-%{hiera('monitoring::jmx_exporter::version')}.jar=%{hiera('jmx_exporter_port')}:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/karaf.yaml"
+
+monitoring::jmx_exporter::jmx_exporter_service: 'karaf'
 
 profile::common::hosts::entries:
   mongo:

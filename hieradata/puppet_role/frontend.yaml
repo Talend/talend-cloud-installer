@@ -16,8 +16,11 @@ profile::common::hosts::entries:
       - "mongo%index%.production.internal-tipaas.com"
       - "mongo%index%"
 
+monitoring::jmx_exporter::jmx_exporter_service: 'tomcat'
+
 tic::frontend::account_manager_nodes: "%{::tic_services_internal_nodes}"
 tic::frontend::artifact_manager_nodes: "%{::tic_services_internal_nodes}"
+tic::frontend::catalina_opts: "-javaagent:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/jmx_prometheus_javaagent-%{hiera('monitoring::jmx_exporter::version')}.jar=%{hiera('jmx_exporter_port')}:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/tomcat.yaml"
 tic::frontend::cms_node: "%{::tic_services_internal_nodes}"
 tic::frontend::config_tpsvc_service_url: "%{::tpsvc_config_url}"
 tic::frontend::crypto_service_url: "%{::tpsvc_crypto_url}"

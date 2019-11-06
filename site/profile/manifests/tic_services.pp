@@ -25,6 +25,10 @@ class profile::tic_services (
   require ::profile::postgresql
   include ::profile::web::nginx
 
+  class { '::monitoring::jmx_exporter':
+    before => Class['::tic::services'],
+  }
+
   profile::register_profile { 'tic_services': }
 
   if $activemq_nodes {
