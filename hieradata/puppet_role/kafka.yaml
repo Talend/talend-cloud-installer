@@ -63,7 +63,7 @@ kafka_infra_logs_cluster_ha: # estimated max cluster size: 102 GiB + customers o
         retention.bytes: "2147483648" # 2 GiB per partition
     zipkin: {}
 
-kafka_customers_logs_cluster_ha: # estimated max cluster size: 108 GiB + customers offsets => 50GiB per node
+kafka_customers_logs_cluster_ha: # estimated max cluster size: 308 GiB + customers offsets => 120GiB per node
   kafka_topics_default_partitions: 12
   kafka_topics_default_replication: 2
   log_level: 'INFO'
