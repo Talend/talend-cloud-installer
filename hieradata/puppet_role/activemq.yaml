@@ -8,7 +8,7 @@ common_packages:
   'ptic-postgresql-schemes':
     ensure: '2.0-4'
 
-activemq::version: '5.15.11-1'
+activemq::version: '5.15.11-2'
 activemq::jmx_enabled: true
 activemq::jmx_agent_opts: "-javaagent:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/jmx_prometheus_javaagent-%{hiera('monitoring::jmx_exporter::version')}.jar=%{hiera('jmx_exporter_port')}:/opt/jmx_exporter-%{hiera('monitoring::jmx_exporter::version')}/activemq.yaml"
 activemq::network_password: "%{::master_password}"
