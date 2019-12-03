@@ -4,6 +4,10 @@ shared_examples 'profile::activemq' do
   it_behaves_like 'profile::common::packagecloud_repos'
   it_behaves_like 'profile::common::cloudwatchlog_files', %w(/opt/activemq/data/activemq.log)
 
+  describe package('activemq') do
+    it { should be_installed.with_version('5.15.11-1') }
+  end
+
 	describe service('activemq') do
 		it { should be_enabled }
 		it { should be_running }
