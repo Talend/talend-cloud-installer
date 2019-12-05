@@ -342,6 +342,7 @@ suites:
   - name: role-ecs
     driver:
       vagrantfiles:
+        - vagrant/2cpu-2gb.rb
         - vagrant/second_disk.rb
       vm_name: ecs-tci
       customize:
@@ -356,6 +357,7 @@ suites:
   - name: ami-ecs
     driver:
       vagrantfiles:
+        - vagrant/2cpu-2gb.rb
         - vagrant/second_disk.rb
       vm_name: ami-ecs-tci
       customize:
