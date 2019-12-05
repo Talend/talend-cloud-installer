@@ -94,6 +94,8 @@ suites:
         - 'spec/acceptance/tic_services_external_spec.rb'
   - name: role-activemq
     driver:
+      vagrantfiles:
+        - vagrant/2cpu-2gb.rb
       vm_name: activemq-tci
       customize:
         name: activemq-tci
