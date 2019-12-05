@@ -108,7 +108,7 @@ GIT
 GITHUBTARBALL
   remote: Talend/puppet-activemq
   specs:
-    talend-activemq (0.5.2)
+    talend-activemq (0.5.4)
 
 GITHUBTARBALL
   remote: Talend/puppet-cloudwatchlogs
