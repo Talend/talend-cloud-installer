@@ -49,5 +49,12 @@ mod 'puppetlabs-postgresql',
   :ref => 'master'
 mod 'puppetlabs-mongodb', '0.18.1',
   :github_tarball => 'Talend/puppet-mongodb'
-mod 'talend-monitoring', '0.1.0.22',
+
+#  mod 'talend-monitoring', '0.1.0.22',
+#  :github_tarball => 'Talend/puppet-monitoring'
+
+# For testing purposes
+mod 'talend-monitoring',
   :github_tarball => 'Talend/puppet-monitoring'
+  :git => 'https://github.com/Talend/puppet-monitoring.git',
+  :ref => 'jleloup/DEVOPS-8445-configure-jmx-activemq'
