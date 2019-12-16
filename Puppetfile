@@ -55,6 +55,5 @@ mod 'puppetlabs-mongodb', '0.18.1',
 
 # For testing purposes
 mod 'talend-monitoring',
-  :github_tarball => 'Talend/puppet-monitoring'
   :git => 'https://github.com/Talend/puppet-monitoring.git',
   :ref => 'jleloup/DEVOPS-8445-configure-jmx-activemq'
