@@ -178,7 +178,7 @@ DEPENDENCIES
   talend-cloudwatchlogs (~> 0.0)
   talend-dataprep_dataset (~> 0.0)
   talend-kafka (>= 0)
-  talend-monitoring (= 0.1.0.22)
+  talend-monitoring (= 0.2.0)
   talend-syncope (~> 0.0)
   talend-tic (~> 0.0)
   talend-user_accounts (~> 0.0)
