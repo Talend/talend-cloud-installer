@@ -50,7 +50,7 @@ mod 'puppetlabs-postgresql',
 mod 'puppetlabs-mongodb', '0.18.1',
   :github_tarball => 'Talend/puppet-mongodb'
 
-  mod 'talend-monitoring', '0.2.0',
+mod 'talend-monitoring', '0.2.0',
   :github_tarball => 'Talend/puppet-monitoring'
 
 # For testing purposes
