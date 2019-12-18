@@ -145,6 +145,7 @@ tic::services::iam_service_url: "%{::tpsvc_iam_server_front_url}"
 tic::services::crypto_service_url: "%{::tpsvc_crypto_url}"
 tic::services::config_service_url: "%{::tpsvc_config_url}"
 tic::services::license_service_url: "%{::tmc_license_url}"
+tic::services::activemq_log_internal_dns: "%{::activemq_log_internal_dns}"
 
 tic::services::zipkin_kafka_servers: "%{::zipkin_kafka_servers}"
 tic::services::zipkin_kafka_topic: "%{::zipkin_kafka_topic}"

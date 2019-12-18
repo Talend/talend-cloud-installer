@@ -92,6 +92,7 @@ tic::services::cms_lts_service_url: "%{::lts_host}"
 tic::services::cms_amq_broker_url: "%{::activemq_host}"
 tic::services::activemq_broker_username: "admin"
 tic::services::activemq_broker_password: "%{::master_password}"
+tic::services::activemq_log_internal_dns: "%{::activemq_log_internal_dns}"
 
 tic::services::logs_transfer_client_admin_url: "http://%{::tic_services_external_nodes}:8181/services/logs-transfer-service"
 tic::services::logs_transfer_client_upload_url: "http://%{::tic_services_external_nodes}:8181/services/logs-transfer-service-runtime"
