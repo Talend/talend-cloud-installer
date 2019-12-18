@@ -8,7 +8,7 @@ common_packages:
   'ptic-postgresql-schemes':
     ensure: '2.0-4'
 
-activemq::version: '5.15.11-2'
+activemq::version: '5.15.11-3'
 activemq::tcp_max_frame_size: 104857600  # 100MiB
 activemq::http_max_frame_size: 52428800  # 50MiB
 activemq::jmx_enabled: true
