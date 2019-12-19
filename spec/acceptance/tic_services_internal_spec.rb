@@ -92,6 +92,11 @@ describe 'role::tic_services_internal' do
     it { should include 'password.reset.url.template=https://my-password-reset-host.com' }
   end
 
+  describe 'Dispatcher Service template' do
+    subject { file('/opt/talend/ipaas/rt-infra/etc/org.talend.ipaas.rt.dispatcher.nodemanager.aws.cfg').content }
+    it { should include '"activemq_log_broker_url":"failover:(tcp://localhost:61616?wireFormat.host=localhost)?jms.prefetchPolicy.queuePrefetch=100"' }
+  end
+
   describe 'Additional Java Packages' do
     subject { package('jre-jce') }
     it { should be_installed }
