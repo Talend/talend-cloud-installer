@@ -85,8 +85,10 @@ kafka_customers_logs_cluster_ha: # estimated max cluster size: 308 GiB + custome
     tmc_logs:
       partitions: "30"
       topic_options:
-        retention.ms: "43200000"      # 12h
-        retention.bytes: "3586297696" # 3.34GiB per partition
+        retention.ms: "43200000"        # 12h
+        retention.bytes: "3586297696"   # 3.34GiB per partition
+        max.message.bytes: "104857600"  # 100 MiB, align with ActiveMQ max message size
+        segment.ms: "300000"            # 5mn
 
 kafka_applications_cluster_ha: # estimated max cluster size: 96 GiB (24 topics with default -3 GiB-  + 3 with custom size) + customers offsets  => 55 GiB per node with security
   kafka_topics_default_partitions: 12
