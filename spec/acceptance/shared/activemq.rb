@@ -4,6 +4,25 @@ shared_examples 'profile::activemq' do
   it_behaves_like 'profile::common::packagecloud_repos'
   it_behaves_like 'profile::common::cloudwatchlog_files', %w(/opt/activemq/data/activemq.log)
 
+  describe 'Verifying activemq sysctl conf' do
+    describe file('/etc/sysctl.d/activemq_jetty.conf') do
+      it { should be_file }
+      its(:content) { should include '# File managed by Puppet, do not edit manually' }
+    end
+    describe command('/sbin/sysctl -a') do
+      its(:stdout) { should include 'net.core.rmem_max = 16777216' }
+      its(:stdout) { should include 'net.core.wmem_max = 16777216' }
+      its(:stdout) { should include 'net.ipv4.tcp_rmem = 4096	87380	16777216' }
+      its(:stdout) { should include 'net.ipv4.tcp_wmem = 4096	16384	16777216' }
+      its(:stdout) { should include 'net.core.somaxconn = 4096' }
+      its(:stdout) { should include 'net.core.netdev_max_backlog = 16384' }
+      its(:stdout) { should include 'net.ipv4.tcp_max_syn_backlog = 8192' }
+      its(:stdout) { should include 'net.ipv4.tcp_syncookies = 1' }
+      its(:stdout) { should include 'net.ipv4.ip_local_port_range = 10000	65535' }
+      its(:stdout) { should include 'net.ipv4.tcp_tw_recycle = 1' }
+    end
+  end
+
   describe package('activemq') do
     it { should be_installed.with_version('5.15.11-3') }
   end

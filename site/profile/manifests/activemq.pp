@@ -18,6 +18,23 @@ class profile::activemq(
 
   profile::register_profile { 'activemq': }
 
+  file { 'activemq sysctl conf':
+    ensure => file,
+    path   => '/etc/sysctl.d/activemq_jetty.conf',
+    source => 'puppet:///modules/profile/etc/sysctl.d/activemq_jetty.conf',
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
+    before => Class['::activemq'],
+    notify => Exec['activemq sysctl apply']
+  }
+
+  exec { 'activemq sysctl apply':
+    path        => '/usr/bin:/usr/sbin/:/bin:/sbin',
+    command     => 'sysctl --system',
+    refreshonly => true
+  }
+
   # prevent postgres provisioning on all the nodes except one: ActiveMQ-A
   # this should be replaced with more sophisticated solution in the future
   $ec2_userdata = pick_default($::ec2_userdata, '')
@@ -43,7 +60,6 @@ class profile::activemq(
         }
       }
     }
-
   } else {
     contain ::activemq
   }
