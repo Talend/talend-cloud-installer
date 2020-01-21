@@ -1,10 +1,13 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    CFPropertyList (2.2.8)
     artifactory (2.3.3)
     builder (3.2.2)
     diff-lcs (1.2.5)
     facter (2.4.6)
+    facter (2.4.6-universal-darwin)
+      CFPropertyList (~> 2.2.6)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
@@ -135,6 +138,7 @@ GEM
 
 PLATFORMS
   ruby
+  universal-darwin-19
 
 DEPENDENCIES
   kitchen-puppet
@@ -156,4 +160,4 @@ DEPENDENCIES
   vagrant-wrapper
 
 BUNDLED WITH
-   1.16.2
+   1.17.3

@@ -36,4 +36,9 @@ shared_examples 'profile::base' do
     it { should include 'synchronised to' }
     it { should include 'time correct to within' }
   end
+
+  describe 'sshd has log level configured to verbose' do
+    subject { file('/etc/ssh/sshd_config').content }
+    it { should include 'LogLevel VERBOSE' }
+  end
 end

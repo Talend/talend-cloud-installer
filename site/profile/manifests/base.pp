@@ -35,6 +35,15 @@ class profile::base {
     include profile::common::helper_scripts
   }
 
+  # Increase sshd log level to Verbose to log failed login attempts
+  file_line { 'sshd_log_level':
+    ensure => present,
+    path   => '/etc/ssd/ssd_config',
+    line   => 'LogLevel VERBOSE',
+    match  => '^LogLevel ',
+    after  => '^#LogLevel INFO',
+  }
+
   # This distributes the custom fact to the host(-pluginsync)
   # on using puppet apply
   file { $::settings::libdir:
