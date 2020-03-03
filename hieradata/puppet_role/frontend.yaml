@@ -65,23 +65,9 @@ logrotate::hieramerge: true
 logrotate::rules:
   catalina_out:
     path: '/srv/tomcat/ipaas-srv/logs/catalina.*'
-    maxsize: '250M'
+    maxsize: '10M'
     copytruncate: true
     rotate: 5
-    rotate_every: 'hour'
-    compress: true
-  tomcat_log:
-    path: '/srv/tomcat/ipaas-srv/logs/*.log'
-    maxsize: '250M'
-    copytruncate: true
-    rotate: 5
-    rotate_every: 'hour'
-    compress: true
-  gc_log:
-    path: '/srv/tomcat/ipaas-srv/logs/gc.log'
-    maxsize: '9M'
-    copytruncate: true
-    rotate: 10
     rotate_every: 'hour'
     compress: true
     missingok: true
@@ -92,6 +78,22 @@ logrotate::rules:
     create_group: tomcat
     su_user: tomcat
     su_group: tomcat
+  tomcat_log:
+    path: '/srv/tomcat/ipaas-srv/logs/*.log'
+    maxsize: '50M'
+    copytruncate: true
+    rotate: 5
+    rotate_every: 'hour'
+    compress: true
+    missingok: true
+    notifempty: true
+    create: true
+    create_mode: 640
+    create_user: tomcat
+    create_group: tomcat
+    su_user: tomcat
+    su_group: tomcat
+
 
 
 
