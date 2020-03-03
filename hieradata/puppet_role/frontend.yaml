@@ -77,6 +77,23 @@ logrotate::rules:
     rotate: 5
     rotate_every: 'hour'
     compress: true
+  gc_log:
+    path: '/srv/tomcat/ipaas-srv/logs/gc.log'
+    maxsize: '9M'
+    copytruncate: true
+    rotate: 10
+    rotate_every: 'hour'
+    compress: true
+    missingok: true
+    notifempty: true
+    create: true
+    create_mode: 640
+    create_user: tomcat
+    create_group: tomcat
+    su_user: tomcat
+    su_group: tomcat
+
+
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/srv/tomcat/ipaas-srv/logs/catalina.out":
