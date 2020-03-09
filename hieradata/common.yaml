@@ -2,77 +2,77 @@
 message: "This node is using common data"
 sudo::purge: false
 
-nginx::package_ensure: '1.12.1-1.el7.ngx'
+nginx::package_ensure: "1.12.1-1.el7.ngx"
 
 common_packages:
-  'rake':
-    ensure: '12.3.3'
-    provider: 'gem'
-  'hiera-eyaml':
-    ensure: 'installed'
-    provider: 'gem'
-  'hiera-eyaml-kms':
-    ensure: 'installed'
-    provider: 'gem'
-  'aws-sdk':
-    ensure: 'installed'
-    provider: 'gem'
-  'package_cloud':
-    ensure: '0.2.45'
-    provider: 'gem'
-  'nmap-ncat':
-    ensure: 'installed'
-  'cloud-init':
-    ensure: 'installed'
-  'awscli':
-    ensure: 'installed'
-    provider: 'pip'
-  'lnav':
-    ensure: 'installed'
-  'python-virtualenv':
-    ensure: 'absent'
+  "rake":
+    ensure: "12.3.3"
+    provider: "gem"
+  "hiera-eyaml":
+    ensure: "installed"
+    provider: "gem"
+  "hiera-eyaml-kms":
+    ensure: "installed"
+    provider: "gem"
+  "aws-sdk":
+    ensure: "installed"
+    provider: "gem"
+  "package_cloud":
+    ensure: "0.2.45"
+    provider: "gem"
+  "nmap-ncat":
+    ensure: "installed"
+  "cloud-init":
+    ensure: "installed"
+  "awscli":
+    ensure: "installed"
+    provider: "pip"
+  "lnav":
+    ensure: "installed"
+  "python-virtualenv":
+    ensure: "absent"
 
 packagecloud_repos:
-  'talend/other':
-    type: 'rpm'
+  "talend/other":
+    type: "rpm"
     master_token: "%{::packagecloud_master_token}"
-  'talend/thirdparty':
-    type: 'rpm'
+  "talend/thirdparty":
+    type: "rpm"
 
 cloudwatchlogs::region: "%{::region}"
 profile::common::ssm::region: "%{::region}"
 
 cloudwatchlog_files:
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/cfn-init.log":
-    path: '/var/log/cfn-init.log'
+    path: "/var/log/cfn-init.log"
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/cfn-init-cmd.log":
-    path: '/var/log/cfn-init-cmd.log'
+    path: "/var/log/cfn-init-cmd.log"
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/messages":
-    path: '/var/log/messages'
+    path: "/var/log/messages"
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/secure":
-    path: '/var/log/secure'
+    path: "/var/log/secure"
   "/talend/tic/%{::main_stack}/%{::puppet_role}/var/log/audit/audit.log":
-    path: '/var/log/audit/audit.log'
-    datetime_format: '%s'
+    path: "/var/log/audit/audit.log"
+    datetime_format: "%s"
 
-profile::web::tomcat::catalina_base: '/opt/apache-tomcat/tomcat'
-profile::web::tomcat::tomcat_version: '8'
+profile::web::tomcat::catalina_base: "/opt/apache-tomcat/tomcat"
+profile::web::tomcat::tomcat_version: "8"
 
 ntp::udlc: true
 ntp::interfaces:
-  - '127.0.0.1'
-  - '::1'
+  - "127.0.0.1"
+  - "::1"
   - "%{::ipaddress_eth0}"
 ntp::restrict:
-  - 'default nomodify notrap nopeer noquery'
-  - '127.0.0.1'
-  - '::1'
-  - '10.200.0.0 mask 255.255.0.0 nomodify notrap'
+  - "default nomodify notrap nopeer noquery"
+  - "127.0.0.1"
+  - "::1"
+  - "10.200.0.0 mask 255.255.0.0 nomodify notrap"
 ntp::servers:
-  - '0.amazon.pool.ntp.org iburst'
-  - '1.amazon.pool.ntp.org iburst'
-  - '2.amazon.pool.ntp.org iburst'
-  - '3.amazon.pool.ntp.org iburst'
+  - "0.amazon.pool.ntp.org iburst"
+  - "1.amazon.pool.ntp.org iburst"
+  - "2.amazon.pool.ntp.org iburst"
+  - "3.amazon.pool.ntp.org iburst"
 
 profile::postgresql::username: tadmin
 profile::postgresql::database: tadmin
@@ -86,16 +86,13 @@ profile::postgresql::hostname: "%{::postgres_nodes}"
 profile::postgresql::password: "%{::master_password}"
 
 # Monitoring of installer-based components
-monitoring::node_exporter::version: '0.17.0'
+monitoring::node_exporter::version: "0.17.0"
 monitoring::node_exporter::port: 9100
 
-monitoring::cadvisor::version: '0.32.0'
-monitoring::cadvisor::version_checksum: '62419c0e06edb55a9c02e68fcae3a81abac2a2d98122c36a9124259e0ca8916c'
+monitoring::cadvisor::version: "0.32.0"
+monitoring::cadvisor::version_checksum: "62419c0e06edb55a9c02e68fcae3a81abac2a2d98122c36a9124259e0ca8916c"
 monitoring::cadvisor::port: 9500
 
-monitoring::mongodb_exporter::version: '0.3.1'
-monitoring::mongodb_exporter::port: 9216
-
-monitoring::jmx_exporter::version: '0.12.0'
-monitoring::jmx_exporter::user: 'root'
+monitoring::jmx_exporter::version: "0.12.0"
+monitoring::jmx_exporter::user: "root"
 jmx_exporter_port: 9404

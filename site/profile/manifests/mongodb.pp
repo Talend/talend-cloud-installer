@@ -283,10 +283,4 @@ class profile::mongodb (
 
   contain ::mongodb::server
   contain ::mongodb::client
-
-  $monitor_user = $_users['monitor']
-  class { 'monitoring::mongodb_exporter':
-    mongodb_url => "mongodb://${$monitor_user[username]}:${$monitor_user[password]}@localhost:27017/${$monitor_user[db_address]}",
-    require     => Class['::profile::mongodb::users'],
-  }
 }

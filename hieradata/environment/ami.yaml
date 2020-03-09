@@ -1,49 +1,47 @@
 ---
-
-tic::services::karaf_service_ensure: 'stopped'
+tic::services::karaf_service_ensure: "stopped"
 tic::services::karaf_service_enable: false
-tic::frontend::tomcat_service_ensure: 'stopped'
+tic::frontend::tomcat_service_ensure: "stopped"
 tic::frontend::tomcat_service_enable: false
 tic::services::init_configuration_service::ensure_init: false
-zookeeper::service_ensure: 'stopped'
+zookeeper::service_ensure: "stopped"
 zookeeper::service_enable: false
-nginx::service_ensure: 'stopped'
-cloudwatchlogs::service_ensure: 'stopped'
+nginx::service_ensure: "stopped"
+cloudwatchlogs::service_ensure: "stopped"
 profile::common::cloudwatchlogs::include: false
 profile::common::ssm::include: false
-profile::postgresql::service_ensure: 'stopped'
+profile::postgresql::service_ensure: "stopped"
 profile::postgresql::service_enable: false
 profile::postgresql::create_databases: false
 
 # Docker
-docker::service_state: 'stopped'
+docker::service_state: "stopped"
 docker::service_enable: false
-profile::docker::registry::ensure: 'absent'
+profile::docker::registry::ensure: "absent"
 profile::docker::registry::running: false
 profile::docker::ecs_agent::running: false
 profile::datadog_docker_agent::running: false
 
-nexus::service_ensure: 'stopped'
+nexus::service_ensure: "stopped"
 nexus::service_enable: false
-syncope::service_ensure: 'stopped'
-activemq::service_ensure: 'stopped'
+syncope::service_ensure: "stopped"
+activemq::service_ensure: "stopped"
 activemq::service_enable: false
-profile::mongodb::service_ensure: 'stopped'
+profile::mongodb::service_ensure: "stopped"
 profile::mongodb::service_enable: false
-profile::mongodb::swap_ensure: 'absent'
-dataprep_dataset::service_ensure: 'stopped'
+profile::mongodb::swap_ensure: "absent"
+dataprep_dataset::service_ensure: "stopped"
 dataprep_dataset::service_enable: false
-profile::elasticsearch::status: 'disabled'
-profile::elasticsearch::security_group: 'not_available'
+profile::elasticsearch::status: "disabled"
+profile::elasticsearch::security_group: "not_available"
 profile::influxdb::service_enable: false
-kafka::broker::service_ensure: 'stopped'
-profile::kafka::kafka_topics_config: ''
+kafka::broker::service_ensure: "stopped"
+profile::kafka::kafka_topics_config: ""
 
-ntp::service_ensure: 'stopped'
+ntp::service_ensure: "stopped"
 ntp::service_enable: false
 
-monitoring::node_exporter::service_ensure: 'stopped'
+monitoring::node_exporter::service_ensure: "stopped"
 monitoring::node_exporter::service_enable: false
-monitoring::cadvisor::service_ensure: 'stopped'
+monitoring::cadvisor::service_ensure: "stopped"
 monitoring::cadvisor::service_enable: false
-monitoring::mongodb_exporter::service_enable: false
