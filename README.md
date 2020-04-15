@@ -39,7 +39,7 @@ sh scripts/setup.sh
 This runs bundler and a puppet apply with --noop enabled
 
 ## Testing Setup
-Run bundler inside the checkout to statisfy requirents
+Run bundler inside the checkout to satisfy requirements
 ``` bash
 bundle install --path=vendor/bundle --without=development
 ```
