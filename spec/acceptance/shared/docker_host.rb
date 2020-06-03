@@ -2,7 +2,15 @@ shared_examples 'profile::docker_host' do
 
   it_behaves_like 'profile::defined', 'docker_host'
 
-  describe package('docker-engine') do
+  describe package('docker-ce') do
+    it { is_expected.to be_installed }
+  end
+
+  describe package('docker-ce-cli') do
+    it { is_expected.to be_installed }
+  end
+
+  describe package('containerd.io') do
     it { is_expected.to be_installed }
   end
 
@@ -31,19 +39,19 @@ shared_examples 'profile::docker_host' do
   #- Push to your registry
   #  - docker push localhost:5000/test/hello-world:latest
   # Your registry is now ready for this acceptance test
-  describe command('/usr/bin/docker pull hello-world') do
+  describe command('/bin/docker pull hello-world') do
     its(:exit_status) { should eq 0 }
   end
 
-  describe command('/usr/bin/docker tag hello-world localhost:5000/test/hello-world:latest') do
+  describe command('/bin/docker tag hello-world localhost:5000/test/hello-world:latest') do
     its(:exit_status) { should eq 0 }
   end
 
-  describe command('/usr/bin/docker push localhost:5000/test/hello-world:latest') do
+  describe command('/bin/docker push localhost:5000/test/hello-world:latest') do
     its(:exit_status) { should eq 0 }
   end
 
-  describe command('/usr/bin/docker pull localhost:5000/test/hello-world:latest') do
+  describe command('/bin/docker pull localhost:5000/test/hello-world:latest') do
     its(:exit_status) { should eq 0 }
   end
 

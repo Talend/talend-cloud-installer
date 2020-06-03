@@ -96,3 +96,8 @@ monitoring::cadvisor::port: 9500
 monitoring::jmx_exporter::version: "0.12.0"
 monitoring::jmx_exporter::user: "root"
 jmx_exporter_port: 9404
+
+docker::package_source_location: "https://download.docker.com/linux/centos/7/$basearch/stable"
+docker::package_key_source: "https://download.docker.com/linux/centos/gpg"
+docker::package_name: "docker-ce"
+docker::service_overrides_template: "profile/etc/systemd/system/docker.service.d/service-overrides-rhel.conf.erb"

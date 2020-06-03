@@ -3,13 +3,13 @@ common_packages:
   'iptables-services':
     ensure: 'installed'
 
-docker::version: '1.12.3-1.el7.centos'
+docker::version: '19.03.11-3.el7'
 
 profile::docker::host::storage_device: "%{::storage_device}"
 
 profile::docker::ecs_agent::running: true
 profile::docker::ecs_agent::cluster_name: "%{::cluster_name}"
-profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.34.0'
+profile::docker::ecs_agent::image: 'amazon/amazon-ecs-agent:v1.39.0'
 
 profile::datadog_docker_agent::image: 'datadog/docker-dd-agent:12.7.5327'
 
