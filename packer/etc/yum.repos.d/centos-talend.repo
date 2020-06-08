@@ -7,8 +7,16 @@ enabled=1
 s3_enabled=true
 
 [CentOS-updates]
-name=centos
+name=centos-updates
 baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/__REPOSITORY_ID__/centos/7/x86_64/updates
+gpgcheck=1
+gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
+enabled=1
+s3_enabled=true
+
+[CentOS-extras]
+name=centos-extras
+baseurl=http://us-east-1-rd-tipaas-talend-com.s3.amazonaws.com/yum-repos/__REPOSITORY_ID__/centos/7/x86_64/extras
 gpgcheck=1
 gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 enabled=1
