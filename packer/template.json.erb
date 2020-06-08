@@ -98,6 +98,7 @@
         "yum clean all",
         "sed -i 's#baseurl=http://yum.puppetlabs.com#baseurl=http://release-archives.puppet.com/yum#g' /etc/yum.repos.d/puppetlabs.repo",
         "yum install -y puppet python-pip python-devel policycoreutils-devel cloud-init",
+        "yum install -y container-selinux-2.10-2.el7.noarch.rpm",
         "gem install aws-sdk hiera-eyaml hiera-eyaml-kms --no-ri --no-rdoc",
         "puppet module install camptocamp-ruby && puppet apply -e 'include ruby::gems'",
         "puppet module install camptocamp-augeas && puppet apply -e 'include ::augeas'",
