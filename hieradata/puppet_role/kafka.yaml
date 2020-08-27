@@ -187,6 +187,10 @@ kafka_applications_cluster_ha: # estimated max cluster size: 102 GiB (24 topics 
       topic_options:
         retention.ms: "3600000" # 1H
         segment.ms: "300000"    # 5mn
+    tpsvc-managed-engines-events:
+      topic_options:
+        retention.ms: "3600000" # 1H
+        segment.ms: "300000"    # 5mn
     tsd-semantic-update:
       topic_options:
         retention.bytes: "536870912" # 512 MiB per partition => 12GiB per cluster
