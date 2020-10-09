@@ -23,7 +23,7 @@ activemq::pg_host: "%{::postgres_nodes}"
 activemq::pg_db: 'ams'
 activemq::pg_username: 'ams'
 activemq::pg_password: "%{::master_password}"
-activemq::auth_url: 'http://%{::syncope_nodes}:8080/activemq-security-service/authenticate'
+activemq::auth_url: 'http://%{::syncope_nodes}:80/activemq-security-service/authenticate'
 activemq::persistence: 'postgres'
 activemq::persistence_pg_host: "%{::activemq_postgres_nodes}"
 activemq::persistence_pg_password: "%{::master_password}"
