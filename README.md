@@ -38,6 +38,52 @@ sh scripts/setup.sh
 ```
 This runs bundler and a puppet apply with --noop enabled
 
+## Ruby setup with asdf
+
+You may need to do a special setup for ruby with [asdf](https://asdf-vm.com/#/):
+
+### Step 1: you need OpenSSL 1.0
+
+``` bash
+sudo mkdir /opt/github-libs && sudo chmod 777 /opt/github-libs
+cd /opt/github-libs
+mkdir src out
+cd src
+git clone git@github.com:openssl/openssl.git --branch OpenSSL_1_0_2-stable
+cd openssl
+./config --prefix=/opt/github-libs/out/OpenSSL_1_0_2-stable --openssldir=/opt/github-libs/out/OpenSSL_1_0_2-stable/ssl shared zlib -fPIC
+make depend
+make
+make install
+make clean
+```
+
+### Step 2: Compile ruby with openssl 1.0
+
+``` bash
+cd $YOUR_TALEND_CLOUD_INSTALLER_DIR
+LDFLAGS="-L/opt/github-libs/out/OpenSSL_1_0_2-stable/lib" CPPFLAGS="-I/opt/github-libs/out/OpenSSL_1_0_2-stable/include/openssl" RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/github-libs/out/OpenSSL_1_0_2-stable" asdf install ruby 2.0.0-p648
+```
+
+### Step 3: Install bundler
+
+We need first to update the certificate because our openssl 1.0 has a bad configuration by default
+
+``` bash
+ruby --version
+ruby 2.0.0p648 (2015-12-16 revision 53162) [x86_64-linux]
+
+curl -fsSL curl.haxx.se/ca/cacert.pem -o $(ruby -ropenssl -e 'puts OpenSSL::X509::DEFAULT_CERT_FILE')
+```
+
+then install bundler
+
+``` bash
+gem install bundler --version '=1.13.6'
+# Because of a bug, we have to reshim
+asdf reshim
+```
+
 ## Testing Setup
 Run bundler inside the checkout to statisfy requirents
 ``` bash

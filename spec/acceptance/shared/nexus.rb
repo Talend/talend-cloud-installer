@@ -107,4 +107,8 @@ shared_examples 'profile::nexus' do
   describe command ('/usr/bin/sudo crontab -l')do
     its(:stdout) {should include '/usr/local/bin/nexus_mem_check.sh' }
   end
+
+  describe file('/srv/puppet_nexus_work_managed_dir_chown.flag') do
+    it { should be_file }
+  end
 end
