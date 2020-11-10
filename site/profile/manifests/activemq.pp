@@ -3,6 +3,7 @@
 #
 class profile::activemq(
   $with_postgresql_optimizations = true,
+  $network_broker_endpoint = undef,
 ){
 
   require ::profile::common::packagecloud_repos
@@ -14,6 +15,12 @@ class profile::activemq(
 
   class { '::monitoring::jmx_exporter':
     before => Class['::activemq'],
+  }
+
+  if empty($network_broker_endpoint) {
+    $network_broker_uri = undef
+  } else {
+    $network_broker_uri = "static:(tcp://${network_broker_endpoint}:61617)"
   }
 
   profile::register_profile { 'activemq': }
@@ -41,7 +48,9 @@ class profile::activemq(
   if $ec2_userdata =~ /InstanceA/ {
     # The part for AMS password is totaly outdated: https://jira.talendforge.org/browse/DEVOPS-4952
 
-    class { '::activemq': } ->
+    class { '::activemq':
+      network_connector_uri => $network_broker_uri,
+    } ->
     class { '::profile::postgresql::provision': }
 
     contain ::activemq
@@ -61,6 +70,8 @@ class profile::activemq(
       }
     }
   } else {
-    contain ::activemq
+    class { '::activemq':
+      network_connector_uri => $network_broker_uri,
+    }
   }
 }

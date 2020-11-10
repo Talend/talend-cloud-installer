@@ -52,6 +52,7 @@ shared_examples 'profile::activemq' do
     its(:content) { should include '<queue physicalName="ipaas.talend.dispatcher.response.queue"/>' }
     its(:content) { should include 'tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=104857600' }
     its(:content) { should include 'http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml&amp;wireFormat.maxFrameSize=52428800' }
+    its(:content) { should include '<networkConnector name="connector-bridge"  uri="static:(tcp://activemq-broker-new.localdomain:61617)" />' }
   end
 
   describe file('/opt/activemq/conf/jetty-server.xml') do

@@ -33,6 +33,8 @@ activemq::ams_security_version: '%{::ams_plugin_version}'
 activemq::jetty_server_min_threads: 10
 activemq::jetty_server_max_threads: 3000
 
+profile::activemq::network_broker_endpoint: '%{::active_mq_network_connect}'
+
 monitoring::jmx_exporter::jmx_exporter_service: 'activemq'
 
 profile::postgresql::roles:

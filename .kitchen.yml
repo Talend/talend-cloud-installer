@@ -102,6 +102,7 @@ suites:
     provisioner:
       custom_facts:
         puppet_role: activemq
+        active_mq_network_connect: activemq-broker-new.localdomain
     verifier:
       patterns:
         - 'spec/acceptance/activemq_spec.rb'
