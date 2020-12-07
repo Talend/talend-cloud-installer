@@ -4,7 +4,7 @@ java::package: "jre1.8"
 java::version: "1.8.0_181-fcs"
 java::java_home: "/usr/java/jre1.8.0_181-amd64"
 
-activemq::version: '5.15.13-1'
+activemq::version: '5.15.13-2'
 activemq::tcp_max_frame_size: 104857600  # 100MiB
 activemq::http_max_frame_size: 52428800  # 50MiB
 activemq::jmx_enabled: true
