@@ -24,7 +24,7 @@ shared_examples 'profile::activemq' do
   end
 
   describe package('activemq') do
-    it { should be_installed.with_version('5.15.13-2') }
+    it { should be_installed.with_version('5.15.13-3') }
   end
 
 	describe service('activemq') do
