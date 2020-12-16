@@ -54,6 +54,8 @@ profile::postgresql::roles:
   activemq:
     password: "%{::master_password}"
     files: []
+activemq::network_connector_user: "networkconnuser"
+activemq::network_connector_password: "networkconnpassword"
 
 sudo::configs:
   'vagrant':

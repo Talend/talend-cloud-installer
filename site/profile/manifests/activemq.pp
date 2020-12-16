@@ -20,7 +20,7 @@ class profile::activemq(
   if empty($network_broker_endpoint) {
     $network_broker_uri = undef
   } else {
-    $network_broker_uri = "static:(tcp://${network_broker_endpoint}:61617)"
+    $network_broker_uri = "static:(tcp://${network_broker_endpoint}:61616)"
   }
 
   profile::register_profile { 'activemq': }
