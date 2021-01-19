@@ -103,10 +103,6 @@ shared_examples 'profile::nexus' do
     its(:content) { should include 'wrapper.java.additional.3=-Djava.util.prefs.userRoot=/srv/nexus' }
   end
 
-  describe command('/usr/bin/sudo -i -u nexus ulimit -n') do
-    its(:stdout) { should include '65535' }
-  end
-
   describe file('/usr/local/bin/nexus_mem_check.sh') do
     it { should be_file }
   end

@@ -48,7 +48,7 @@ allow httpd_t transproxy_port_t:tcp_socket name_connect;
     $_nexus_nodes_port = '8081'
   }
 
-  $java_memory = floor($::memorysize_mb * 0.70)
+  $java_memory = floor($::memorysize_mb * 0.75)
 
   profile::common::mount_device { 'nexus_storage':
     device  => $storage_device,
