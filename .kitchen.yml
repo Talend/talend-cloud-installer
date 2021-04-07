@@ -353,7 +353,7 @@ suites:
       manifest: management_proxy.pp
       custom_facts:
         puppet_role: management_proxy
-        elasticsearch_sys: localhost:9200
+        elasticsearch_system_logs: 127.0.0.1:9200
         storage_device: /dev/sdb
     verifier:
       patterns:

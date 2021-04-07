@@ -6,7 +6,6 @@ Exec {
   path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
 }
 class {'elasticsearch':
-  status       => 'running',
   manage_repo  => true,
   java_install => true,
   repo_version => '2.x'

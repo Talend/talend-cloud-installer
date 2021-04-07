@@ -95,21 +95,21 @@ ntp::interfaces:
 
 role::management_proxy::elasticsearch:
   sys:
-    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_host: "%{::elasticsearch_system_logs}"
     elasticsearch_url_scheme: 'http'
     nginx_location: ''
     nginx_location_priority: 500
     auth_username: 'kibana'
     auth_password: "%{::master_password}"
   sys2:
-    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_host: "%{::elasticsearch_system_logs}"
     elasticsearch_url_scheme: 'http'
     nginx_location: '/sys2'
     nginx_location_priority: 450
     auth_username: 'kibana2'
     auth_password: "%{::master_password}"
   sys3:
-    elasticsearch_host: "%{::elasticsearch_sys}"
+    elasticsearch_host: "%{::elasticsearch_system_logs}"
     elasticsearch_url_scheme: 'http'
     nginx_location: '/sys3'
     nginx_location_priority: 410

@@ -153,7 +153,7 @@ GITHUBTARBALL
 DEPENDENCIES
   camptocamp-accounts (~> 1.0)
   computology-packagecloud (~> 0.0)
-  elasticsearch-elasticsearch (~> 0.0)
+  elasticsearch-elasticsearch (= 0.14.0)
   garethr-docker (~> 5.3.0)
   golja-influxdb (~> 4.0)
   herculesteam-augeasproviders_shellvar (~> 2.0)

@@ -9,7 +9,7 @@
   "issues_url": "https://github.com/Talend/talend-cloud-installer/issues",
   "dependencies": [
     {"name": "computology-packagecloud", "version_requirement": "0.x"},
-    {"name": "elasticsearch/elasticsearch", "version_requirement": "0.x"},
+    {"name": "elasticsearch/elasticsearch", "version_requirement": "0.14.0"},
     {"name": "puppet/nginx", "version_requirement": "0.4.x"},
     {"name": "jfryman/selinux", "version_requirement": "0.x"},
     {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
