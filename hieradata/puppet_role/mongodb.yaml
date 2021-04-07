@@ -39,6 +39,17 @@ profile::mongodb::roles:
     roles: []
 
 profile::mongodb::users:
+  admin:
+    db_address: 'admin'
+    username: 'admin'
+    password: '%{::master_password}'
+    roles:
+      - role: 'userAdminAnyDatabase'
+        db: 'admin'
+      - role: 'dbAdminAnyDatabase'
+        db: 'admin'
+      - role: 'readWriteAnyDatabase'
+        db: 'admin'
   backup:
     db_address: 'admin'
     username: 'backup'
