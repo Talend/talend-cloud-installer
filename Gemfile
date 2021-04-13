@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'puppet', '~> 3.8'
+gem 'puppet', '~> 6.13'
 gem 'rake'
 gem 'tilt'
 gem 'librarian-puppet', '~> 3.0'
