@@ -21,7 +21,7 @@ define profile::nexus::nginx_location (
     $raw_append = [
       'proxy_intercept_errors on;',
       'recursive_error_pages on;',
-      "error_page 404 403 500 502 503 504 = @${vhost}${next_backend};",
+      "error_page 404 403 401 500 502 503 504 = @${vhost}${next_backend};",
     ]
   } else {
     $raw_append = []
